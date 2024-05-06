@@ -67,7 +67,14 @@ int main()
         window.draw(borderY);
 
         //Draw lines
-        window.draw(parameters.lines, parameters.lineDensity, Lines);
+        if (!parameters.asymptote) {
+            window.draw(parameters.lines1, parameters.line1Density, Lines);
+        }
+
+        else {
+            window.draw(parameters.lines1, parameters.line1Density, Lines);
+            window.draw(parameters.lines2, parameters.line2Density, Lines);
+        }
 
         window.display();
     }
