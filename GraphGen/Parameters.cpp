@@ -149,41 +149,9 @@ void Parameters::Generate(Vector2i defaultWindowSize)
     n = std::stof(nString);
     c = std::stof(cString);
 
+    printf("\n \n SPLIT \n \n");
 
-//FORM LINES
-    //Initialise array with max value of default window width * 2
-    //Note: using default screen size as to which if screen size is changed it 
-    //Stretches instead of messing it up
-    lines = { new Vertex[defaultWindowSize.x * 2] };
-
-    float x = -(defaultWindowSize.x / 2);
-    float y = 0;
-
-    int index = 0;
-
-    //Loop through all pixels on the screen twice
-    for (int p = 0; p < defaultWindowSize.x * 2; p++) {
-        y = (a * pow(x, n)) + c;
-
-        //Note if y == y is to check if y is a nan value
-        //Nan for some reason returns always false
-        if (y >= -(defaultWindowSize.y / 2) && y <= (defaultWindowSize.y / 2) && y == y) {
-            lines[index].position = ConvertPos(defaultWindowSize, x, y);
-            
-            if (index != 0 && index != (defaultWindowSize.x * 2) - 1) {
-                lines[index + 1].position = ConvertPos(defaultWindowSize, x, y);
-                index++;
-            }
-
-            index++;
-        }
-
-
-        p++;
-        x++;
-    }
-
-    lineDensity = index;
+    CalculateLines(defaultWindowSize);
 }
 
 bool Parameters::IsNum(std::string string) {
@@ -214,8 +182,92 @@ bool Parameters::IsNum(std::string string) {
     return true;
 }
 
+void Parameters::CalculateLines(Vector2i defaultWindowSize)
+{
+    //FORM LINES
+    //Initialise array with max value of default window width * 2
+    //Note: using default screen size as to which if screen size is changed it 
+    //Stretches instead of messing it up
+    lines1 = { new Vertex[defaultWindowSize.x * 2] };
+
+    float x = -(defaultWindowSize.x / 2);
+    float y = 0;
+
+    int index = 0;
+
+    int p = 0;
+
+    float lastX = 0;
+
+    asymptote = false;
+
+    //Loop through all pixels on the screen twice
+    for (p = 0; p < defaultWindowSize.x * 2; p++) {
+        y = (a * pow(x, n)) + c;
+
+        //Note if y == y is to check if y is a nan value
+        //Nan for some reason returns always false
+        if (y >= -(defaultWindowSize.y / 2) && y <= (defaultWindowSize.y / 2) && y == y) {
+
+            if (lastX != x - 1 && index != 0) {
+                asymptote = true;
+                break;
+            };
+            lastX = x;
+
+            lines1[index].position = ConvertPos(defaultWindowSize, x, y);
+
+            if (index != 0 && index != (defaultWindowSize.x * 2) - 1) {
+                lines1[index + 1].position = ConvertPos(defaultWindowSize, x, y);
+                index++;
+            }
+
+            index++;
+        }
+
+
+        p++;
+        x++;
+    }
+
+    line1Density = index;
+
+    //ONLY If there is an asymptote, run again through the rest
+
+    if (asymptote) {
+        //Loop through the rest of the pixels
+
+        lines2 = { new Vertex[defaultWindowSize.x * 2] };
+
+        index = 0;
+
+        for (p = p; p < defaultWindowSize.x * 2; p++) {
+            y = (a * pow(x, n)) + c;
+
+            //Note if y == y is to check if y is a nan value
+            //Nan for some reason returns always false
+            if (y >= -(defaultWindowSize.y / 2) && y <= (defaultWindowSize.y / 2) && y == y) {
+
+                lines2[index].position = ConvertPos(defaultWindowSize, x, y);
+
+                if (index != 0 && index != (defaultWindowSize.x * 2) - 1) {
+                    lines2[index + 1].position = ConvertPos(defaultWindowSize, x, y);
+                    index++;
+                }
+
+                index++;
+            }
+
+
+            p++;
+            x++;
+        }
+        line2Density = index;
+    }
+}
+
 Vector2f Parameters::ConvertPos(Vector2i defaultWindowSize, int x, int y) {
     x = (defaultWindowSize.x / 2) + x;
     y = (defaultWindowSize.y / 2) - y;
     return Vector2f(x, y);
-};
+}

@@ -18,12 +18,17 @@ public:
 	float n;
 	float c;
 
-	Vertex* lines;
-	int lineDensity;
+	Vertex* lines1;
+	Vertex* lines2;
+	int line1Density;
+	int line2Density;
+	bool asymptote;
 
 private:
 
 	Vector2f ConvertPos(Vector2i defaultWindowSize, int x, int y);
+
+	void CalculateLines(Vector2i defaultWindowSize);
 
 	bool IsNum(std::string string);
 
