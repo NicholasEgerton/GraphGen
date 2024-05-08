@@ -201,8 +201,8 @@ void Parameters::CalculateLines(Vector2i defaultWindowSize)
 
     asymptote = false;
 
-    //Loop through all pixels on the screen twice
-    for (p = 0; p < defaultWindowSize.x * 2; p++) {
+    //Loop through all pixels on the screen
+    for (p = 0; p < defaultWindowSize.x; p++) {
         y = (a * pow(x, n)) + c;
 
         //Note if y == y is to check if y is a nan value
@@ -215,18 +215,19 @@ void Parameters::CalculateLines(Vector2i defaultWindowSize)
             };
             lastX = x;
 
+            
             lines1[index].position = ConvertPos(defaultWindowSize, x, y);
 
-            if (index != 0 && index != (defaultWindowSize.x * 2) - 1) {
+            if (index != 0 && index + 1 < (defaultWindowSize.x * 2)) {
                 lines1[index + 1].position = ConvertPos(defaultWindowSize, x, y);
                 index++;
             }
 
             index++;
+
+            
         }
 
-
-        p++;
         x++;
     }
 
@@ -236,12 +237,11 @@ void Parameters::CalculateLines(Vector2i defaultWindowSize)
 
     if (asymptote) {
         //Loop through the rest of the pixels
-
         lines2 = { new Vertex[defaultWindowSize.x * 2] };
 
         index = 0;
 
-        for (p = p; p < defaultWindowSize.x * 2; p++) {
+        for (p = p; p < defaultWindowSize.x; p++) {
             y = (a * pow(x, n)) + c;
 
             //Note if y == y is to check if y is a nan value
@@ -250,7 +250,7 @@ void Parameters::CalculateLines(Vector2i defaultWindowSize)
 
                 lines2[index].position = ConvertPos(defaultWindowSize, x, y);
 
-                if (index != 0 && index != (defaultWindowSize.x * 2) - 1) {
+                if (index != 0 && index + 1 < (defaultWindowSize.x * 2)) {
                     lines2[index + 1].position = ConvertPos(defaultWindowSize, x, y);
                     index++;
                 }
@@ -258,12 +258,12 @@ void Parameters::CalculateLines(Vector2i defaultWindowSize)
                 index++;
             }
 
-
-            p++;
             x++;
         }
         line2Density = index;
     }
+
+
 }
 
 Vector2f Parameters::ConvertPos(Vector2i defaultWindowSize, int x, int y) {

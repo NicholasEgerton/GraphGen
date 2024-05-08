@@ -36,6 +36,9 @@ int main()
     Parameters parameters;
     parameters.Init(&window, &iBeam, &Roboto);
 
+    //Generate default starting graph (y = x)
+    parameters.Generate(Vector2i(window.getSize()));
+
     //Set up X and Y borders
     RectangleShape borderX(Vector2f(window.getSize().x, 3));
     borderX.setPosition(Vector2f(0, window.getSize().x / 2));
@@ -43,15 +46,14 @@ int main()
     RectangleShape borderY(Vector2f(3, window.getSize().y));
     borderY.setPosition(Vector2f(window.getSize().x / 2, 0));
     borderY.setFillColor(Color(255, 127, 80));
-
-    parameters.Generate(Vector2i(window.getSize()));
     
     while (window.isOpen())
     {
         while (window.pollEvent(event))
         {
             //Allow the window to be closed
-            if (event.type == Event::Closed) {
+            if (event.type == Event::Closed)
+            {
                 window.close();
             }
         }
