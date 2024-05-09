@@ -1,12 +1,1 @@
-﻿  slider.cpp
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\slider.cpp(43,56): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-          and
-          [
-              T=float
-          ]
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\slider.cpp(46,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  GraphGen.vcxproj -> C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\x64\Debug\GraphGen.exe
+﻿  GraphGen.vcxproj -> C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\x64\Debug\GraphGen.exe
