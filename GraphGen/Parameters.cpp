@@ -47,9 +47,9 @@ void Parameters::Init(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto) {
     cInputText.Init(Vector2f(60, 420), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, Roboto, &window);
 
     //Sliders
-    aSlider.Init(Vector2f(265, 157.5), Vector2f(225, 12.5), Color::White, Color::Black, Vector2f(-1000, 1000), true, &aInputText, &window);
-    nSlider.Init(Vector2f(265, 290), Vector2f(225, 12.5), Color::White, Color::Black, Vector2f(-10, 10), true, &nInputText, &window);
-    cSlider.Init(Vector2f(265, 440), Vector2f(225, 12.5), Color::White, Color::Black, Vector2f(-500, 500), true, &cInputText, &window);
+    aSlider.Init(Vector2f(265, 157.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
+    nSlider.Init(Vector2f(265, 290), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
+    cSlider.Init(Vector2f(265, 440), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
 
     //Buttons
     aButton.Init(Vector2f(410, 110), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", Roboto, &window);
@@ -144,6 +144,10 @@ void Parameters::Generate(Vector2i defaultWindowSize)
     if (a == std::stof(aString) && n == std::stof(nString) && c == std::stof(cString)) {
         return;
     }
+
+    aSlider.ChangeBeamPos();
+    nSlider.ChangeBeamPos();
+    cSlider.ChangeBeamPos();
 
     a = std::stof(aString);
     n = std::stof(nString);
