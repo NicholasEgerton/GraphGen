@@ -1,24 +1,20 @@
 ﻿  Parameters.cpp
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(87,55): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(90,55): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(197,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(223,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(223,68): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(226,79): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(226,76): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(255,75): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(255,72): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(258,83): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(258,80): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(276,24): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(202,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(230,67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(230,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(248,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(248,68): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(263,24): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(276,21): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(263,21): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
@@ -60,20 +56,9 @@ C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Source.cpp(47,53): war
           [
               T=float
           ]
-  slider.cpp
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\slider.cpp(43,56): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-          and
-          [
-              T=float
-          ]
-C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\slider.cpp(46,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   Generating code
-  145 of 156 functions (92.9%) were compiled, the rest were copied from previous compilation.
-    4 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+  23 of 155 functions (14.8%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   GraphGen.vcxproj -> C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\x64\Release\GraphGen.exe

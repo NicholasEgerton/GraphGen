@@ -70,12 +70,12 @@ int main()
 
         //Draw lines
         if (!parameters.asymptote) {
-            window.draw(parameters.lines1, parameters.line1Density, Lines);
+            window.draw(parameters.lines1);
         }
 
         else {
-            window.draw(parameters.lines1, parameters.line1Density, Lines);
-            window.draw(parameters.lines2, parameters.line2Density, Lines);
+            window.draw(parameters.lines1);
+            window.draw(parameters.lines2);
         }
 
         window.display();

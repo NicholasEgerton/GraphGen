@@ -1,1 +1,60 @@
-﻿  GraphGen.vcxproj -> C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\x64\Debug\GraphGen.exe
+﻿  Parameters.cpp
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(90,55): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(202,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(230,67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(230,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(248,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(248,68): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(263,24): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Parameters.cpp(263,21): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Source.cpp
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Source.cpp(43,53): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Source.cpp(44,56): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Source.cpp(46,56): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\GraphGen\Source.cpp(47,53): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  Generating Code...
+  GraphGen.vcxproj -> C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\x64\Debug\GraphGen.exe

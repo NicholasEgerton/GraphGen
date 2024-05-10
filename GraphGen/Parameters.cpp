@@ -32,27 +32,29 @@ void Parameters::Init(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto) {
     aText.setStyle(Text::Bold);
 
     nText = Text("n", *Roboto, 60);
-    nText.setPosition(10, 270);
+    nText.setPosition(10, 241.5);
     nText.setFillColor(Color::Black);
     nText.setStyle(Text::Bold);
 
     cText = Text("c", *Roboto, 60);
-    cText.setPosition(10, 420);
+    cText.setPosition(10, 362.5);
     cText.setFillColor(Color::Black);
     cText.setStyle(Text::Bold);
 
     //Input texts
-    aInputText.Init(Vector2f(60, 137.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
-    nInputText.Init(Vector2f(60, 270), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
-    cInputText.Init(Vector2f(60, 420), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+    aInputText.Init(Vector2f(60, 137), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+    nInputText.Init(Vector2f(60, 258.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+    cInputText.Init(Vector2f(60, 380), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, Roboto, &window);
 
     //Sliders
-    aSlider.Init(Vector2f(265, 157.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
-    nSlider.Init(Vector2f(265, 290), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
-    cSlider.Init(Vector2f(265, 440), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
+    aSlider.Init(Vector2f(265, 157), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
+    nSlider.Init(Vector2f(265, 278.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
+    cSlider.Init(Vector2f(265, 400), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
 
     //Buttons
     aButton.Init(Vector2f(410, 110), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", Roboto, &window);
+    //(In development)
+    //modeButton.Init(Vector2f(10, 450), Vector2f(450, 30), Color::Black, Color::White, 30, "Switch To Composite Functions", "Switch To Singular Functions", Roboto, &window);
 }
 
 
@@ -64,6 +66,7 @@ void Parameters::Update() {
             window.close();
             mainWindow->close();
         }
+
         //Update Input Texts
         aInputText.Update(event);
         nInputText.Update(event);
@@ -88,6 +91,15 @@ void Parameters::Update() {
             aSlider.rounded = false;
         }
     }
+
+    //Update graph every frame at 60 frames a second
+    //1 / 60 is approximately = 0.0167 (4.dp)
+
+    if (clock.getElapsedTime().asSeconds() >= 0.0167) {
+        Generate(Vector2i(mainWindow->getSize()));
+        clock.restart();
+    }
+
     window.clear(Color(137, 207, 240));
 
     //Draw Texts
@@ -96,14 +108,6 @@ void Parameters::Update() {
     window.draw(aText);
     window.draw(nText);
     window.draw(cText);
-
-    //Update graph every frame at 60 frames a second
-    //1 / 60 is approximately = 0.0167 (4.dp) 
-
-    if (clock.getElapsedTime().asSeconds() >= 0.0167) {
-        Generate(Vector2i(mainWindow->getSize()));
-        clock.restart();
-    }
 
     //Draw Input Texts
     aInputText.Draw();
@@ -189,19 +193,19 @@ bool Parameters::IsNum(std::string string) {
 void Parameters::CalculateLines(Vector2i defaultWindowSize)
 {
     //FORM LINES
-    //Initialise array with max value of default window width * 2
-    //Note: using default screen size as to which if screen size is changed it 
-    //Stretches instead of messing it up
-    lines1 = { new Vertex[defaultWindowSize.x * 2] };
+    //NOTE: Using default screen size so if the screen size changes
+    //It simply stretches/constricts screen size instead of
+    //Physically changing the lines
+
+    lines1 = VertexArray(LinesStrip);
 
     float x = -(defaultWindowSize.x / 2);
     float y = 0;
 
-    int index = 0;
-
     int p = 0;
 
     float lastX = 0;
+    float lastY = 0;
 
     asymptote = false;
 
@@ -213,37 +217,27 @@ void Parameters::CalculateLines(Vector2i defaultWindowSize)
         //Nan for some reason returns always false
         if (y >= -(defaultWindowSize.y / 2) && y <= (defaultWindowSize.y / 2) && y == y) {
 
-            if (lastX != x - 1 && index != 0) {
+            if (lastX != x - 1 && x != -(defaultWindowSize.x / 2)) {
                 asymptote = true;
+                x++;
+                lastY = y;
                 break;
             };
+
             lastX = x;
+            lastY = y;
 
-            
-            lines1[index].position = ConvertPos(defaultWindowSize, x, y);
-
-            if (index != 0 && index + 1 < (defaultWindowSize.x * 2)) {
-                lines1[index + 1].position = ConvertPos(defaultWindowSize, x, y);
-                index++;
-            }
-
-            index++;
-
-            
+            lines1.append(Vertex(ConvertPos(defaultWindowSize, x, y)));
         }
 
         x++;
     }
 
-    line1Density = index;
-
     //ONLY If there is an asymptote, run again through the rest
 
     if (asymptote) {
         //Loop through the rest of the pixels
-        lines2 = { new Vertex[defaultWindowSize.x * 2] };
-
-        index = 0;
+        lines2 = VertexArray(LinesStrip);
 
         for (p = p; p < defaultWindowSize.x; p++) {
             y = (a * pow(x, n)) + c;
@@ -251,20 +245,13 @@ void Parameters::CalculateLines(Vector2i defaultWindowSize)
             //Note if y == y is to check if y is a nan value
             //Nan for some reason returns always false
             if (y >= -(defaultWindowSize.y / 2) && y <= (defaultWindowSize.y / 2) && y == y) {
-
-                lines2[index].position = ConvertPos(defaultWindowSize, x, y);
-
-                if (index != 0 && index + 1 < (defaultWindowSize.x * 2)) {
-                    lines2[index + 1].position = ConvertPos(defaultWindowSize, x, y);
-                    index++;
-                }
-
-                index++;
+                lines2.append(Vertex(ConvertPos(defaultWindowSize, x, y)));
             }
+
+            lastY = y;
 
             x++;
         }
-        line2Density = index;
     }
 
 

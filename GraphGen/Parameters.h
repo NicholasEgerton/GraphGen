@@ -18,10 +18,8 @@ public:
 	float n;
 	float c;
 
-	Vertex* lines1;
-	Vertex* lines2;
-	int line1Density;
-	int line2Density;
+	VertexArray lines1;
+	VertexArray lines2;
 	bool asymptote;
 
 private:
@@ -36,6 +34,7 @@ private:
 
 	RenderWindow window;
 
+	//If singular functions
 	Text titleText;
 	Text infoText;
 	Text linearText;
