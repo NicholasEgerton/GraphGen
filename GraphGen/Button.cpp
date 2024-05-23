@@ -14,7 +14,6 @@ void Button::Init(Vector2f pos, Vector2f size, Color buttonCol, Color textCol, f
 	rect.setFillColor(buttonCol);
 
 	text = Text(defaultText1, *font, textSize);
-	text.setFont(*font);
 	text.setPosition(Vector2f(pos.x, pos.y - 5));
 	text.setFillColor(textCol);
 }

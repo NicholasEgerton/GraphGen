@@ -69,13 +69,8 @@ int main()
         window.draw(borderY);
 
         //Draw lines
-        if (!parameters.asymptote) {
-            window.draw(parameters.lines1);
-        }
-
-        else {
-            window.draw(parameters.lines1);
-            window.draw(parameters.lines2);
+        for (int i = 0; i < parameters.linesVector.size(); i++) {
+            window.draw(parameters.linesVector[i]);
         }
 
         window.display();

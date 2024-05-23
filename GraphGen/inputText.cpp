@@ -44,21 +44,8 @@ void InputText::Update(Event event)
     if (event.type == sf::Event::TextEntered && clickedRect) {
 
         String s = text.getString();
-        //Backspace
-        if (event.text.unicode == 8) {
-            if (s.getSize()) {
-                s.erase(s.getSize() - 1, s.getSize());
-            }
-        }
-        //Typing
-        //Make sure its not a letter and only 0-9 or decimal --> .
-        else if(event.text.unicode >= 45 && event.text.unicode <= 57 && event.text.unicode != 47) {
-            if (s.getSize() < maxChar) {
-                s += static_cast<char>(event.text.unicode);
-            }
-        }
 
-        text.setString(s);
+        text.setString(ValidText(event, s));
     }
 }
 
@@ -75,6 +62,25 @@ bool InputText::InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSiz
     }
 
     return false;
+}
+
+String InputText::ValidText(Event event, String s)
+{
+    //Backspace
+    if (event.text.unicode == 8) {
+        if (s.getSize()) {
+            s.erase(s.getSize() - 1, s.getSize());
+        }
+    }
+    //Typing
+    //Make sure its not a letter and only 0-9 or decimal --> .
+    else if (event.text.unicode >= 45 && event.text.unicode <= 57 && event.text.unicode != 47) {
+        if (s.getSize() < maxChar) {
+            s += static_cast<char>(event.text.unicode);
+        }
+    }
+
+    return s;
 }
 
 void InputText::Draw()

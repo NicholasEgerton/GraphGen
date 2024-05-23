@@ -7,24 +7,26 @@ using namespace sf;
 class InputText {
 public:
 
-	void Init(Vector2f pos, Vector2f size, float textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window);
-	void Update(Event event);
+	virtual void Init(Vector2f pos, Vector2f size, float textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window);
+	virtual void Update(Event event);
 	void Draw();
 
 	Text text;
 	RectangleShape rect;
 
+	int maxChar;
+
 private:
+
+	bool InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSize);
+
+	virtual String ValidText(Event event, String s);
 
 	bool inRect = false;
 	bool clickedRect = false;
-
-	bool InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSize);
 
 	//Received variables
 	RenderWindow* window;
 	
 	Sprite* iBeam;
-
-	int maxChar;
 };

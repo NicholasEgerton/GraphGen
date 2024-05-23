@@ -11,7 +11,7 @@ public:
 	void Update(Event event);
 	void Draw();
 
-	bool state;
+	bool state = false;
 
 private:
 
@@ -25,7 +25,7 @@ private:
 
 	Color buttonCol;
 
-	bool highlight;
+	bool highlight = false;
 
 	//Received variables
 	RenderWindow* window;

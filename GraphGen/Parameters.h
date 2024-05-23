@@ -4,6 +4,8 @@
 #include "InputText.h"
 #include "slider.h"
 #include "Button.h"
+#include "Tabs.h"
+#include "FunctionInputText.h"
 
 using namespace sf;
 
@@ -14,27 +16,46 @@ public:
 	void Update();
 	void Generate(Vector2i defaultWindowSize);
 
+	std::vector<VertexArray> linesVector;
+
+private:
+
+	Vector2f ConvertPos(Vector2f defaultWindowSize, float x, float y);
+
+	void CalculateLines(Vector2f defaultWindowSize);
+
+	struct Vector2iComparator {
+		bool operator()(const Vector2i& v1, const Vector2i& v2) const {
+			return v1.x < v2.x;
+		}
+	};
+
+	bool IsNum(std::string string);
+
+	bool mode = false; //False = singular, true = composite functions
+
+	float CalculateY(float x);
+
+	//For singular functions only
 	float a;
 	float n;
 	float c;
 
-	VertexArray lines1;
-	VertexArray lines2;
-	bool asymptote;
+	//For composite functions only
+	std::vector<int> indexes;
+	std::vector<Vector3f> aNCValues = { Vector3f(1, 1, 0) };
+	//Note: in mathOperations 0 = /, 1 = *, 2 = +, 3 = -
+	//This is so it can be sorted easily for bidmas
+	//And the second parameter is the original index of the operator
 
-private:
+	std::vector<Vector2i> mathOperations;
 
-	Vector2f ConvertPos(Vector2i defaultWindowSize, int x, int y);
-
-	void CalculateLines(Vector2i defaultWindowSize);
-
-	bool IsNum(std::string string);
+	const static int maxOperators = 8;
 
 	Clock clock;
 
 	RenderWindow window;
 
-	//If singular functions
 	Text titleText;
 	Text infoText;
 	Text linearText;
@@ -46,11 +67,16 @@ private:
 	InputText nInputText;
 	InputText cInputText;
 
+	FunctionInputText functionInputText;
+
 	Slider aSlider;
 	Slider nSlider;
 	Slider cSlider;
 
 	Button aButton;
+	Button modeButton;
+
+	Tabs tabs;
 
 	//Received variables
 	RenderWindow* mainWindow;

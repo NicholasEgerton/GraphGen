@@ -134,13 +134,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="FunctionInputText.cpp" />
     <ClCompile Include="inputText.cpp" />
     <ClCompile Include="Parameters.cpp" />
     <ClCompile Include="slider.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Tabs.cpp" />
+    <ClCompile Include="Tabs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="FunctionInputText.h" />
     <ClInclude Include="inputText.h" />
     <ClInclude Include="Parameters.h" />
     <ClInclude Include="slider.h" />
