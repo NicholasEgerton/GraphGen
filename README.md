@@ -1,9 +1,7 @@
 # GraphGen
 Simple mathematical graphing calculator inspired by Desmos, made with SFML and C++.
 
-Made by altering a graph based on variables, a, n, and c, and therefore can only support functions of the form:
-
-f(x) = ax^n + c
+Made by altering functions based on variables, a, n, and c, and therefore can only support polynomials.
 
 Made as a personal project to advance my knowledge and learn new skills.
 
