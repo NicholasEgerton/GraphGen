@@ -2,7 +2,7 @@
 #include <vector>
 #include <iomanip>
 
-void Tabs::Init(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol, float textSize, Font* font, InputText* aInputText, InputText* nInputText, InputText* cInputText, Slider* aSlider, Slider* nSlider, Slider* cSlider, RenderWindow* window)
+Tabs::Tabs(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol, unsigned int textSize, Font* font, InputText* aInputText, InputText* nInputText, InputText* cInputText, Slider* aSlider, Slider* nSlider, Slider* cSlider, RenderWindow* window)
 {
 	//Setup received variables
 	Tabs::window = window;
@@ -156,9 +156,9 @@ bool Tabs::IsNum(std::string string) {
 
 void Tabs::UpdateValues(int i)
 {
-	std::string aString = static_cast<std::string>(aInputText->text.getString());
-	std::string nString = static_cast<std::string>(nInputText->text.getString());
-	std::string cString = static_cast<std::string>(cInputText->text.getString());
+	std::string aString = static_cast<std::string>(aInputText->GetText().getString());
+	std::string nString = static_cast<std::string>(nInputText->GetText().getString());
+	std::string cString = static_cast<std::string>(cInputText->GetText().getString());
 
 	//Don't generate if strings are empty
 	if (aString.empty() || nString.empty() || cString.empty()) {
@@ -188,9 +188,9 @@ void Tabs::UpdateText(int i)
 {
 
 	std::string strArr[3] = {
-		FloatToString(tabs[i].a, aInputText->maxChar),
-		FloatToString(tabs[i].n, nInputText->maxChar),
-		FloatToString(tabs[i].c, cInputText->maxChar)
+		FloatToString(tabs[i].a, aInputText->GetMaxChar()),
+		FloatToString(tabs[i].n, nInputText->GetMaxChar()),
+		FloatToString(tabs[i].c, cInputText->GetMaxChar())
 	};
 
 	//REMOVE TRAILING ZEROS
@@ -212,9 +212,9 @@ void Tabs::UpdateText(int i)
 		}
 	}
 
-	aInputText->text.setString(strArr[0]);
-	nInputText->text.setString(strArr[1]);
-	cInputText->text.setString(strArr[2]);
+	aInputText->SetTextString(strArr[0]);
+	nInputText->SetTextString(strArr[1]);
+	cInputText->SetTextString(strArr[2]);
 
 	aSlider->ChangeBeamPos();
 	nSlider->ChangeBeamPos();

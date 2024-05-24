@@ -1,6 +1,6 @@
 #include "slider.h"
 
-void Slider::Init(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText* inputText, RenderWindow* window)
+Slider::Slider(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText* inputText, RenderWindow* window)
 {
 	//Setup received variables
 	Slider::window = window;
@@ -9,7 +9,7 @@ void Slider::Init(Vector2f pos, Vector2f size, Color barColor, Color beamColor, 
 	Slider::valueBounds = valueBounds;
 	Slider::rounded = rounded;
 
-	inputTextString = inputText->text.getString();
+	inputTextString = inputText->GetText().getString();
 
 	//Setup bar and beam
 	bar = RectangleShape(size);
@@ -40,16 +40,16 @@ void Slider::Update(Event event)
 	//Note, allowing the mouse to be at any y value, but has to be on x of bar
 	//More fluid movement
 	if (inControl && InBounds(Mouse::getPosition(*window), Vector2f(bar.getPosition().x, 0), Vector2f(bar.getSize().x, 500))) {
-		beam.setPosition(Vector2f(Mouse::getPosition(*window).x, beam.getPosition().y));
+		beam.setPosition(Vector2f(static_cast<float>((Mouse::getPosition(*window).x)), beam.getPosition().y));
 		
 		if (rounded) {
-			int value = round(ToValue());
-			inputText->text.setString(std::to_string(value));
+			int value = static_cast<int>(roundf(ToValue()));
+			inputText->SetTextString(std::to_string(value));
 		}
 
 		else {
 			float value = roundf(ToValue() * 1000000) / 1000000;
-			inputText->text.setString(std::to_string(value));
+			inputText->SetTextString(std::to_string(value));
 		}
 	}
 }
@@ -109,7 +109,7 @@ void Slider::Draw()
 void Slider::ChangeBeamPos()
 {
 	//Update slider if user changes input text
-	std::string s = inputText->text.getString();
+	std::string s = inputText->GetText().getString();
 
 	float f = std::stof(s);
 

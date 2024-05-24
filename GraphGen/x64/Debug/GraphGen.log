@@ -1,5 +1,11 @@
-﻿  FunctionInputText.cpp
-C:\Users\egert\OneDrive\Desktop\Dev\Git\Development\GraphGen\FunctionInputText.cpp(26,44): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Users\egert\OneDrive\Desktop\Dev\Git\Development\GraphGen\FunctionInputText.cpp(72,40): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+﻿  Button.cpp
+  FunctionInputText.cpp
+  inputText.cpp
+  Parameters.cpp
+  slider.cpp
+  Source.cpp
+  Tabs.cpp
+  Tabs.h
+  Generating Code...
 x64\Debug\Tabs.obj : warning LNK4042: object specified more than once; extras ignored
   GraphGen.vcxproj -> C:\Users\egert\OneDrive\Desktop\Dev\Git\Development\x64\Debug\GraphGen.exe

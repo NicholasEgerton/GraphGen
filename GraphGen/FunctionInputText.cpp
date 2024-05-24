@@ -1,10 +1,8 @@
 #include "FunctionInputText.h"
 
-void FunctionInputText::Init(Vector2f pos, Vector2f size, float textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window)
+FunctionInputText::FunctionInputText(Vector2f pos, Vector2f size, unsigned int textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window)
+    : InputText(pos, size, textSize, defaultText, maxChar, textCol, backgroundCol, iBeam, font, window)
 {
-    //Run regular init (kind of like super)
-    InputText::Init(pos, size, textSize, defaultText, maxChar, textCol, backgroundCol, iBeam, font, window);
-
     FunctionInputText::charSize = static_cast<float>(textSize);
 }
 
@@ -23,7 +21,7 @@ String FunctionInputText::ValidText(Event event, String s)
         if (charSize <= 68) {
             charSize += 2;
             if (charSize >= 18) {
-                text.setCharacterSize(round(charSize));
+                text.setCharacterSize(static_cast<unsigned int>(roundf(charSize)));
             }
         }
     }
@@ -69,7 +67,7 @@ String FunctionInputText::AddText(Uint32 unicode, String s)
     if (charSize >= 2) {
         charSize -= 2;
         if (charSize >= 24) {
-            text.setCharacterSize(round(charSize));
+            text.setCharacterSize(static_cast<unsigned int>(roundf(charSize)));
         }
     }
 

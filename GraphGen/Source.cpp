@@ -33,18 +33,19 @@ int main()
     }
 
     //Set up parameter window
-    Parameters parameters;
-    parameters.Init(&window, &iBeam, &Roboto);
+    Parameters parameters(&window, &iBeam, &Roboto);
 
     //Generate default starting graph (y = x)
     parameters.Generate(Vector2i(window.getSize()));
 
     //Set up X and Y borders
-    RectangleShape borderX(Vector2f(window.getSize().x, 3));
-    borderX.setPosition(Vector2f(0, window.getSize().x / 2));
+    const Vector2f wSize = Vector2f(window.getSize());
+
+    RectangleShape borderX(Vector2f(wSize.x, 3));
+    borderX.setPosition(Vector2f(0, wSize.x / 2));
     borderX.setFillColor(Color(255, 127, 80));
-    RectangleShape borderY(Vector2f(3, window.getSize().y));
-    borderY.setPosition(Vector2f(window.getSize().x / 2, 0));
+    RectangleShape borderY(Vector2f(3, wSize.y));
+    borderY.setPosition(Vector2f(wSize.x / 2, 0));
     borderY.setFillColor(Color(255, 127, 80));
     
     while (window.isOpen())
@@ -69,8 +70,8 @@ int main()
         window.draw(borderY);
 
         //Draw lines
-        for (int i = 0; i < parameters.linesVector.size(); i++) {
-            window.draw(parameters.linesVector[i]);
+        for (int i = 0; i < parameters.GetLinesVector().size(); i++) {
+            window.draw(parameters.GetLinesVector()[i]);
         }
 
         window.display();

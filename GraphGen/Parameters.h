@@ -12,11 +12,10 @@ using namespace sf;
 class Parameters {
 
 public:
-	void Init(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto);
+	Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto);
+
 	void Update();
 	void Generate(Vector2i defaultWindowSize);
-
-	std::vector<VertexArray> linesVector;
 
 private:
 
@@ -32,9 +31,11 @@ private:
 
 	bool IsNum(std::string string);
 
+	float CalculateY(float x);
+
 	bool mode = false; //False = singular, true = composite functions
 
-	float CalculateY(float x);
+	std::vector<VertexArray> linesVector;
 
 	//For singular functions only
 	float a;
@@ -85,4 +86,9 @@ private:
 	Sprite* iBeam;
 
 	Font* Roboto;
+
+public:
+	const std::vector<VertexArray>& GetLinesVector() {
+		return linesVector;
+	}
 };

@@ -8,14 +8,11 @@ using namespace sf;
 class Slider {
 public:
 
-	void Init(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText* inputText, RenderWindow* window);
+	Slider() {}
+	Slider(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText* inputText, RenderWindow* window);
 	void Update(Event event);
 	void Draw();
 	void ChangeBeamPos();
-
-	Vector2f valueBounds;
-
-	bool rounded;
 
 private:
 
@@ -25,17 +22,39 @@ private:
 
 	Vector2f ToBeamPos(float value);
 
-	RectangleShape bar;
-	RectangleShape beam;
+	RectangleShape bar{};
+	RectangleShape beam{};
 
-	bool inControl;
+	bool inControl = false;
 
-	String inputTextString;
+	bool rounded = false;
+
+	String inputTextString{};
+
+	Vector2f valueBounds{};
 
 	//Received variables
-	RenderWindow* window;
+	RenderWindow* window{};
 
-	InputText* inputText;
+	InputText* inputText{};
 
-	float defaultValue;
+	float defaultValue = 0;
+
+public:
+
+	const bool& GetRounded() {
+		return rounded;
+	}
+
+	void SetRounded(bool r) {
+		rounded = r;
+	}
+
+	const Vector2f& GetValueBounds() {
+		return valueBounds;
+	}
+
+	void SetValueBounds(Vector2f v) {
+		valueBounds = v;
+	}
 };
