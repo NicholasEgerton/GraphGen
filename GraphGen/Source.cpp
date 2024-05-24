@@ -36,7 +36,7 @@ int main()
     Parameters parameters(&window, &iBeam, &Roboto);
 
     //Generate default starting graph (y = x)
-    parameters.Generate(Vector2i(window.getSize()));
+    parameters.Generate(Vector2i(window.getSize()), false);
 
     //Set up X and Y borders
     const Vector2f wSize = Vector2f(window.getSize());
@@ -56,6 +56,26 @@ int main()
             if (event.type == Event::Closed)
             {
                 window.close();
+            }
+
+            if (event.type == Event::MouseWheelScrolled) {
+                //MIN LOWER BOUND OF 4.76837e-07
+                if (parameters.GetScale() > 4.76837e-07) {
+                    if (event.mouseWheelScroll.delta >= 1) {
+                        parameters.SetScale(parameters.GetScale() / 2);
+                    }
+                }
+
+                //MAX HIGHER BOUND OF 524288
+                if (parameters.GetScale() < 524288) {
+                    if (event.mouseWheelScroll.delta <= -1) {
+                        parameters.SetScale(parameters.GetScale() * 2);
+                    }
+                }
+
+                //The final argument true says to ignore the values
+                //Being the same as we are zooming
+                parameters.Generate(Vector2i(window.getSize()), true);
             }
         }
 
