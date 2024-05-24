@@ -1,6 +1,6 @@
 #include "Button.h"
 
-void Button::Init(Vector2f pos, Vector2f size, Color buttonCol, Color textCol, float textSize, String defaultText1, String defaultText2, Font* font, RenderWindow* window)
+Button::Button(Vector2f pos, Vector2f size, Color buttonCol, Color textCol, unsigned int textSize, String defaultText1, String defaultText2, Font* font, RenderWindow* window)
 {
 	//Setup received variables
 	Button::window = window;

@@ -4,7 +4,7 @@
 
 using namespace sf;
 
-void Parameters::Init(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto) {
+Parameters::Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto) {
     //Setup Received variables
     Parameters::mainWindow = mainWindow;
     Parameters::Roboto = Roboto;
@@ -44,23 +44,23 @@ void Parameters::Init(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto) {
     cText.setStyle(Text::Bold);
 
     //Input texts
-    aInputText.Init(Vector2f(60, 137), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
-    nInputText.Init(Vector2f(60, 258.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
-    cInputText.Init(Vector2f(60, 380), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+    aInputText = InputText(Vector2f(60, 137), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+    nInputText = InputText(Vector2f(60, 258.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+    cInputText = InputText(Vector2f(60, 380), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, Roboto, &window);
 
-    functionInputText.Init(Vector2f(20, 325), Vector2f(460, 100), 70, "a(x)", 39, Color::White, Color::Black, iBeam, Roboto, &window);
+    functionInputText = FunctionInputText(Vector2f(20, 325), Vector2f(460, 100), 70, "a(x)", 39, Color::White, Color::Black, iBeam, Roboto, &window);
 
     //Sliders
-    aSlider.Init(Vector2f(265, 157), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
-    nSlider.Init(Vector2f(265, 278.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
-    cSlider.Init(Vector2f(265, 400), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
+    aSlider = Slider(Vector2f(265, 157), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
+    nSlider = Slider(Vector2f(265, 278.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
+    cSlider = Slider(Vector2f(265, 400), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
 
     //Buttons
-    aButton.Init(Vector2f(410, 110), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", Roboto, &window);
-    modeButton.Init(Vector2f(10, 450), Vector2f(450, 30), Color::Black, Color::White, 30, "Switch To Composite Functions", "Switch To Singular Functions", Roboto, &window);
+    aButton = Button(Vector2f(410, 110), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", Roboto, &window);
+    modeButton = Button(Vector2f(10, 450), Vector2f(450, 30), Color::Black, Color::White, 30, "Switch To Composite Functions", "Switch To Singular Functions", Roboto, &window);
 
     //Tabs
-    tabs.Init(Vector2f(5, 5), Vector2f(57, 25), 8, Color(255, 140, 0), Color::White, 25, Roboto, &aInputText, &nInputText, &cInputText, &aSlider, &nSlider, &cSlider, &window);
+    tabs = Tabs(Vector2f(5, 5), Vector2f(57, 25), 8, Color(255, 140, 0), Color::White, 25, Roboto, &aInputText, &nInputText, &cInputText, &aSlider, &nSlider, &cSlider, &window);
 }
 
 
@@ -78,9 +78,9 @@ void Parameters::Update() {
         //If the mode has changed, regenerate the required elements (The universal ones)
         //To the new mode
         //This way, we are not resetting the objects every frame,
-        //And only when we need to
-        if (mode != modeButton.state) {
-            mode = modeButton.state;
+        //And only when they must change
+        if (mode != modeButton.GetState()) {
+            mode = modeButton.GetState();
 
             if (!mode) {
                 //Texts
@@ -100,17 +100,17 @@ void Parameters::Update() {
                 cText.setStyle(Text::Bold);
 
                 //Input texts
-                aInputText.Init(Vector2f(60, 137), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
-                nInputText.Init(Vector2f(60, 258.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
-                cInputText.Init(Vector2f(60, 380), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+                aInputText = InputText(Vector2f(60, 137), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+                nInputText = InputText(Vector2f(60, 258.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+                cInputText = InputText(Vector2f(60, 380), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, Roboto, &window);
 
                 //Sliders
-                aSlider.Init(Vector2f(265, 157), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
-                nSlider.Init(Vector2f(265, 278.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
-                cSlider.Init(Vector2f(265, 400), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
+                aSlider = Slider(Vector2f(265, 157), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
+                nSlider = Slider(Vector2f(265, 278.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
+                cSlider = Slider(Vector2f(265, 400), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
 
                 //Buttons
-                aButton.Init(Vector2f(410, 110), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", Roboto, &window);
+                aButton = Button(Vector2f(410, 110), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", Roboto, &window);
             }
 
             else {
@@ -131,17 +131,17 @@ void Parameters::Update() {
                 cText.setStyle(Text::Bold);
 
                 //Input texts
-                aInputText.Init(Vector2f(60, 77), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
-                nInputText.Init(Vector2f(60, 158.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
-                cInputText.Init(Vector2f(60, 241), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+                aInputText = InputText(Vector2f(60, 77), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+                nInputText = InputText(Vector2f(60, 158.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, Roboto, &window);
+                cInputText = InputText(Vector2f(60, 241), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, Roboto, &window);
 
                 //Sliders
-                aSlider.Init(Vector2f(265, 97), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
-                nSlider.Init(Vector2f(265, 178.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
-                cSlider.Init(Vector2f(265, 261), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
+                aSlider = Slider(Vector2f(265, 97), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
+                nSlider = Slider(Vector2f(265, 178.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
+                cSlider = Slider(Vector2f(265, 261), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
 
                 //Buttons
-                aButton.Init(Vector2f(410, 50), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", Roboto, &window);
+                aButton = Button(Vector2f(410, 50), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", Roboto, &window);
             }
         }
 
@@ -165,14 +165,14 @@ void Parameters::Update() {
         aButton.Update(event);
 
         //Change aSlider based on aButton
-        if (!aButton.state) {
-            aSlider.valueBounds = Vector2f(-1000, 1000);
-            aSlider.rounded = true;
+        if (!aButton.GetState()) {
+            aSlider.SetValueBounds(Vector2f(-1000, 1000));
+            aSlider.SetRounded(true);
         }
 
         else {
-            aSlider.valueBounds = Vector2f(-0.01f, 0.01f);
-            aSlider.rounded = false;
+            aSlider.SetValueBounds(Vector2f(-0.01f, 0.01f));
+            aSlider.SetRounded(false);
         }
     }
 
@@ -226,9 +226,9 @@ void Parameters::Generate(Vector2i defaultWindowSize)
         //Convert input text strings to std strings and convert to float
         //Set a, n, and c to those.
 
-        std::string aString = static_cast<std::string>(aInputText.text.getString());
-        std::string nString = static_cast<std::string>(nInputText.text.getString());
-        std::string cString = static_cast<std::string>(cInputText.text.getString());
+        std::string aString = static_cast<std::string>(aInputText.GetText().getString());
+        std::string nString = static_cast<std::string>(nInputText.GetText().getString());
+        std::string cString = static_cast<std::string>(cInputText.GetText().getString());
 
         //Don't generate if strings are empty
         if (aString.empty() || nString.empty() || cString.empty()) {
@@ -262,7 +262,7 @@ void Parameters::Generate(Vector2i defaultWindowSize)
         indexes.clear();
         mathOperations.clear();
 
-        std::string s = functionInputText.text.getString();
+        std::string s = functionInputText.GetText().getString();
 
         const std::string aToH = "abcdefgh";
 
@@ -326,7 +326,7 @@ void Parameters::Generate(Vector2i defaultWindowSize)
             if (aToH.find(s[i]) != std::string::npos && s.substr(i + 1, 3) == "(x)") {
                 //If so, we add to the indexes vector as the index of the letter
                 //in a to h, this way we know which tab/function it is from
-                indexes.push_back(aToH.find(s[i]));
+                indexes.push_back(static_cast<int>(aToH.find(s[i])));
                 length -= 4;
                 i += 4;
             }
@@ -346,7 +346,7 @@ void Parameters::Generate(Vector2i defaultWindowSize)
 
         if (aNCValues.size() == indexes.size()) {
             for (size_t i = 0; i < aNCValues.size(); i++) {
-                if (aNCValues[i] != Vector3f(tabs.tabs[indexes[i]].a, tabs.tabs[indexes[i]].n, tabs.tabs[indexes[i]].c)) {
+                if (aNCValues[i] != Vector3f(tabs.GetTabs()[indexes[i]].a, tabs.GetTabs()[indexes[i]].n, tabs.GetTabs()[indexes[i]].c)) {
                     sameValues = false;
                 };
             }
@@ -363,7 +363,7 @@ void Parameters::Generate(Vector2i defaultWindowSize)
         else {
             aNCValues.clear();
             for (size_t i = 0; i < indexes.size(); i++) {
-                aNCValues.push_back(Vector3f(tabs.tabs[indexes[i]].a, tabs.tabs[indexes[i]].n, tabs.tabs[indexes[i]].c));
+                aNCValues.push_back(Vector3f(tabs.GetTabs()[indexes[i]].a, tabs.GetTabs()[indexes[i]].n, tabs.GetTabs()[indexes[i]].c));
             }
         }
 
