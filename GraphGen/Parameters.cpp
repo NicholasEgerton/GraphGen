@@ -11,7 +11,7 @@ Parameters::Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto) {
     Parameters::iBeam = iBeam;
 
     //Create the window
-    window.create(VideoMode(500, 500), "Parameters");
+    window.create(VideoMode(500, 500), "Parameters", Style::Titlebar | Style::Close);
 
     //Init clock
     clock = Clock();
@@ -180,7 +180,7 @@ void Parameters::Update() {
     //1 / 60 is approximately = 0.0167 (4.dp)
 
     if (clock.getElapsedTime().asSeconds() >= 0.0167) {
-        Generate(Vector2i(mainWindow->getSize()));
+        Generate(Vector2i(mainWindow->getSize()), false);
         clock.restart();
     }
 
@@ -220,7 +220,7 @@ void Parameters::Update() {
     window.display();
 }
 
-void Parameters::Generate(Vector2i defaultWindowSize)
+void Parameters::Generate(Vector2i defaultWindowSize, bool ignoreSame)
 {
     if (!mode) { //Singular functions
         //Convert input text strings to std strings and convert to float
@@ -242,7 +242,9 @@ void Parameters::Generate(Vector2i defaultWindowSize)
 
         //Don't generate if values have not changed
         if (a == std::stof(aString) && n == std::stof(nString) && c == std::stof(cString)) {
-            return;
+            if (!ignoreSame) {
+                return;
+            }
         }
 
         aSlider.ChangeBeamPos();
@@ -342,13 +344,20 @@ void Parameters::Generate(Vector2i defaultWindowSize)
         }
 
         //Finally, don't gen if the same values
-        bool sameValues = true;
 
-        if (aNCValues.size() == indexes.size()) {
-            for (size_t i = 0; i < aNCValues.size(); i++) {
-                if (aNCValues[i] != Vector3f(tabs.GetTabs()[indexes[i]].a, tabs.GetTabs()[indexes[i]].n, tabs.GetTabs()[indexes[i]].c)) {
-                    sameValues = false;
-                };
+        bool sameValues = true;
+        if (!ignoreSame) {
+
+            if (aNCValues.size() == indexes.size()) {
+                for (size_t i = 0; i < aNCValues.size(); i++) {
+                    if (aNCValues[i] != Vector3f(tabs.GetTabs()[indexes[i]].a, tabs.GetTabs()[indexes[i]].n, tabs.GetTabs()[indexes[i]].c)) {
+                        sameValues = false;
+                    };
+                }
+            }
+
+            else {
+                sameValues = false;
             }
         }
 
@@ -412,7 +421,7 @@ void Parameters::CalculateLines(Vector2f defaultWindowSize)
     linesVector.clear();
     linesVector.push_back(VertexArray(LineStrip));
 
-    float x = -(defaultWindowSize.x / 2);
+    float x = -(defaultWindowSize.x / 2) * scale;
     float y = 0;
 
     int p = 0;
@@ -425,11 +434,13 @@ void Parameters::CalculateLines(Vector2f defaultWindowSize)
     for (p = 0; p < defaultWindowSize.x; p++) {
         y = CalculateY(x);
 
-        //Note if y == y is to check if y is a nan value
-        //Nan for some reason returns always false
+        //Note using if y == y is to check if y is a nan value
         if (y == y) {
-            if (lastX != x - 1 && x != -(defaultWindowSize.x / 2)) {
-                x++;
+            //If the lastX was NOT directly before
+            //And the current x is not the first
+            //Then there is an asymptote so split the lines
+            if (lastX != x - scale && x != -(defaultWindowSize.x / 2) * scale) {
+                x+= scale;
                 linesVector.push_back(VertexArray(LinesStrip));
                 linesVectorIndex++;
             };
@@ -439,7 +450,7 @@ void Parameters::CalculateLines(Vector2f defaultWindowSize)
             linesVector[linesVectorIndex].append(Vertex(ConvertPos(defaultWindowSize, x, y)));
         }
 
-        x++;
+        x += scale;
     }
 }
 
@@ -493,7 +504,7 @@ float Parameters::CalculateY(float x)
 }
 
 Vector2f Parameters::ConvertPos(Vector2f defaultWindowSize, float x, float y) {
-    x = (defaultWindowSize.x / 2) + x;
-    y = (defaultWindowSize.y / 2) - y;
+    x = (defaultWindowSize.x / 2) + x / scale;
+    y = (defaultWindowSize.y / 2) - y / scale;
     return Vector2f(x, y);
 }
