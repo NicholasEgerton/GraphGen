@@ -11,7 +11,7 @@ Parameters::Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto) {
     Parameters::iBeam = iBeam;
 
     //Create the window
-    window.create(VideoMode(500, 500), "Parameters");
+    window.create(VideoMode(500, 500), "Parameters", Style::Titlebar | Style::Close);
 
     //Init clock
     clock = Clock();
