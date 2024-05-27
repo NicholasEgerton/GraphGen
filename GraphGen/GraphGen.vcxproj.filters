@@ -21,10 +21,10 @@
     <ClCompile Include="Parameters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="inputText.cpp">
+    <ClCompile Include="InputText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="slider.cpp">
+    <ClCompile Include="Slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
@@ -39,21 +39,27 @@
     <ClCompile Include="FunctionInputText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Parameters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inputText.h">
+    <ClInclude Include="InputText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="slider.h">
+    <ClInclude Include="Slider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FunctionInputText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

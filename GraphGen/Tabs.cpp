@@ -1,6 +1,7 @@
 #include "Tabs.h"
 #include <vector>
 #include <iomanip>
+#include "Utils.h"
 
 Tabs::Tabs(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol, unsigned int textSize, Font* font, InputText* aInputText, InputText* nInputText, InputText* cInputText, Slider* aSlider, Slider* nSlider, Slider* cSlider, RenderWindow* window)
 {
@@ -73,7 +74,7 @@ void Tabs::Update(Event event)
 		if (!tabs[i].clicked) {
 
 			//Check if mouse is over tab
-			if (InBounds(Mouse::getPosition(*window), tabs[i].rect.getPosition(), tabs[i].rect.getSize())) {
+			if (Utils::InBounds(Mouse::getPosition(*window), tabs[i].rect.getPosition(), tabs[i].rect.getSize())) {
 				tabs[i].rect.setSize(Vector2f(originalSize.x, originalSize.y + 10));
 
 				if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
@@ -109,51 +110,6 @@ void Tabs::Update(Event event)
 	}
 }
 
-
-bool Tabs::InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSize)
-{
-	//Keeping in mind that the position of a rectangle is defined by its top left corner,
-	//And the size increases from the top left corner
-	//Checking if the point is > than the position and less than the size of the rect + position
-	//Gives if the point is in the rect
-	if (pointPos.x >= boundPos.x && pointPos.y >= boundPos.y) {
-		if (pointPos.x <= boundPos.x + boundSize.x && pointPos.y <= boundPos.y + boundSize.y) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool Tabs::IsNum(std::string string) {
-	
-	for (int i = 0; i < string.length(); i++) {
-		if (!isdigit(string[i])) {
-			if (string[i] == '-') {
-				if (i != 0 || string.length() <= 1) {
-					return false;
-				}
-			}
-
-			else if (string[i] == '.') {
-				if (string.find_first_of('.') != string.find_last_of('.') || string.length() <= 1) {
-					return false;
-				}
-
-				else if (string[i - 1] == '-') {
-					return false;
-				}
-			}
-
-			else {
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
-
 void Tabs::UpdateValues(int i)
 {
 	std::string aString = static_cast<std::string>(aInputText->GetText().getString());
@@ -166,7 +122,7 @@ void Tabs::UpdateValues(int i)
 	}
 
 	//Don't generate if strings are not a valid number
-	if (!IsNum(aString) || !IsNum(nString) || !IsNum(cString)) {
+	if (!Utils::IsStringNum(aString) || !Utils::IsStringNum(nString) || !Utils::IsStringNum(cString)) {
 		return;
 	}
 
@@ -188,9 +144,9 @@ void Tabs::UpdateText(int i)
 {
 
 	std::string strArr[3] = {
-		FloatToString(tabs[i].a, aInputText->GetMaxChar()),
-		FloatToString(tabs[i].n, nInputText->GetMaxChar()),
-		FloatToString(tabs[i].c, cInputText->GetMaxChar())
+		Utils::FloatToString(tabs[i].a, aInputText->GetMaxChar()),
+		Utils::FloatToString(tabs[i].n, nInputText->GetMaxChar()),
+		Utils::FloatToString(tabs[i].c, cInputText->GetMaxChar())
 	};
 
 	//REMOVE TRAILING ZEROS
@@ -219,17 +175,6 @@ void Tabs::UpdateText(int i)
 	aSlider->ChangeBeamPos();
 	nSlider->ChangeBeamPos();
 	cSlider->ChangeBeamPos();
-}
-
-std::string Tabs::FloatToString(float f, int precision)
-{
-	std::stringstream stream;
-
-	stream << std::fixed << std::setprecision(precision) << f;
-
-	std::string newStr = stream.str();
-
-	return newStr;
 }
 
 void Tabs::Draw()

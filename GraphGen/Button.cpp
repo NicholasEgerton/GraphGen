@@ -1,4 +1,5 @@
 #include "Button.h"
+#include "Utils.h"
 
 Button::Button(Vector2f pos, Vector2f size, Color buttonCol, Color textCol, unsigned int textSize, String defaultText1, String defaultText2, Font* font, RenderWindow* window)
 {
@@ -21,7 +22,7 @@ Button::Button(Vector2f pos, Vector2f size, Color buttonCol, Color textCol, unsi
 void Button::Update(Event event)
 {
 	//Highlift if mouse is over button
-	highlight = InBounds(Mouse::getPosition(*window), rect.getPosition(), rect.getSize());
+	highlight = Utils::InBounds(Mouse::getPosition(*window), rect.getPosition(), rect.getSize());
 
 	//Make even brighter if clicked and switch state
 	if (highlight) {
@@ -50,22 +51,6 @@ void Button::Update(Event event)
 			text.setString(defaultText2);
 		}
 	}
-}
-
-
-bool Button::InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSize)
-{
-	//Keeping in mind that the position of a rectangle is defined by its top left corner,
-	//And the size increases from the top left corner
-	//Checking if the point is > than the position and less than the size of the rect + position
-	//Gives if the point is in the rect
-	if (pointPos.x >= boundPos.x && pointPos.y >= boundPos.y) {
-		if (pointPos.x <= boundPos.x + boundSize.x && pointPos.y <= boundPos.y + boundSize.y) {
-			return true;
-		}
-	}
-
-	return false;
 }
 
 void Button::Draw()

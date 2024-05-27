@@ -15,7 +15,7 @@ public:
 	Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto);
 
 	void Update();
-	void Generate(Vector2i defaultWindowSize);
+	void Generate(Vector2i defaultWindowSize, bool ignoreSame);
 
 private:
 
@@ -29,11 +29,11 @@ private:
 		}
 	};
 
-	bool IsNum(std::string string);
-
 	float CalculateY(float x);
 
 	bool mode = false; //False = singular, true = composite functions
+
+	float scale = 1;
 
 	std::vector<VertexArray> linesVector;
 
@@ -90,5 +90,13 @@ private:
 public:
 	const std::vector<VertexArray>& GetLinesVector() {
 		return linesVector;
+	}
+
+	const float& GetScale() {
+		return scale;
+	}
+
+	void SetScale(float f) {
+		scale = f;
 	}
 };

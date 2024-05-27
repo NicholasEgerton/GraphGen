@@ -1,4 +1,5 @@
 #include "InputText.h"
+#include "Utils.h"
 
 InputText::InputText(Vector2f pos, Vector2f size, unsigned int textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window)
 {
@@ -21,7 +22,7 @@ InputText::InputText(Vector2f pos, Vector2f size, unsigned int textSize, String 
 void InputText::Update(Event event)
 {
     //Check if mouse is in rect
-    if (InBounds(Mouse::getPosition(*window), rect.getPosition(), rect.getSize())) {
+    if (Utils::InBounds(Mouse::getPosition(*window), rect.getPosition(), rect.getSize())) {
         inRect = true;
         iBeam->setPosition(static_cast<sf::Vector2f>(Mouse::getPosition(*window)));
         window->setMouseCursorVisible(false);
@@ -47,21 +48,6 @@ void InputText::Update(Event event)
 
         text.setString(ValidText(event, s));
     }
-}
-
-bool InputText::InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSize)
-{
-    //Keeping in mind that the position of a rectangle is defined by its top left corner,
-    //And the size increases from the top left corner
-    //Checking if the point is > than the position and less than the size of the rect + position
-    //Gives if the point is in the rect
-    if (pointPos.x >= boundPos.x && pointPos.y >= boundPos.y) {
-        if (pointPos.x <= boundPos.x + boundSize.x && pointPos.y <= boundPos.y + boundSize.y) {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 String InputText::ValidText(Event event, String s)

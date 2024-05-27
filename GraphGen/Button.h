@@ -14,8 +14,6 @@ public:
 
 private:
 
-	bool InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSize);
-
 	RectangleShape rect{};
 	Text text{};
 

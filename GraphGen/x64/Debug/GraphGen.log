@@ -1,11 +1,12 @@
 ﻿  Button.cpp
+  Utils.cpp
   FunctionInputText.cpp
-  inputText.cpp
+  InputText.cpp
   Parameters.cpp
-  slider.cpp
+  Slider.cpp
   Source.cpp
   Tabs.cpp
   Tabs.h
   Generating Code...
 x64\Debug\Tabs.obj : warning LNK4042: object specified more than once; extras ignored
-  GraphGen.vcxproj -> C:\Users\egert\OneDrive\Desktop\Dev\Git\Development\x64\Debug\GraphGen.exe
+  GraphGen.vcxproj -> C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\x64\Debug\GraphGen.exe
