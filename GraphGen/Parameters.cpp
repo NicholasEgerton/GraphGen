@@ -1,6 +1,7 @@
 #include "Parameters.h"
 #include <iostream>
 #include <algorithm>
+#include "Utils.h"
 
 using namespace sf;
 
@@ -236,7 +237,7 @@ void Parameters::Generate(Vector2i defaultWindowSize, bool ignoreSame)
         }
 
         //Don't generate if strings are not a valid number
-        if (!IsNum(aString) || !IsNum(nString) || !IsNum(cString)) {
+        if (!Utils::IsStringNum(aString) || !Utils::IsStringNum(nString) || !Utils::IsStringNum(cString)) {
             return;
         }
 
@@ -381,34 +382,6 @@ void Parameters::Generate(Vector2i defaultWindowSize, bool ignoreSame)
         //And the + - / * between them and var mathOperations
         CalculateLines(Vector2f(defaultWindowSize));
     }
-}
-
-bool Parameters::IsNum(std::string string) {
-    for (int i = 0; i < string.length(); i++) {
-        if (!isdigit(string[i])) {
-            if (string[i] == '-') {
-                if (i != 0 || string.length() <= 1) {
-                    return false;
-                }
-            }
-
-            else if (string[i] == '.') {
-                if (string.find_first_of('.') != string.find_last_of('.') || string.length() <= 1) {
-                    return false;
-                }
-
-                else if (string[i - 1] == '-') {
-                    return false;
-                }
-            }
-
-            else {
-                return false;
-            }
-        }
-    }
-
-    return true;
 }
 
 void Parameters::CalculateLines(Vector2f defaultWindowSize)

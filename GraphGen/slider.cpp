@@ -1,4 +1,5 @@
 #include "slider.h"
+#include "Utils.h"
 
 Slider::Slider(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText* inputText, RenderWindow* window)
 {
@@ -27,7 +28,7 @@ void Slider::Update(Event event)
 {
 
 	//Check if mouse is on beam
-	if (InBounds(Mouse::getPosition(*window), beam.getPosition(), beam.getSize()) && event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
+	if (Utils::InBounds(Mouse::getPosition(*window), beam.getPosition(), beam.getSize()) && event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
 		inControl = true;
 	}
 
@@ -39,7 +40,7 @@ void Slider::Update(Event event)
 	//(Stop the beam from coming of bar)
 	//Note, allowing the mouse to be at any y value, but has to be on x of bar
 	//More fluid movement
-	if (inControl && InBounds(Mouse::getPosition(*window), Vector2f(bar.getPosition().x, 0), Vector2f(bar.getSize().x, 500))) {
+	if (inControl && Utils::InBounds(Mouse::getPosition(*window), Vector2f(bar.getPosition().x, 0), Vector2f(bar.getSize().x, 500))) {
 		beam.setPosition(Vector2f(static_cast<float>((Mouse::getPosition(*window).x)), beam.getPosition().y));
 		
 		if (rounded) {
@@ -83,21 +84,6 @@ Vector2f Slider::ToBeamPos(float value)
 	float pos = localPos + bar.getPosition().x;
 
 	return Vector2f(pos, beam.getPosition().y);
-}
-
-bool Slider::InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSize)
-{
-	//Keeping in mind that the position of a rectangle is defined by its top left corner,
-	//And the size increases from the top left corner
-	//Checking if the point is > than the position and less than the size of the rect + position
-	//Gives if the point is in the rect
-	if (pointPos.x >= boundPos.x && pointPos.y >= boundPos.y) {
-		if (pointPos.x <= boundPos.x + boundSize.x && pointPos.y <= boundPos.y + boundSize.y) {
-			return true;
-		}
-	}
-
-	return false;
 }
 
 void Slider::Draw()

@@ -6,19 +6,9 @@
 #include "Parameters.h"
 #include <iostream>
 #include <iomanip>
+#include "Utils.h"
 
 using namespace sf;
-
-std::string FloatToString(float f, int precision)
-{
-    std::stringstream stream;
-
-    stream << std::fixed << std::setprecision(precision) << f;
-
-    std::string newStr = stream.str();
-
-    return newStr;
-}
 
 void ZoomScaleTexts(float delta, int precision, Text* horizontalScaleTexts, Text* verticalScaleTexts, RenderWindow* window) {
 
@@ -38,12 +28,12 @@ void ZoomScaleTexts(float delta, int precision, Text* horizontalScaleTexts, Text
 
         f *= factor;
 
-        s = FloatToString(f, precision);
+        s = Utils::FloatToString(f, precision);
 
         horizontalScaleTexts[i].setString(s);
 
         f *= -1;
-        s = FloatToString(f, precision);
+        s = Utils::FloatToString(f, precision);
         verticalScaleTexts[i].setString(s);
     }
 }
@@ -119,7 +109,7 @@ int main()
         Vector2f hozPos = Vector2f(Vector2f(xValue + (wSize.y / 2), wSize.y / 2.f));
         Vector2f verPos = Vector2f(Vector2f(wSize.x / 2, yValue + (wSize.y / 2.f)));
 
-        horizontalScaleTexts[i] = Text(FloatToString(xValue, 0), Roboto, 20);
+        horizontalScaleTexts[i] = Text(Utils::FloatToString(xValue, 0), Roboto, 20);
         horizontalScaleTexts[i].setPosition(Vector2f(hozPos.x - 20, hozPos.y + offset));
         horizontalScaleTexts[i].setFillColor(txtCol);
 
@@ -127,7 +117,7 @@ int main()
         horizontalScaleRects[i].setPosition(Vector2f(hozPos.x, hozPos.y - 3));
         horizontalScaleRects[i].setFillColor(rectCol);
 
-        verticalScaleTexts[i] = Text(FloatToString(-yValue, 0), Roboto, 20);
+        verticalScaleTexts[i] = Text(Utils::FloatToString(-yValue, 0), Roboto, 20);
         verticalScaleTexts[i].setPosition(Vector2f(verPos.x + offset, verPos.y - 15));
         verticalScaleTexts[i].setFillColor(txtCol);
 

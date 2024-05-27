@@ -23,8 +23,6 @@ protected:
 private:
 	virtual String ValidText(Event event, String s);
 
-	bool InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSize);
-
 
 	bool inRect = false;
 	bool clickedRect = false;

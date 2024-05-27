@@ -29,8 +29,6 @@ private:
 		}
 	};
 
-	bool IsNum(std::string string);
-
 	float CalculateY(float x);
 
 	bool mode = false; //False = singular, true = composite functions

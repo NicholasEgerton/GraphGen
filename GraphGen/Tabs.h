@@ -19,11 +19,7 @@ public:
 
 private:
 
-	bool InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSize);
-
 	bool IsNum(std::string string);
-
-	std::string FloatToString(float f, int precision);
 
 	void UpdateValues(int i);
 

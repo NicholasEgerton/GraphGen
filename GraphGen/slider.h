@@ -16,8 +16,6 @@ public:
 
 private:
 
-	bool InBounds(Vector2i pointPos, Vector2f boundPos, Vector2f boundSize);
-
 	float ToValue();
 
 	Vector2f ToBeamPos(float value);
