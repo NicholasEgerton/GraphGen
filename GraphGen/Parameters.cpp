@@ -324,7 +324,7 @@ void Parameters::Generate(Vector2i defaultWindowSize, bool ignoreSame)
         //Here, we check if s[0] is a letter in a to h and if it is followed
         //with "(x)"
 
-        int i = 0;
+        size_t i = 0;
         while (length >= 4) {
             if (aToH.find(s[i]) != std::string::npos && s.substr(i + 1, 3) == "(x)") {
                 //If so, we add to the indexes vector as the index of the letter
