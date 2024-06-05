@@ -1,4 +1,2 @@
-﻿  Parameters.cpp
-  LINK : C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\x64\Debug\GraphGen.exe not found or not built by the last incremental link; performing full link
-x64\Debug\Tabs.obj : warning LNK4042: object specified more than once; extras ignored
+﻿  Source.cpp
   GraphGen.vcxproj -> C:\Users\egert\OneDrive\Desktop\Dev\Git\GraphGen\x64\Debug\GraphGen.exe
