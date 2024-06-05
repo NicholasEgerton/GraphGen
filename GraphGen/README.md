@@ -7,13 +7,11 @@ Made as a personal project to advance my knowledge and learn new skills.
 
 How to run:
 
-->Download/Clone
+->Go to "Releases" on the right hand side and click the latest version.
 
-->Navigate to GraphGen/Debug or GraphGen/Release (Debug will have command prompt as debug log)
+->Download GraphGen.zip
 
-Requirements to modify:
-
-->SFML
+->Extract and run the exe file!
 
 How to modify:
 
