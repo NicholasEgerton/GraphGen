@@ -50,7 +50,7 @@ int main()
 
     //Load Sprites
     Texture iBeamTexture;
-    if (!iBeamTexture.loadFromFile("images/idc_ibeam_white.png")) 
+    if (!iBeamTexture.loadFromFile("idc_ibeam_white.png")) 
     {
         printf("Failed to load texture: idc_ibeam");
     }
@@ -61,7 +61,7 @@ int main()
     //Load Font "Roboto"
 
     Font Roboto;
-    if (!Roboto.loadFromFile("fonts/Roboto.ttf")) {
+    if (!Roboto.loadFromFile("Roboto.ttf")) {
         printf("Failed to load font: Roboto");
     }
 
