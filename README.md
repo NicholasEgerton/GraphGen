@@ -17,8 +17,12 @@ How to modify:
 
 ->Create a new empty sfml project and link with editor (There are tutorials on youtube on how to do this with visual studio)
 
-->Take all the files in the GraphGen folder and put them in the directory of cpp and h files (Should be name of project)
+->Take all the .cpp and .h files and place them in the same directory as the source.cpp file of your project.
 
 ->Build!
+
+->Then, take the fonts and images from their folders and drag them into the debug and release folders.
+
+->Run!
 
 Made by Nicholas Egerton.
