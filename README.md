@@ -14,7 +14,8 @@ How to run:
 ->Extract and run the exe file!
 
 Dependencies to modify:
-->C++ compiler
+
+->C++ Compiler
 ->SFML
 
 How to modify:
