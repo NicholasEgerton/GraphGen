@@ -180,7 +180,7 @@ void Parameters::Update() {
     //Update graph every frame at 60 frames a second
     //1 / 60 is approximately = 0.0167 (4.dp)
 
-    if (clock.getElapsedTime().asSeconds() >= 0.0167) {
+    if (clock.getElapsedTime().asSeconds() >= 0.0167f) {
         Generate(Vector2i(mainWindow->getSize()), false);
         clock.restart();
     }
