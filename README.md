@@ -13,6 +13,10 @@ How to run:
 
 ->Extract and run the exe file!
 
+Dependencies to modify:
+->C++ compiler
+->SFML
+
 How to modify:
 
 ->Create a new empty sfml project and link with editor (There are tutorials on youtube on how to do this with visual studio)
