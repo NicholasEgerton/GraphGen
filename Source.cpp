@@ -38,6 +38,41 @@ void ZoomScaleTexts(float delta, int precision, Text* horizontalScaleTexts, Text
     }
 }
 
+
+void Zoom(float& precision, float& delta, Parameters* parameters, Text* horizontalScaleTexts, Text* verticalScaleTexts, RenderWindow* window) {
+
+    if (parameters->GetScale() >= 1) {
+        precision = 0;
+    }
+
+    //MIN LOWER BOUND OF 1.90735e-06
+    if (parameters->GetScale() > 1.90735e-06) {
+        if (delta >= 1) {
+            parameters->SetScale(parameters->GetScale() / 2);
+            precision += 0.34f;
+
+            ZoomScaleTexts(delta, static_cast<int>(roundf(precision)), horizontalScaleTexts, verticalScaleTexts, window);
+            //The final argument true says to ignore the values
+            //Being the same as we are zooming
+            parameters->Generate(Vector2i(window->getSize()), true);
+        }
+    }
+
+    //MAX UPPPER BOUND OF 131072
+    if (parameters->GetScale() < 131072) {
+        if (delta <= -1) {
+            parameters->SetScale(parameters->GetScale() * 2);
+            precision -= 0.34f;
+
+            ZoomScaleTexts(delta, static_cast<int>(roundf(precision)), horizontalScaleTexts, verticalScaleTexts, window);
+
+            //The final argument true says to ignore the values
+            //Being the same as we are zooming
+            parameters->Generate(Vector2i(window->getSize()), true);
+        }
+    }
+}
+
 int main()
 {
 
@@ -132,6 +167,15 @@ int main()
 
     //How many decimal points on the scale
     float precision = 0;
+
+    struct KeyZoom {
+        bool zooming;
+        float key; //-1 = -, 1 = +
+    };
+
+    KeyZoom keyZoom = { false, 0 };
+
+    Clock zoomClock = Clock();
     
     while (window.isOpen())
     {
@@ -143,39 +187,37 @@ int main()
                 window.close();
             }
 
-            if (event.type == Event::MouseWheelScrolled) {
-                if (parameters.GetScale() >= 1) {
-                    precision = 0;
+            if (event.type == Event::KeyPressed) {
+                if (event.key.scancode == Keyboard::Scan::Equal || event.key.scancode == Keyboard::Scan::NumpadPlus) {
+                    keyZoom.zooming = true;
+                    keyZoom.key = 1;
                 }
 
-                std::cout << parameters.GetScale() << std::endl;
-                //MIN LOWER BOUND OF 1.90735e-06
-                if (parameters.GetScale() > 1.90735e-06) {
-                    if (event.mouseWheelScroll.delta >= 1) {
-                        parameters.SetScale(parameters.GetScale() / 2);
-                        precision += 0.34f;
-                        
-                        ZoomScaleTexts(event.mouseWheelScroll.delta, static_cast<int>(roundf(precision)), horizontalScaleTexts, verticalScaleTexts, &window);
-                        //The final argument true says to ignore the values
-                        //Being the same as we are zooming
-                        parameters.Generate(Vector2i(window.getSize()), true);
-                    }
-                }
-
-                //MAX UPPPER BOUND OF 131072
-                if (parameters.GetScale() < 131072) {
-                    if (event.mouseWheelScroll.delta <= -1) {
-                        parameters.SetScale(parameters.GetScale() * 2);
-                        precision -= 0.34f;
-                        
-                        ZoomScaleTexts(event.mouseWheelScroll.delta, static_cast<int>(roundf(precision)), horizontalScaleTexts, verticalScaleTexts, &window);
-
-                        //The final argument true says to ignore the values
-                        //Being the same as we are zooming
-                        parameters.Generate(Vector2i(window.getSize()), true);
-                    }
+                else if (event.key.scancode == Keyboard::Scan::Hyphen || event.key.scancode == Keyboard::Scan::NumpadMinus) {
+                    keyZoom.zooming = true;
+                    keyZoom.key = -1;
                 }
             }
+
+            if (event.type == Event::KeyReleased) {
+                if (event.key.scancode == Keyboard::Scan::Equal || event.key.scancode == Keyboard::Scan::NumpadPlus) {
+                    keyZoom.zooming = false;
+                }
+
+                else if (event.key.scancode == Keyboard::Scan::Hyphen || event.key.scancode == Keyboard::Scan::NumpadMinus) {
+                    keyZoom.zooming = false;
+                }
+            }
+
+            if (event.type == Event::MouseWheelScrolled) {
+                Zoom(precision, event.mouseWheelScroll.delta, &parameters, horizontalScaleTexts, verticalScaleTexts, &window);
+            }
+        }
+
+        //Key zoom at approximately 30fps
+        if (keyZoom.zooming && zoomClock.getElapsedTime().asSeconds() >= 0.033f) {
+            Zoom(precision, keyZoom.key, &parameters, horizontalScaleTexts, verticalScaleTexts, &window);
+            zoomClock.restart();
         }
 
         //Update Parameter window
