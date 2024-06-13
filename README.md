@@ -20,7 +20,9 @@ Made by altering functions based on variables, a, n, and c, and therefore can on
 
 - Create a new empty sfml project and link with editor (There are tutorials on this such as [this](https://www.youtube.com/watch?v=lFzpkvrscs4&t=110s&pp=ygUXc2ZtbCB2aXN1YWwgc3R1ZGlvIDIwMjI%3D)).
 
-- Take all the .cpp and .h files and place them in the same directory as the source.cpp file of your project.
+- Clone the project.
+
+- Take all the .cpp and .h files from GraphGen and place them in the same directory as the source.cpp file of your project.
 
 - Build!
 
