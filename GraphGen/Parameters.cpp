@@ -408,7 +408,8 @@ void Parameters::CalculateLines(Vector2f defaultWindowSize)
         y = CalculateY(x);
 
         //Note using if y == y is to check if y is a nan value
-        if (y == y) {
+        //And isinf occurs if domain error occurs (dividing by 0)
+        if (y == y && !isinf(y)) {
             //If the lastX was NOT directly before
             //And the current x is not the first
             //Then there is an asymptote so split the lines
