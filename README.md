@@ -3,6 +3,8 @@ Simple mathematical graphing calculator inspired by Desmos, made with SFML and C
 
 Made by altering functions based on variables, a, n, and c, and therefore can only support _polynomials._
 
+![graphGenScreenshot](https://github.com/user-attachments/assets/8186f61f-5b8e-4379-ad29-03d36e20bb65)
+
 ## Installation:
 
 - Go to [Releases](https://github.com/NicholasEgerton/GraphGen/releases) and select the latest version.
