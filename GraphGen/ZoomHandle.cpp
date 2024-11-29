@@ -4,7 +4,7 @@
 
 using namespace sf;
 
-void ZoomHandle::Zoom(float& precision, float& delta, Parameters* parameters, Text* horizontalScaleTexts, Text* verticalScaleTexts, RenderWindow* window) {
+void ZoomHandle::Zoom(float& precision, float& delta, Parameters* parameters, std::vector<Text>& horizontalScaleTexts, std::vector<Text>& verticalScaleTexts, RenderWindow* window) {
 
     if (parameters->GetScale() >= 1) {
         precision = 0;
@@ -38,7 +38,7 @@ void ZoomHandle::Zoom(float& precision, float& delta, Parameters* parameters, Te
     }
 }
 
-void ZoomHandle::ZoomScaleTexts(float delta, int precision, Text* horizontalScaleTexts, Text* verticalScaleTexts, RenderWindow* window) {
+void ZoomHandle::ZoomScaleTexts(float delta, int precision, std::vector<Text>& horizontalScaleTexts, std::vector<Text>& verticalScaleTexts, RenderWindow* window) {
 
     float factor = 0;
     if (delta >= 1) {
