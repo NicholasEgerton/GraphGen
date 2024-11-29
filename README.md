@@ -1,7 +1,7 @@
 # GraphGen
 Simple mathematical graphing calculator inspired by Desmos, made with SFML and C++.
 
-Made by altering functions based on variables, a, n, and c, and therefore can only support _polynomials._
+Made by altering functions based on variables, a, n, and c, and therefore can only support _rational functions._
 
 ## Installation:
 
