@@ -9,6 +9,7 @@
 #include "Utils.h"
 #include "ZoomHandle.h"
 #include "Axis.h"
+#include "Input.h"
 
 using namespace sf;
 
@@ -45,60 +46,16 @@ int main()
 
     Axis axis = Axis(Vector2i(window.getSize()), &Roboto);
 
-    //How many decimal points on the scale
-    float precision = 0;
-
-    struct KeyZoom {
-        bool zooming;
-        float key; //-1 = -, 1 = +
-    };
-
-    KeyZoom keyZoom = { false, 0 };
-
-    Clock zoomClock = Clock();
+    Input input = Input(parameters, axis, window);
     
     while (window.isOpen())
     {
         while (window.pollEvent(event))
         {
-            //Allow the window to be closed
-            if (event.type == Event::Closed)
-            {
-                window.close();
-            }
-
-            if (event.type == Event::KeyPressed) {
-                if (event.key.scancode == Keyboard::Scan::Equal || event.key.scancode == Keyboard::Scan::NumpadPlus) {
-                    keyZoom.zooming = true;
-                    keyZoom.key = 1;
-                }
-
-                else if (event.key.scancode == Keyboard::Scan::Hyphen || event.key.scancode == Keyboard::Scan::NumpadMinus) {
-                    keyZoom.zooming = true;
-                    keyZoom.key = -1;
-                }
-            }
-
-            if (event.type == Event::KeyReleased) {
-                if (event.key.scancode == Keyboard::Scan::Equal || event.key.scancode == Keyboard::Scan::NumpadPlus) {
-                    keyZoom.zooming = false;
-                }
-
-                else if (event.key.scancode == Keyboard::Scan::Hyphen || event.key.scancode == Keyboard::Scan::NumpadMinus) {
-                    keyZoom.zooming = false;
-                }
-            }
-
-            if (event.type == Event::MouseWheelScrolled) {
-                ZoomHandle::Zoom(precision, event.mouseWheelScroll.delta, &parameters, axis.GetHorizontalScaleTexts(), axis.GetVerticalScaleTexts(), &window);
-            }
+            input.HandleEvents(event);
         }
 
-        //Key zoom at approximately 30fps
-        if (keyZoom.zooming && zoomClock.getElapsedTime().asSeconds() >= 0.033f) {
-            ZoomHandle::Zoom(precision, keyZoom.key, &parameters, axis.GetHorizontalScaleTexts(), axis.GetVerticalScaleTexts(), &window);
-            zoomClock.restart();
-        }
+        input.Update();
 
         //Update Parameter window
         parameters.Update();
