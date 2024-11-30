@@ -1,3 +1,4 @@
+//Work of Nicholas Egerton
 #include "Parameters.h"
 #include <iostream>
 #include <algorithm>

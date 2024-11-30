@@ -1,3 +1,4 @@
+//Work of Nicholas Egerton
 #include "slider.h"
 #include "Utils.h"
 

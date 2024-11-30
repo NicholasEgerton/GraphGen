@@ -1,3 +1,4 @@
+//Work of Nicholas Egerton
 #pragma once
 
 #include "inputText.h"

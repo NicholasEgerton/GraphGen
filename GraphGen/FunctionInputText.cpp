@@ -1,3 +1,4 @@
+//Work of Nicholas Egerton
 #include "FunctionInputText.h"
 
 FunctionInputText::FunctionInputText(Vector2f pos, Vector2f size, unsigned int textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window)

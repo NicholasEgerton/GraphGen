@@ -1,7 +1,4 @@
-//Graph Gen
-//Source
 //Work of Nicholas Egerton
-
 #include "SFML/Graphics.hpp"
 #include "Parameters.h"
 #include <iostream>
@@ -10,12 +7,12 @@
 #include "ZoomHandle.h"
 #include "Axis.h"
 #include "Input.h"
+#include "Renderer.h"
 
 using namespace sf;
 
 int main()
 {
-
     //Create window and event
     RenderWindow window(VideoMode(1000, 1000), "GraphGen", Style::Titlebar | Style::Close);
     
@@ -47,6 +44,8 @@ int main()
     Axis axis = Axis(Vector2i(window.getSize()), &Roboto);
 
     Input input = Input(parameters, axis, window);
+
+    Renderer renderer = Renderer(parameters, axis, window);
     
     while (window.isOpen())
     {
@@ -60,28 +59,7 @@ int main()
         //Update Parameter window
         parameters.Update();
 
-        //Clear window
-        window.clear(Color::Black);
-        
-        //Draw borders
-        window.draw(axis.GetAxisX());
-        window.draw(axis.GetAxisY());
-
-
-        for (int i = 0; i < 8; i++) {
-            window.draw(axis.GetHorizontalScaleTexts()[i]);
-            window.draw(axis.GetVerticalScaleTexts()[i]);
-
-            window.draw(axis.GetHorizontalScaleRects()[i]);
-            window.draw(axis.GetVerticalScaleRects()[i]);
-        }
-
-        //Draw lines
-        for (int i = 0; i < parameters.GetLinesVector().size(); i++) {
-            window.draw(parameters.GetLinesVector()[i]);
-        }
-
-        window.display();
+        renderer.Update();
     }
 
     return 0;

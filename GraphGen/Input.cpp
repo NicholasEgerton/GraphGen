@@ -1,3 +1,4 @@
+//Work of Nicholas Egerton
 #include "Input.h"
 
 using namespace sf;
