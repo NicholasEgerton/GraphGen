@@ -7,8 +7,7 @@ using namespace sf;
 
 class InputText {
 public:
-
-	InputText() {}
+	InputText() = default;
 	InputText(Vector2f pos, Vector2f size, unsigned int textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window);
 	virtual void Update(Event event);
 	void Draw();
@@ -16,10 +15,11 @@ public:
 protected:
 
 
-	Text text{};
-	RectangleShape rect{};
+	Text text;
+	RectangleShape rect;
 
-	int maxChar{};
+	//Received protected variables
+	int maxChar;
 
 private:
 	virtual String ValidText(Event event, String s);
@@ -29,10 +29,10 @@ private:
 	bool clickedRect = false;
 
 
-	//Received variables
-	RenderWindow* window{};
+	//Received private variables
+	RenderWindow* window;
 
-	Sprite* iBeam{};
+	Sprite* iBeam;
 
 public:
 

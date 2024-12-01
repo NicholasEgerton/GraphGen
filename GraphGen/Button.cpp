@@ -3,13 +3,8 @@
 #include "Utils.h"
 
 Button::Button(Vector2f pos, Vector2f size, Color buttonCol, Color textCol, unsigned int textSize, String defaultText1, String defaultText2, Font* font, RenderWindow* window)
+	: buttonCol(buttonCol), defaultText1(defaultText1), defaultText2(defaultText2), window(window)
 {
-	//Setup received variables
-	Button::window = window;
-	Button::buttonCol = buttonCol;
-	Button::defaultText1 = defaultText1;
-	Button::defaultText2 = defaultText2;
-
 	//Setup rect and text
 	rect = RectangleShape(size);
 	rect.setPosition(pos);

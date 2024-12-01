@@ -6,19 +6,16 @@
 
 using namespace sf;
 
-Parameters::Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto) {
-    //Setup Received variables
-    Parameters::mainWindow = mainWindow;
-    Parameters::Roboto = Roboto;
-    Parameters::iBeam = iBeam;
-
+Parameters::Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto) 
+    : mainWindow(mainWindow), iBeam(iBeam), Roboto(Roboto)
+{
     //Create the window
     window.create(VideoMode(500, 500), "Parameters", Style::Titlebar | Style::Close);
 
     //Init clock
     clock = Clock();
 
-//SETUP Objects (I kinda hate the boilerplate needed but sigh it seems its required)
+//SETUP Objects
 
     //Texts
     titleText = Text("Parameters:", *Roboto, 70);

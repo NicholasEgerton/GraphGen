@@ -9,6 +9,7 @@ using namespace sf;
 class Axis
 {
 public:
+	Axis() = default;
 	Axis(Vector2i wSize, Font* Roboto);
 
 private:

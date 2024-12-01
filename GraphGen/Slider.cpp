@@ -3,14 +3,8 @@
 #include "Utils.h"
 
 Slider::Slider(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText* inputText, RenderWindow* window)
+	: defaultValue(defaultValue), valueBounds(valueBounds), rounded(rounded), inputText(inputText), window(window)
 {
-	//Setup received variables
-	Slider::window = window;
-	Slider::inputText = inputText;
-	Slider::defaultValue = defaultValue;
-	Slider::valueBounds = valueBounds;
-	Slider::rounded = rounded;
-
 	inputTextString = inputText->GetText().getString();
 
 	//Setup bar and beam

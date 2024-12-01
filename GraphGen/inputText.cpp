@@ -3,12 +3,8 @@
 #include "Utils.h"
 
 InputText::InputText(Vector2f pos, Vector2f size, unsigned int textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window)
+    : maxChar(maxChar), iBeam(iBeam), window(window)
 {
-    //Setup received variables
-    InputText::window = window;
-    InputText::iBeam = iBeam;
-    InputText::maxChar = maxChar;
-
     //Initialise the rect and text
     rect = RectangleShape(size);
     rect.setPosition(pos);

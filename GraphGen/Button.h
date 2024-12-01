@@ -7,28 +7,26 @@ using namespace sf;
 
 class Button {
 public:
-
-	Button() {}
+	Button() = default;
 	Button(Vector2f pos, Vector2f size, Color buttonCol, Color textCol, unsigned int textSize, String defaultText1, String defaultText2, Font* font, RenderWindow* window);
 	void Update(Event event);
 	void Draw();
 
 private:
 
-	RectangleShape rect{};
-	Text text{};
-
-	String defaultText1{};
-	String defaultText2{};
-
-	Color buttonCol{};
+	RectangleShape rect;
+	Text text;
 
 	bool state = false;
 
 	bool highlight = false;
 
 	//Received variables
-	RenderWindow* window{};
+	RenderWindow* window;
+	String defaultText1;
+	String defaultText2;
+
+	Color buttonCol;
 
 public:
 

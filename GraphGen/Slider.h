@@ -8,8 +8,7 @@ using namespace sf;
 
 class Slider {
 public:
-
-	Slider() {}
+	Slider() = default;
 	Slider(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText* inputText, RenderWindow* window);
 	void Update(Event event);
 	void Draw();
@@ -21,21 +20,21 @@ private:
 
 	Vector2f ToBeamPos(float value);
 
-	RectangleShape bar{};
-	RectangleShape beam{};
+	RectangleShape bar;
+	RectangleShape beam;
 
 	bool inControl = false;
 
 	bool rounded = false;
 
-	String inputTextString{};
+	String inputTextString;
 
-	Vector2f valueBounds{};
+	Vector2f valueBounds;
 
 	//Received variables
-	RenderWindow* window{};
+	RenderWindow* window;
 
-	InputText* inputText{};
+	InputText* inputText;
 
 	float defaultValue = 0;
 

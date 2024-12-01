@@ -13,6 +13,7 @@ using namespace sf;
 class Parameters {
 
 public:
+	Parameters() = default;
 	Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto);
 
 	void Update();

@@ -11,17 +11,13 @@ using namespace sf;
 
 class Tabs {
 public:
-
-	Tabs() {}
+	Tabs() = default;
 	Tabs(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol, unsigned int textSize, Font* font, InputText* aInputText, InputText* nInputText, InputText* cInputText, Slider* aSlider, Slider* nSlider, Slider* cSlider, RenderWindow* window);
 	
 	void Update(Event event);
 	void Draw();
 
 private:
-
-	bool IsNum(std::string string);
-
 	void UpdateValues(int i);
 
 	void UpdateText(int i);
@@ -35,24 +31,24 @@ private:
 		float c; //And only interacting with the inputTexts.
 	};
 
-	std::vector<Tab> tabs{};
+	std::vector<Tab> tabs;
 
-	int tabsAmount{};
+	int tabsAmount;
 
 	//Received variables
-	RenderWindow* window{};
+	RenderWindow* window;
 
-	Vector2f originalSize{};
+	Vector2f originalSize;
 
-	Color originalColor{};
+	Color originalColor;
 
-	InputText* aInputText{};
-	InputText* nInputText{};
-	InputText* cInputText{};
+	InputText* aInputText;
+	InputText* nInputText;
+	InputText* cInputText;
 
-	Slider* aSlider{};
-	Slider* nSlider{};
-	Slider* cSlider{};
+	Slider* aSlider;
+	Slider* nSlider;
+	Slider* cSlider;
 
 public:
 

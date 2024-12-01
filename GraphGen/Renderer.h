@@ -10,6 +10,7 @@ using namespace sf;
 
 class Renderer {
 public:
+	Renderer() = default;
 	Renderer(Parameters& parameters, Axis& axis, RenderWindow& window)
 	: parameters(parameters), axis(axis), window(window) {};
 	void Update();

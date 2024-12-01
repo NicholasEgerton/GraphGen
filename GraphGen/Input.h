@@ -8,6 +8,7 @@
 
 class Input {
 public:
+	Input() = default;
 	Input(Parameters& parameters, Axis& axis, RenderWindow& window)
 		: parameters(parameters), axis(axis), window(window) {};
 	void HandleEvents(Event& event);
