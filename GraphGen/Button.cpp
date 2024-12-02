@@ -2,6 +2,8 @@
 #include "Button.h"
 #include "Utils.h"
 
+using namespace sf;
+
 Button::Button(Vector2f pos, Vector2f size, Color buttonCol, Color textCol, unsigned int textSize, String defaultText1, String defaultText2, Font* font, RenderWindow* window)
 	: buttonCol(buttonCol), defaultText1(defaultText1), defaultText2(defaultText2), window(window)
 {

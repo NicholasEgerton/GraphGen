@@ -2,51 +2,48 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include <iostream>
-
-using namespace sf;
 
 class Axis
 {
 public:
 	Axis() = default;
-	Axis(Vector2i wSize, Font* Roboto);
+	Axis(sf::Vector2i wSize, sf::Font* Roboto);
 
 private:
-	RectangleShape axisX;
-	RectangleShape axisY;
+	sf::RectangleShape axisX;
+	sf::RectangleShape axisY;
 
-	std::vector<Text> horizontalScaleTexts;
-	std::vector<Text> verticalScaleTexts;
-	std::vector<RectangleShape> horizontalScaleRects;
-	std::vector<RectangleShape> verticalScaleRects;
+	std::vector<sf::Text> horizontalScaleTexts;
+	std::vector<sf::Text> verticalScaleTexts;
+	std::vector<sf::RectangleShape> horizontalScaleRects;
+	std::vector<sf::RectangleShape> verticalScaleRects;
 
 	const int offset = 10;
-	const Color txtCol = Color(0, 128, 175);
-	const Color rectCol = Color(50, 150, 50);
+	const sf::Color txtCol = sf::Color(0, 128, 175);
+	const sf::Color rectCol = sf::Color(50, 150, 50);
 
 public:
-	RectangleShape& GetAxisX() {
+	sf::RectangleShape& GetAxisX() {
 		return axisX;
 	}
 
-	RectangleShape& GetAxisY() {
+	sf::RectangleShape& GetAxisY() {
 		return axisY;
 	}
 
-	std::vector<Text>& GetHorizontalScaleTexts() {
+	std::vector<sf::Text>& GetHorizontalScaleTexts() {
 		return horizontalScaleTexts;
 	};
 
-	std::vector<Text>& GetVerticalScaleTexts() {
+	std::vector<sf::Text>& GetVerticalScaleTexts() {
 		return verticalScaleTexts;
 	};
 
-	std::vector<RectangleShape>& GetHorizontalScaleRects() {
+	std::vector<sf::RectangleShape>& GetHorizontalScaleRects() {
 		return horizontalScaleRects;
 	};
 
-	std::vector<RectangleShape>& GetVerticalScaleRects() {
+	std::vector<sf::RectangleShape>& GetVerticalScaleRects() {
 		return verticalScaleRects;
 	};
 

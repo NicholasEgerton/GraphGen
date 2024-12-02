@@ -4,20 +4,17 @@
 #include "SFML/Graphics.hpp"
 #include "Parameters.h"
 #include "Axis.h"
-#include <iostream>
-
-using namespace sf;
 
 class Renderer {
 public:
 	Renderer() = default;
-	Renderer(Parameters& parameters, Axis& axis, RenderWindow& window)
+	Renderer(Parameters& parameters, Axis& axis, sf::RenderWindow& window)
 	: parameters(parameters), axis(axis), window(window) {};
 	void Update();
 
 private:
 	//Received variables
-	RenderWindow& window;
+	sf::RenderWindow& window;
 	Parameters& parameters;
 	Axis& axis;
 };

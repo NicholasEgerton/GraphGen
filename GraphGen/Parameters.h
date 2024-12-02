@@ -8,25 +8,23 @@
 #include "Tabs.h"
 #include "FunctionInputText.h"
 
-using namespace sf;
-
 class Parameters {
 
 public:
 	Parameters() = default;
-	Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* Roboto);
+	Parameters(sf::RenderWindow* mainWindow, sf::Sprite* iBeam, sf::Font* font);
 
 	void Update();
-	void Generate(Vector2i defaultWindowSize, bool ignoreSame);
+	void Generate(sf::Vector2i defaultWindowSize, bool ignoreSame);
 
 private:
 
-	Vector2f ConvertPos(Vector2f defaultWindowSize, float x, float y);
+	sf::Vector2f ConvertPos(sf::Vector2f defaultWindowSize, float x, float y);
 
-	void CalculateLines(Vector2f defaultWindowSize);
+	void CalculateLines(sf::Vector2f defaultWindowSize);
 
 	struct Vector2iComparator {
-		bool operator()(const Vector2i& v1, const Vector2i& v2) const {
+		bool operator()(const sf::Vector2i& v1, const sf::Vector2i& v2) const {
 			return v1.x < v2.x;
 		}
 	};
@@ -37,7 +35,7 @@ private:
 
 	float scale = 1;
 
-	std::vector<VertexArray> linesVector;
+	std::vector<sf::VertexArray> linesVector;
 
 	//For singular functions only
 	float a;
@@ -46,25 +44,25 @@ private:
 
 	//For composite functions only
 	std::vector<int> indexes;
-	std::vector<Vector3f> aNCValues = { Vector3f(1, 1, 0) };
+	std::vector<sf::Vector3f> aNCValues = { sf::Vector3f(1, 1, 0) };
 	//Note: in mathOperations 0 = /, 1 = *, 2 = +, 3 = -
 	//This is so it can be sorted easily for bidmas
 	//And the second parameter is the original index of the operator
 
-	std::vector<Vector2i> mathOperations;
+	std::vector<sf::Vector2i> mathOperations;
 
 	const static int maxOperators = 8;
 
-	Clock clock;
+	sf::Clock clock;
 
-	RenderWindow window;
+	sf::RenderWindow window;
 
-	Text titleText;
-	Text infoText;
-	Text linearText;
-	Text aText;
-	Text nText;
-	Text cText;
+	sf::Text titleText;
+	sf::Text infoText;
+	sf::Text linearText;
+	sf::Text aText;
+	sf::Text nText;
+	sf::Text cText;
 
 	InputText aInputText;
 	InputText nInputText;
@@ -82,15 +80,15 @@ private:
 	Tabs tabs;
 
 	//Received variables
-	RenderWindow* mainWindow;
-	Event event;
+	sf::RenderWindow* mainWindow;
+	sf::Event event;
 
-	Sprite* iBeam;
+	sf::Sprite* iBeam;
 
-	Font* Roboto;
+	sf::Font* font;
 
 public:
-	const std::vector<VertexArray>& GetLinesVector() {
+	const std::vector<sf::VertexArray>& GetLinesVector() {
 		return linesVector;
 	}
 

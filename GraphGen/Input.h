@@ -2,20 +2,19 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include <iostream>
 #include "ZoomHandle.h"
 #include "Axis.h"
 
 class Input {
 public:
 	Input() = default;
-	Input(Parameters& parameters, Axis& axis, RenderWindow& window)
+	Input(Parameters& parameters, Axis& axis, sf::RenderWindow& window)
 		: parameters(parameters), axis(axis), window(window) {};
-	void HandleEvents(Event& event);
+	void HandleEvents(sf::Event& event);
 	void Update();
 
 private:
-	Clock zoomClock = Clock();
+	sf::Clock zoomClock = sf::Clock();
 
 	//How many decimal points on the scale
 	float precision = 0;
@@ -25,5 +24,5 @@ private:
 	//Received variables
 	Parameters& parameters;
 	Axis& axis;
-	RenderWindow& window;
+	sf::RenderWindow& window;
 };

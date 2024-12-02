@@ -1,18 +1,21 @@
 //Work of Nicholas Egerton
 #pragma once
 
-#include "inputText.h"
 #include "SFML/Graphics.hpp"
+#include "inputText.h"
 
 class FunctionInputText : public InputText {
 public:
 	FunctionInputText() = default;
-	FunctionInputText(Vector2f pos, Vector2f size, unsigned int textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window);
+	FunctionInputText(sf::Vector2f pos, sf::Vector2f size,
+		unsigned int textSize, sf::String defaultText, int maxChar,
+		sf::Color textCol, sf::Color backgroundCol, sf::Sprite* iBeam,
+		sf::Font* font, sf::RenderWindow* window);
 
-	String ValidText(Event event, String s) override;
+	sf::String ValidText(sf::Event event, sf::String s) override;
 
 private:
-	String AddText(Uint32 text, String s);
+	sf::String AddText(sf::Uint32 text, sf::String s);
 
 	float charSize;
 };

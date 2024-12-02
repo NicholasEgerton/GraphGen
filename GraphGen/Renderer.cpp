@@ -1,6 +1,8 @@
 //Work of Nicholas Egerton
 #include "Renderer.h"
 
+using namespace sf;
+
 void Renderer::Update() {
     //Clear window
     window.clear(Color::Black);

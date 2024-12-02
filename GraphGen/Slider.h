@@ -4,13 +4,13 @@
 #include "SFML/Graphics.hpp"
 #include "inputText.h"
 
-using namespace sf;
-
 class Slider {
 public:
 	Slider() = default;
-	Slider(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText* inputText, RenderWindow* window);
-	void Update(Event event);
+	Slider(sf::Vector2f pos, sf::Vector2f size, sf::Color barColor,
+		sf::Color beamColor, float defaultValue, sf::Vector2f valueBounds,
+		bool rounded, InputText* inputText, sf::RenderWindow* window);
+	void Update(sf::Event event);
 	void Draw();
 	void ChangeBeamPos();
 
@@ -18,21 +18,21 @@ private:
 
 	float ToValue();
 
-	Vector2f ToBeamPos(float value);
+	sf::Vector2f ToBeamPos(float value);
 
-	RectangleShape bar;
-	RectangleShape beam;
+	sf::RectangleShape bar;
+	sf::RectangleShape beam;
 
 	bool inControl = false;
 
 	bool rounded = false;
 
-	String inputTextString;
+	sf::String inputTextString;
 
-	Vector2f valueBounds;
+	sf::Vector2f valueBounds;
 
 	//Received variables
-	RenderWindow* window;
+	sf::RenderWindow* window;
 
 	InputText* inputText;
 
@@ -48,11 +48,11 @@ public:
 		rounded = r;
 	}
 
-	const Vector2f& GetValueBounds() {
+	const sf::Vector2f& GetValueBounds() {
 		return valueBounds;
 	}
 
-	void SetValueBounds(Vector2f v) {
+	void SetValueBounds(sf::Vector2f v) {
 		valueBounds = v;
 	}
 };

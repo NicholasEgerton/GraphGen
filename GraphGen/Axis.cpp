@@ -2,6 +2,8 @@
 #include "Axis.h"
 #include "Utils.h"
 
+using namespace sf;
+
 Axis::Axis(Vector2i wSize, Font* Roboto)
 {
     //Setup axis borders

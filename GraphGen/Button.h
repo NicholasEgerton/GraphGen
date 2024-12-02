@@ -3,30 +3,30 @@
 
 #include "SFML/Graphics.hpp"
 
-using namespace sf;
-
 class Button {
 public:
 	Button() = default;
-	Button(Vector2f pos, Vector2f size, Color buttonCol, Color textCol, unsigned int textSize, String defaultText1, String defaultText2, Font* font, RenderWindow* window);
-	void Update(Event event);
+	Button(sf::Vector2f pos, sf::Vector2f size, sf::Color buttonCol, 
+		sf::Color textCol, unsigned int textSize, sf::String defaultText1,
+		sf::String defaultText2, sf::Font* font, sf::RenderWindow* window);
+	void Update(sf::Event event);
 	void Draw();
 
 private:
 
-	RectangleShape rect;
-	Text text;
+	sf::RectangleShape rect;
+	sf::Text text;
 
 	bool state = false;
 
 	bool highlight = false;
 
 	//Received variables
-	RenderWindow* window;
-	String defaultText1;
-	String defaultText2;
+	sf::RenderWindow* window;
+	sf::String defaultText1;
+	sf::String defaultText2;
 
-	Color buttonCol;
+	sf::Color buttonCol;
 
 public:
 

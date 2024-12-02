@@ -3,26 +3,27 @@
 
 #include "SFML/Graphics.hpp"
 
-using namespace sf;
-
 class InputText {
 public:
 	InputText() = default;
-	InputText(Vector2f pos, Vector2f size, unsigned int textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window);
-	virtual void Update(Event event);
+	InputText(sf::Vector2f pos, sf::Vector2f size, unsigned int textSize,
+		sf::String defaultText, int maxChar, sf::Color textCol, 
+		sf::Color backgroundCol, sf::Sprite* iBeam, sf::Font* font, 
+		sf::RenderWindow* window);
+	virtual void Update(sf::Event event);
 	void Draw();
 
 protected:
 
 
-	Text text;
-	RectangleShape rect;
+	sf::Text text;
+	sf::RectangleShape rect;
 
 	//Received protected variables
 	int maxChar;
 
 private:
-	virtual String ValidText(Event event, String s);
+	virtual sf::String ValidText(sf::Event event, sf::String s);
 
 
 	bool inRect = false;
@@ -30,17 +31,17 @@ private:
 
 
 	//Received private variables
-	RenderWindow* window;
+	sf::RenderWindow* window;
 
-	Sprite* iBeam;
+	sf::Sprite* iBeam;
 
 public:
 
-	const Text& GetText() {
+	const sf::Text& GetText() {
 		return text;
 	}
 
-	void SetTextString(String s) {
+	void SetTextString(sf::String s) {
 		text.setString(s);
 	}
 

@@ -2,6 +2,8 @@
 #include "InputText.h"
 #include "Utils.h"
 
+using namespace sf;
+
 InputText::InputText(Vector2f pos, Vector2f size, unsigned int textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window)
     : maxChar(maxChar), iBeam(iBeam), window(window)
 {
