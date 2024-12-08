@@ -9,7 +9,7 @@ class Input {
 public:
 	Input() = default;
 	Input(Parameters& parameters, Axis& axis, sf::RenderWindow& window)
-		: parameters(parameters), axis(axis), window(window) {};
+		: parameters(&parameters), axis(&axis), window(&window) {};
 	void HandleEvents(sf::Event& event);
 	void Update();
 
@@ -22,7 +22,7 @@ private:
 	ZoomHandle::KeyZoom keyZoom = { false, 0 };
 
 	//Received variables
-	Parameters& parameters;
-	Axis& axis;
-	sf::RenderWindow& window;
+	Parameters* parameters{};
+	Axis* axis{};
+	sf::RenderWindow* window{};
 };

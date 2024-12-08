@@ -6,8 +6,8 @@
 
 using namespace sf;
 
-Parameters::Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* font) 
-    : mainWindow(mainWindow), iBeam(iBeam), font(font)
+Parameters::Parameters(RenderWindow& mainWindow, Sprite& iBeam, Font& font) 
+    : mainWindow(&mainWindow), iBeam(&iBeam), font(&font)
 {
     //Create the window
     window.create(VideoMode(500, 500), "Parameters", Style::Titlebar | Style::Close);
@@ -18,48 +18,48 @@ Parameters::Parameters(RenderWindow* mainWindow, Sprite* iBeam, Font* font)
 //SETUP Objects
 
     //Texts
-    titleText = Text("Parameters:", *font, 70);
+    titleText = Text("Parameters:", font, 70);
     titleText.setPosition(50, 0);
     titleText.setFillColor(Color(150, 0, 0));
     titleText.setStyle(Text::Bold | Text::Underlined);
 
-    infoText = Text("Type or use the sliders to adjust parameters.", *font, 20);
+    infoText = Text("Type or use the sliders to adjust parameters.", font, 20);
     infoText.setPosition(40, 80);
     infoText.setFillColor(Color(0, 150, 0));
 
-    aText = Text("a", *font, 60);
+    aText = Text("a", font, 60);
     aText.setPosition(10, 120);
     aText.setFillColor(Color::Black);
     aText.setStyle(Text::Bold);
 
-    nText = Text("n", *font, 60);
+    nText = Text("n", font, 60);
     nText.setPosition(10, 241.5);
     nText.setFillColor(Color::Black);
     nText.setStyle(Text::Bold);
 
-    cText = Text("c", *font, 60);
+    cText = Text("c", font, 60);
     cText.setPosition(10, 362.5);
     cText.setFillColor(Color::Black);
     cText.setStyle(Text::Bold);
 
     //Input texts
-    aInputText = InputText(Vector2f(60, 137), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, font, &window);
-    nInputText = InputText(Vector2f(60, 258.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, font, &window);
-    cInputText = InputText(Vector2f(60, 380), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, font, &window);
+    aInputText = InputText(Vector2f(60, 137), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, font, window);
+    nInputText = InputText(Vector2f(60, 258.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, font, window);
+    cInputText = InputText(Vector2f(60, 380), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, font, window);
 
-    functionInputText = FunctionInputText(Vector2f(20, 325), Vector2f(460, 100), 70, "a(x)", 39, Color::White, Color::Black, iBeam, font, &window);
+    functionInputText = FunctionInputText(Vector2f(20, 325), Vector2f(460, 100), 70, "a(x)", 39, Color::White, Color::Black, iBeam, font, window);
 
     //Sliders
-    aSlider = Slider(Vector2f(265, 157), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
-    nSlider = Slider(Vector2f(265, 278.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
-    cSlider = Slider(Vector2f(265, 400), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
+    aSlider = Slider(Vector2f(265, 157), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, aInputText, window);
+    nSlider = Slider(Vector2f(265, 278.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, nInputText, window);
+    cSlider = Slider(Vector2f(265, 400), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, cInputText, window);
 
     //Buttons
-    aButton = Button(Vector2f(410, 110), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", font, &window);
-    modeButton = Button(Vector2f(10, 450), Vector2f(450, 30), Color::Black, Color::White, 30, "Switch To Composite Functions", "Switch To Singular Functions", font, &window);
+    aButton = Button(Vector2f(410, 110), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", font, window);
+    modeButton = Button(Vector2f(10, 450), Vector2f(450, 30), Color::Black, Color::White, 30, "Switch To Composite Functions", "Switch To Singular Functions", font, window);
 
     //Tabs
-    tabs = Tabs(Vector2f(5, 5), Vector2f(57, 25), 8, Color(255, 140, 0), Color::White, 25, font, &aInputText, &nInputText, &cInputText, &aSlider, &nSlider, &cSlider, &window);
+    tabs = Tabs(Vector2f(5, 5), Vector2f(57, 25), 8, Color(255, 140, 0), Color::White, 25, font, aInputText, nInputText, cInputText, aSlider, nSlider, cSlider, window);
 }
 
 
@@ -99,17 +99,17 @@ void Parameters::Update() {
                 cText.setStyle(Text::Bold);
 
                 //Input texts
-                aInputText = InputText(Vector2f(60, 137), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, font, &window);
-                nInputText = InputText(Vector2f(60, 258.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, font, &window);
-                cInputText = InputText(Vector2f(60, 380), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, font, &window);
+                aInputText = InputText(Vector2f(60, 137), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, *iBeam, *font, window);
+                nInputText = InputText(Vector2f(60, 258.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, *iBeam, *font, window);
+                cInputText = InputText(Vector2f(60, 380), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, *iBeam, *font, window);
 
                 //Sliders
-                aSlider = Slider(Vector2f(265, 157), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
-                nSlider = Slider(Vector2f(265, 278.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
-                cSlider = Slider(Vector2f(265, 400), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
+                aSlider = Slider(Vector2f(265, 157), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, aInputText, window);
+                nSlider = Slider(Vector2f(265, 278.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, nInputText, window);
+                cSlider = Slider(Vector2f(265, 400), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, cInputText, window);
 
                 //Buttons
-                aButton = Button(Vector2f(410, 110), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", font, &window);
+                aButton = Button(Vector2f(410, 110), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", *font, window);
             }
 
             else {
@@ -130,17 +130,17 @@ void Parameters::Update() {
                 cText.setStyle(Text::Bold);
 
                 //Input texts
-                aInputText = InputText(Vector2f(60, 77), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, font, &window);
-                nInputText = InputText(Vector2f(60, 158.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, iBeam, font, &window);
-                cInputText = InputText(Vector2f(60, 241), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, iBeam, font, &window);
+                aInputText = InputText(Vector2f(60, 77), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, *iBeam, *font, window);
+                nInputText = InputText(Vector2f(60, 158.5), Vector2f(200, 50), 40, "1", 9, Color::White, Color::Black, *iBeam, *font, window);
+                cInputText = InputText(Vector2f(60, 241), Vector2f(200, 50), 40, "0", 9, Color::White, Color::Black, *iBeam, *font, window);
 
                 //Sliders
-                aSlider = Slider(Vector2f(265, 97), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, &aInputText, &window);
-                nSlider = Slider(Vector2f(265, 178.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, &nInputText, &window);
-                cSlider = Slider(Vector2f(265, 261), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, &cInputText, &window);
+                aSlider = Slider(Vector2f(265, 97), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-1000, 1000), true, aInputText, window);
+                nSlider = Slider(Vector2f(265, 178.5), Vector2f(225, 12.5), Color::White, Color::Black, 1, Vector2f(-10, 10), true, nInputText, window);
+                cSlider = Slider(Vector2f(265, 261), Vector2f(225, 12.5), Color::White, Color::Black, 0, Vector2f(-500, 500), true, cInputText, window);
 
                 //Buttons
-                aButton = Button(Vector2f(410, 50), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", font, &window);
+                aButton = Button(Vector2f(410, 50), Vector2f(80, 30), Color::Black, Color::White, 30, "Large", "Small", *font, window);
             }
         }
 

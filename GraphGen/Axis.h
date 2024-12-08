@@ -6,8 +6,8 @@
 class Axis
 {
 public:
-	Axis() = default;
-	Axis(sf::Vector2i wSize, sf::Font* Roboto);
+	Axis() = delete;
+	Axis(sf::Vector2f wSize, const sf::Font& Roboto);
 
 private:
 	sf::RectangleShape axisX;

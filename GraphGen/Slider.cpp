@@ -4,10 +4,10 @@
 
 using namespace sf;
 
-Slider::Slider(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText* inputText, RenderWindow* window)
-	: defaultValue(defaultValue), valueBounds(valueBounds), rounded(rounded), inputText(inputText), window(window)
+Slider::Slider(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText& inputText, RenderWindow& window)
+	: defaultValue(defaultValue), valueBounds(valueBounds), rounded(rounded), inputText(&inputText), window(&window)
 {
-	inputTextString = inputText->GetText().getString();
+	inputTextString = inputText.GetText().getString();
 
 	//Setup bar and beam
 	bar = RectangleShape(size);

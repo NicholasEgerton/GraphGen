@@ -9,7 +9,7 @@ public:
 	Slider() = default;
 	Slider(sf::Vector2f pos, sf::Vector2f size, sf::Color barColor,
 		sf::Color beamColor, float defaultValue, sf::Vector2f valueBounds,
-		bool rounded, InputText* inputText, sf::RenderWindow* window);
+		bool rounded, InputText& inputText, sf::RenderWindow& window);
 	void Update(sf::Event event);
 	void Draw();
 	void ChangeBeamPos();
@@ -32,9 +32,9 @@ private:
 	sf::Vector2f valueBounds;
 
 	//Received variables
-	sf::RenderWindow* window;
+	sf::RenderWindow* window{};
 
-	InputText* inputText;
+	InputText* inputText{};
 
 	float defaultValue = 0;
 

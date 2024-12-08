@@ -8,7 +8,7 @@ void Input::HandleEvents(Event& event)
     //Allow the window to be closed
     if (event.type == Event::Closed)
     {
-        window.close();
+        window->close();
     }
 
     if (event.type == Event::KeyPressed) {
@@ -34,7 +34,7 @@ void Input::HandleEvents(Event& event)
     }
 
     if (event.type == Event::MouseWheelScrolled) {
-        ZoomHandle::Zoom(precision, event.mouseWheelScroll.delta, &parameters, axis.GetHorizontalScaleTexts(), axis.GetVerticalScaleTexts(), &window);
+        ZoomHandle::Zoom(precision, event.mouseWheelScroll.delta, parameters, axis->GetHorizontalScaleTexts(), axis->GetVerticalScaleTexts(), window);
     }
 }
 
@@ -42,7 +42,7 @@ void Input::Update()
 {
     //Key zoom at approximately 30fps
     if (keyZoom.zooming && zoomClock.getElapsedTime().asSeconds() >= 0.033f) {
-        ZoomHandle::Zoom(precision, keyZoom.key, &parameters, axis.GetHorizontalScaleTexts(), axis.GetVerticalScaleTexts(), &window);
+        ZoomHandle::Zoom(precision, keyZoom.key, parameters, axis->GetHorizontalScaleTexts(), axis->GetVerticalScaleTexts(), window);
         zoomClock.restart();
     }
 }

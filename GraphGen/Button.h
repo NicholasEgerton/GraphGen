@@ -8,7 +8,7 @@ public:
 	Button() = default;
 	Button(sf::Vector2f pos, sf::Vector2f size, sf::Color buttonCol, 
 		sf::Color textCol, unsigned int textSize, sf::String defaultText1,
-		sf::String defaultText2, sf::Font* font, sf::RenderWindow* window);
+		sf::String defaultText2, sf::Font& font, sf::RenderWindow& window);
 	void Update(sf::Event event);
 	void Draw();
 
@@ -22,11 +22,11 @@ private:
 	bool highlight = false;
 
 	//Received variables
-	sf::RenderWindow* window;
-	sf::String defaultText1;
-	sf::String defaultText2;
+	sf::RenderWindow* window{};
+	sf::String defaultText1{};
+	sf::String defaultText2{};
 
-	sf::Color buttonCol;
+	sf::Color buttonCol{};
 
 public:
 

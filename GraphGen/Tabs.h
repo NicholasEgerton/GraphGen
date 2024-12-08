@@ -11,10 +11,10 @@ class Tabs {
 public:
 	Tabs() = default;
 	Tabs(sf::Vector2f pos, sf::Vector2f size, int amount, sf::Color tabCol,
-		sf::Color textCol, unsigned int textSize, sf::Font* font, 
-		InputText* aInputText, InputText* nInputText, InputText* cInputText,
-		Slider* aSlider, Slider* nSlider, Slider* cSlider,
-		sf::RenderWindow* window);
+		sf::Color textCol, unsigned int textSize, sf::Font& font, 
+		InputText& aInputText, InputText& nInputText, InputText& cInputText,
+		Slider& aSlider, Slider& nSlider, Slider& cSlider,
+		sf::RenderWindow& window);
 	
 	void Update(Event event);
 	void Draw();
@@ -38,19 +38,19 @@ private:
 	int tabsAmount;
 
 	//Received variables
-	sf::RenderWindow* window;
+	sf::RenderWindow* window{};
 
-	sf::Vector2f originalSize;
+	sf::Vector2f originalSize{};
 
-	sf::Color originalColor;
+	sf::Color originalColor{};
 
-	InputText* aInputText;
-	InputText* nInputText;
-	InputText* cInputText;
+	InputText* aInputText{};
+	InputText* nInputText{};
+	InputText* cInputText{};
 
-	Slider* aSlider;
-	Slider* nSlider;
-	Slider* cSlider;
+	Slider* aSlider{};
+	Slider* nSlider{};
+	Slider* cSlider{};
 
 public:
 

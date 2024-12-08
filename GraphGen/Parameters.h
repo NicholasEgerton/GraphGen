@@ -12,7 +12,7 @@ class Parameters {
 
 public:
 	Parameters() = default;
-	Parameters(sf::RenderWindow* mainWindow, sf::Sprite* iBeam, sf::Font* font);
+	Parameters(sf::RenderWindow& mainWindow, sf::Sprite& iBeam, sf::Font& font);
 
 	void Update();
 	void Generate(sf::Vector2i defaultWindowSize, bool ignoreSame);
@@ -79,13 +79,14 @@ private:
 
 	Tabs tabs;
 
-	//Received variables
-	sf::RenderWindow* mainWindow;
 	sf::Event event;
 
-	sf::Sprite* iBeam;
+	//Received variables
+	sf::RenderWindow* mainWindow{};
 
-	sf::Font* font;
+	sf::Sprite* iBeam{};
+
+	sf::Font* font{};
 
 public:
 	const std::vector<sf::VertexArray>& GetLinesVector() {

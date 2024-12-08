@@ -36,12 +36,12 @@ int main()
     }
 
     //Set up parameter window
-    Parameters parameters(&window, &iBeam, &Roboto);
+    Parameters parameters(window, iBeam, Roboto);
 
     //Generate default starting graph (y = x)
     parameters.Generate(Vector2i(window.getSize()), false);
 
-    Axis axis = Axis(Vector2i(window.getSize()), &Roboto);
+    Axis axis = Axis(Vector2f(window.getSize()), Roboto);
 
     Input input = Input(parameters, axis, window);
 

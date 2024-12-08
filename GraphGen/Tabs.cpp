@@ -6,9 +6,9 @@
 
 using namespace sf;
 
-Tabs::Tabs(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol, unsigned int textSize, Font* font, InputText* aInputText, InputText* nInputText, InputText* cInputText, Slider* aSlider, Slider* nSlider, Slider* cSlider, RenderWindow* window)
-	: originalSize(size), originalColor(tabCol), tabsAmount(amount), aInputText(aInputText), nInputText(nInputText), cInputText(cInputText), 
-	aSlider(aSlider), nSlider(nSlider), cSlider(cSlider), window(window)
+Tabs::Tabs(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol, unsigned int textSize, Font& font, InputText& aInputText, InputText& nInputText, InputText& cInputText, Slider& aSlider, Slider& nSlider, Slider& cSlider, RenderWindow& window)
+	: originalSize(size), originalColor(tabCol), tabsAmount(amount), aInputText(&aInputText), nInputText(&nInputText), cInputText(&cInputText),
+	aSlider(&aSlider), nSlider(&nSlider), cSlider(&cSlider), window(&window)
 {
 	float lastX = 0;
 
@@ -23,7 +23,7 @@ Tabs::Tabs(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol,
 
 		Tab tab = {
 			RectangleShape(size),
-			Text(s, *font, textSize),
+			Text(s, font, textSize),
 			false,
 			1.f,
 			1.f,

@@ -9,12 +9,12 @@ class Renderer {
 public:
 	Renderer() = default;
 	Renderer(Parameters& parameters, Axis& axis, sf::RenderWindow& window)
-	: parameters(parameters), axis(axis), window(window) {};
+	: parameters(&parameters), axis(&axis), window(&window) {};
 	void Update();
 
 private:
 	//Received variables
-	sf::RenderWindow& window;
-	Parameters& parameters;
-	Axis& axis;
+	sf::RenderWindow* window{};
+	Parameters* parameters{};
+	Axis* axis{};
 };

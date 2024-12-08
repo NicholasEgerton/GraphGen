@@ -8,8 +8,8 @@ public:
 	InputText() = default;
 	InputText(sf::Vector2f pos, sf::Vector2f size, unsigned int textSize,
 		sf::String defaultText, int maxChar, sf::Color textCol, 
-		sf::Color backgroundCol, sf::Sprite* iBeam, sf::Font* font, 
-		sf::RenderWindow* window);
+		sf::Color backgroundCol, sf::Sprite& iBeam, sf::Font& font, 
+		sf::RenderWindow& window);
 	virtual void Update(sf::Event event);
 	void Draw();
 
@@ -31,9 +31,9 @@ private:
 
 
 	//Received private variables
-	sf::RenderWindow* window;
+	sf::RenderWindow* window{};
 
-	sf::Sprite* iBeam;
+	sf::Sprite* iBeam{};
 
 public:
 
