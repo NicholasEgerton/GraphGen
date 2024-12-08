@@ -15,7 +15,7 @@ public:
 	sf::String ValidText(sf::Event event, sf::String s) override;
 
 private:
-	sf::String AddText(sf::Uint32 text, sf::String s);
+	sf::String AddText(sf::String s, char stringToAdd);
 
 	//Received variables
 	float charSize{};
