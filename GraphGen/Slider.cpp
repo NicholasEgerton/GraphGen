@@ -1,16 +1,13 @@
+//Work of Nicholas Egerton
 #include "slider.h"
 #include "Utils.h"
 
-Slider::Slider(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText* inputText, RenderWindow* window)
-{
-	//Setup received variables
-	Slider::window = window;
-	Slider::inputText = inputText;
-	Slider::defaultValue = defaultValue;
-	Slider::valueBounds = valueBounds;
-	Slider::rounded = rounded;
+using namespace sf;
 
-	inputTextString = inputText->GetText().getString();
+Slider::Slider(Vector2f pos, Vector2f size, Color barColor, Color beamColor, float defaultValue, Vector2f valueBounds, bool rounded, InputText& inputText, RenderWindow& window)
+	: defaultValue(defaultValue), valueBounds(valueBounds), rounded(rounded), inputText(&inputText), window(&window)
+{
+	inputTextString = inputText.GetText().getString();
 
 	//Setup bar and beam
 	bar = RectangleShape(size);

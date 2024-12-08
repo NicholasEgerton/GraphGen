@@ -1,33 +1,32 @@
+//Work of Nicholas Egerton
 #pragma once
 
 #include "SFML/Graphics.hpp"
 
-using namespace sf;
-
 class Button {
 public:
-
-	Button() {}
-	Button(Vector2f pos, Vector2f size, Color buttonCol, Color textCol, unsigned int textSize, String defaultText1, String defaultText2, Font* font, RenderWindow* window);
-	void Update(Event event);
+	Button() = default;
+	Button(sf::Vector2f pos, sf::Vector2f size, sf::Color buttonCol, 
+		sf::Color textCol, unsigned int textSize, sf::String defaultText1,
+		sf::String defaultText2, sf::Font& font, sf::RenderWindow& window);
+	void Update(sf::Event event);
 	void Draw();
 
 private:
 
-	RectangleShape rect{};
-	Text text{};
-
-	String defaultText1{};
-	String defaultText2{};
-
-	Color buttonCol{};
+	sf::RectangleShape rect;
+	sf::Text text;
 
 	bool state = false;
 
 	bool highlight = false;
 
 	//Received variables
-	RenderWindow* window{};
+	sf::RenderWindow* window{};
+	sf::String defaultText1{};
+	sf::String defaultText2{};
+
+	sf::Color buttonCol{};
 
 public:
 

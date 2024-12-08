@@ -1,3 +1,4 @@
+//Work of Nicholas Egerton
 #include "ZoomHandle.h"
 #include "Parameters.h"
 #include "Utils.h"

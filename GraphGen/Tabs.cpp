@@ -1,22 +1,15 @@
+//Work of Nicholas Egerton
 #include "Tabs.h"
 #include <vector>
 #include <iomanip>
 #include "Utils.h"
 
-Tabs::Tabs(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol, unsigned int textSize, Font* font, InputText* aInputText, InputText* nInputText, InputText* cInputText, Slider* aSlider, Slider* nSlider, Slider* cSlider, RenderWindow* window)
-{
-	//Setup received variables
-	Tabs::window = window;
-	Tabs::tabsAmount = amount;
-	Tabs::originalSize = size;
-	Tabs::originalColor = tabCol;
-	Tabs::aInputText = aInputText;
-	Tabs::nInputText = nInputText;
-	Tabs::cInputText = cInputText;
-	Tabs::aSlider = aSlider;
-	Tabs::nSlider = nSlider;
-	Tabs::cSlider = cSlider;
+using namespace sf;
 
+Tabs::Tabs(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol, unsigned int textSize, Font& font, InputText& aInputText, InputText& nInputText, InputText& cInputText, Slider& aSlider, Slider& nSlider, Slider& cSlider, RenderWindow& window)
+	: originalSize(size), originalColor(tabCol), tabsAmount(amount), aInputText(&aInputText), nInputText(&nInputText), cInputText(&cInputText),
+	aSlider(&aSlider), nSlider(&nSlider), cSlider(&cSlider), window(&window)
+{
 	float lastX = 0;
 
 	char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
@@ -30,7 +23,7 @@ Tabs::Tabs(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol,
 
 		Tab tab = {
 			RectangleShape(size),
-			Text(s, *font, textSize),
+			Text(s, font, textSize),
 			false,
 			1.f,
 			1.f,

@@ -1,20 +1,19 @@
+//Work of Nicholas Egerton
 #include "InputText.h"
 #include "Utils.h"
 
-InputText::InputText(Vector2f pos, Vector2f size, unsigned int textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite* iBeam, Font* font, RenderWindow* window)
-{
-    //Setup received variables
-    InputText::window = window;
-    InputText::iBeam = iBeam;
-    InputText::maxChar = maxChar;
+using namespace sf;
 
+InputText::InputText(Vector2f pos, Vector2f size, unsigned int textSize, String defaultText, int maxChar, Color textCol, Color backgroundCol, Sprite& iBeam, Font& font, RenderWindow& window)
+    : maxChar(maxChar), iBeam(&iBeam), window(&window)
+{
     //Initialise the rect and text
     rect = RectangleShape(size);
     rect.setPosition(pos);
     rect.setFillColor(backgroundCol);
 
-    text = Text(defaultText, *font, textSize);
-    text.setFont(*font);
+    text = Text(defaultText, font, textSize);
+    text.setFont(font);
     text.setPosition(pos);
     text.setFillColor(textCol);
 }

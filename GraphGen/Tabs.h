@@ -1,49 +1,48 @@
+//Work of Nicholas Egerton
 #pragma once
 
 #include "SFML/Graphics.hpp"
 #include "inputText.h"
 #include "slider.h"
-#include <sstream>
-#include <iostream>
 
 using namespace sf;
 
 class Tabs {
 public:
-
-	Tabs() {}
-	Tabs(Vector2f pos, Vector2f size, int amount, Color tabCol, Color textCol, unsigned int textSize, Font* font, InputText* aInputText, InputText* nInputText, InputText* cInputText, Slider* aSlider, Slider* nSlider, Slider* cSlider, RenderWindow* window);
+	Tabs() = default;
+	Tabs(sf::Vector2f pos, sf::Vector2f size, int amount, sf::Color tabCol,
+		sf::Color textCol, unsigned int textSize, sf::Font& font, 
+		InputText& aInputText, InputText& nInputText, InputText& cInputText,
+		Slider& aSlider, Slider& nSlider, Slider& cSlider,
+		sf::RenderWindow& window);
 	
 	void Update(Event event);
 	void Draw();
 
 private:
-
-	bool IsNum(std::string string);
-
 	void UpdateValues(int i);
 
 	void UpdateText(int i);
 
 	struct Tab {
-		RectangleShape rect;
-		Text text;
+		sf::RectangleShape rect;
+		sf::Text text;
 		bool clicked;
 		float a; //Note, these are made strings as 
 		float n; //They never are needed in mathematical operations
 		float c; //And only interacting with the inputTexts.
 	};
 
-	std::vector<Tab> tabs{};
+	std::vector<Tab> tabs;
 
-	int tabsAmount{};
+	int tabsAmount;
 
 	//Received variables
-	RenderWindow* window{};
+	sf::RenderWindow* window{};
 
-	Vector2f originalSize{};
+	sf::Vector2f originalSize{};
 
-	Color originalColor{};
+	sf::Color originalColor{};
 
 	InputText* aInputText{};
 	InputText* nInputText{};
