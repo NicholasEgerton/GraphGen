@@ -275,7 +275,7 @@ void Parameters::Generate(Vector2i defaultWindowSize, bool ignoreSame)
             }
         }
 
-        if (sameValues && infix == oldInfix) {
+        if (sameValues && infix == oldInfix && !ignoreSame) {
             oldInfix = infix;
             return;
         }
