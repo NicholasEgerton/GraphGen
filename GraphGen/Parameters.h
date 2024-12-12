@@ -7,6 +7,7 @@
 #include "Button.h"
 #include "Tabs.h"
 #include "FunctionInputText.h"
+#include <array>
 
 class Parameters {
 
@@ -21,13 +22,25 @@ private:
 
 	sf::Vector2f ConvertPos(sf::Vector2f defaultWindowSize, float x, float y);
 
+	std::vector<std::string> InfixToPostfix(std::string& infix);
+
 	void CalculateLines(sf::Vector2f defaultWindowSize);
 
-	struct Vector2iComparator {
-		bool operator()(const sf::Vector2i& v1, const sf::Vector2i& v2) const {
-			return v1.x < v2.x;
+	bool ValidateInfix(std::string& infix);
+
+	int GetOperatorPriority(char op) {
+		if (op == '*' || op == '/') {
+			return 1; //Highest priority
 		}
-	};
+
+		else if (op == '+' || op == '-') {
+			return 0; //Lowest priority
+		}
+
+		else {
+			return -1; //Invalid operator
+		}
+	}
 
 	float CalculateY(float x);
 
@@ -43,15 +56,17 @@ private:
 	float c;
 
 	//For composite functions only
-	std::vector<int> indexes;
-	std::vector<sf::Vector3f> aNCValues = { sf::Vector3f(1, 1, 0) };
-	//Note: in mathOperations 0 = /, 1 = *, 2 = +, 3 = -
-	//This is so it can be sorted easily for bidmas
-	//And the second parameter is the original index of the operator
+	std::vector<std::string> postfixExpression;
+	std::string oldInfix = "a(x)";
 
-	std::vector<sf::Vector2i> mathOperations;
+	struct ANC {
+		float a;
+		float n;
+		float c;
+	};
 
-	const static int maxOperators = 8;
+	std::array<ANC, 8> aNCValues;
+
 
 	sf::Clock clock;
 
