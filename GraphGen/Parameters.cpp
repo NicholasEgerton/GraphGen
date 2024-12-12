@@ -3,6 +3,8 @@
 #include <iostream>
 #include <algorithm>
 #include "Utils.h"
+#include <stack>
+#include <algorithm>
 
 using namespace sf;
 
@@ -12,8 +14,10 @@ Parameters::Parameters(RenderWindow& mainWindow, Sprite& iBeam, Font& font)
     //Create the window
     window.create(VideoMode(500, 500), "Parameters", Style::Titlebar | Style::Close);
 
-    //Init clock
-    clock = Clock();
+    //Put default values in aNCValues
+    for (int i = 0; i < aNCValues.size(); ++i) {
+        aNCValues[i] = { 1, 1, 0 };
+    }
 
 //SETUP Objects
 
@@ -259,125 +263,34 @@ void Parameters::Generate(Vector2i defaultWindowSize, bool ignoreSame)
     }
 
     else { //Composite functions
-
-        indexes.clear();
-        mathOperations.clear();
-
-        std::string s = functionInputText.GetText().getString();
-
-        const std::string aToH = "abcdefgh";
-
-        size_t length = s.length();
-
-        //Dont gen if string is empty or less than minimum required string
-        if (length < 4) { //Min is e.g "a(x)" which is 4 characters
-            return;
-        }
-
-        int mathIndex = 0;
-
-        //Save the + - / * in mathOperations
-        for (size_t i = 0; i < length; i++) {
-            switch(s[i]) {
-                case '/':
-                    mathOperations.push_back(Vector2i(0, mathIndex));
-                    mathIndex++;
-                    break;
-                case '*':
-                    mathOperations.push_back(Vector2i(1, mathIndex));
-                    mathIndex++;
-                    break;
-                case '+':
-                    mathOperations.push_back(Vector2i(2, mathIndex));
-                    mathIndex++;
-                    break;
-                case '-':
-                    mathOperations.push_back(Vector2i(3, mathIndex));
-                    mathIndex++;
-                    break;
-            }
-        }
-
-        //Then sort them for bidmas
-
-        std::sort(mathOperations.begin(), mathOperations.end(), Vector2iComparator());
-
-        //Then remove them
-        s.erase(std::remove_if(s.begin(), s.end(), [](char c)
-            {
-                return c == '+' || c == '-' || c == '*'
-                    || c == '/';
-            }),
-            s.end());
-
-        //Update length afterwards
-        length = s.size();
-
-        if (length < 4) {
-            return;
-        }
-
-        //Now, loop through the string, and split into functions, e.g a(x) or b(x)
-        // 
-        //Here, we check if s[0] is a letter in a to h and if it is followed
-        //with "(x)"
-
-        size_t i = 0;
-        while (length >= 4) {
-            if (aToH.find(s[i]) != std::string::npos && s.substr(i + 1, 3) == "(x)") {
-                //If so, we add to the indexes vector as the index of the letter
-                //in a to h, this way we know which tab/function it is from
-                indexes.push_back(static_cast<int>(aToH.find(s[i])));
-                length -= 4;
-                i += 4;
-            }
-
-            else {
-                break;
-            }
-        }
-
-        //Final check to make sure all good
-        if (length != 0 || mathOperations.size() != indexes.size() - 1) {
-            return;
-        }
-
-        //Finally, don't gen if the same values
+        std::string infix = functionInputText.GetText().getString();
 
         bool sameValues = true;
-        if (!ignoreSame) {
 
-            if (aNCValues.size() == indexes.size()) {
-                for (size_t i = 0; i < aNCValues.size(); i++) {
-                    if (aNCValues[i] != Vector3f(tabs.GetTabs()[indexes[i]].a, tabs.GetTabs()[indexes[i]].n, tabs.GetTabs()[indexes[i]].c)) {
-                        sameValues = false;
-                    };
-                }
-            }
-
-            else {
+        for (int i = 0; i < aNCValues.size(); ++i) {
+            Tabs::Tab tab = tabs.GetTabs()[i];
+            if (aNCValues[i].a != tab.a || aNCValues[i].n != tab.n || aNCValues[i].c != tab.c) {
+                aNCValues[i] = { tab.a, tab.n, tab.c };
                 sameValues = false;
             }
         }
 
-        else {
-            sameValues = false;
-        }
-
-        if (sameValues) {
+        if (sameValues && infix == oldInfix) {
+            oldInfix = infix;
             return;
         }
 
-        else {
-            aNCValues.clear();
-            for (size_t i = 0; i < indexes.size(); i++) {
-                aNCValues.push_back(Vector3f(tabs.GetTabs()[indexes[i]].a, tabs.GetTabs()[indexes[i]].n, tabs.GetTabs()[indexes[i]].c));
-            }
+        oldInfix = infix;
+
+        //Remove spaces
+        infix.erase(std::remove_if(infix.begin(), infix.end(), isspace), infix.end());
+        
+        //Validate infix
+        if (!ValidateInfix(infix)) {
+            return;
         }
 
-
-        //Now we know the a, n and c values for the used functions in  var aNCValues
-        //And the + - / * between them and var mathOperations
+        postfixExpression = InfixToPostfix(infix);
         CalculateLines(Vector2f(defaultWindowSize));
     }
 }
@@ -405,9 +318,8 @@ void Parameters::CalculateLines(Vector2f defaultWindowSize)
     for (p = 0; p < defaultWindowSize.x; p++) {
         y = CalculateY(x);
 
-        //Note using if y == y is to check if y is a nan value
-        //And isinf occurs if domain error occurs (dividing by 0)
-        if (y == y && !isinf(y)) {
+        //Checking if y is a real value
+        if (!isnan(y) && !isinf(y)) {
             //If the lastX was NOT directly before
             //And the current x is not the first
             //Then there is an asymptote so split the lines
@@ -426,6 +338,56 @@ void Parameters::CalculateLines(Vector2f defaultWindowSize)
     }
 }
 
+bool Parameters::ValidateInfix(std::string& infix)
+{
+    const std::string validCharacters = "abcdefghx()/*+-";
+    const std::string aToH = "abcdefgh";
+    const std::string operators = "/*+-";
+
+    //a(x) = 4 char, a(x)+b(x) = 9, a(x)+b(x)-c(x) = 14 ect.
+    //If f is number of functions and c is number of chars,
+    //Our expression must satisfy: c = 5f - 1
+    //8 is max amount of functions in functionInputText
+    for (int f = 0; f < 8; ++f) {
+        if (infix.size() == (5 * f - 1)) {
+            break;
+        }
+
+        else if (f == 7) {
+            return false;
+        }
+    }
+
+    for (int i = 0; i < infix.size(); ++i) {
+        //If it is in (abcdefgh), check if it follows with (x)
+        if (aToH.find(infix[i]) != std::string::npos) {
+            if (i + 3 < infix.size()) {
+                if (infix.substr(i + 1, 3) != "(x)") {
+                    return false;
+                }
+            }
+
+            else {
+                return false;
+            }
+        }
+        //Check no two operators follow each other
+        else if (operators.find(infix[i]) != std::string::npos) {
+            if (i + 1 < infix.size()) {
+                if (operators.find(infix[i + 1]) != std::string::npos) {
+                    return false;
+                }
+            }
+
+            else {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 float Parameters::CalculateY(float x)
 {
     //Singular functions
@@ -435,44 +397,103 @@ float Parameters::CalculateY(float x)
 
     //Composite
     else { 
-        std::vector<float> termVector;
-        float currentTerm;
+        std::string aToH = "abcdefgh";
 
-        //Populate termVector
-        for (int i = 0; i < aNCValues.size(); i++) {
-            termVector.push_back((aNCValues[i].x * pow(x, aNCValues[i].y)) + aNCValues[i].z);
-        }
+        //Create a temp version of post fix (eq means equation)
+        std::vector<std::string> eq = postfixExpression;
 
-        if (mathOperations.size() < 1) {
-            return termVector[0];
-        }
-
-        currentTerm = termVector[mathOperations[0].y];
-
-        size_t size = mathOperations.size();
-        
-        //Loop through all the operations and calculate in bidmas
-        //Process example: 5 + "4" / 2 * 6 = 5 + "2" * 6 = 5 + 12 = 17
-        //The currentTerm in example is in quotation marks
-
-        for (int i = 0; i < size; i++) {
-            switch (mathOperations[i].x) {
-            case 0: //divide
-                currentTerm /= termVector[mathOperations[i].y + 1];
-                break;
-            case 1: //multipy
-                currentTerm *= termVector[mathOperations[i].y + 1];
-                break;
-            case 2: //add
-                currentTerm += termVector[mathOperations[i].y + 1];
-                break;
-            case 3: //subtract
-                currentTerm -= termVector[mathOperations[i].y + 1];
-                break;
+        //Replace function names with their terms at this x
+        for (int i = 0; i < eq.size(); ++i) {
+            if (aToH.find(eq[i][0]) != std::string::npos) {
+                int functionIndex = aToH.find(eq[i][0]);
+                float term = (aNCValues[functionIndex].a * pow(x, aNCValues[functionIndex].n)) + aNCValues[functionIndex].c;
+                eq[i] = std::to_string(term);
             }
         }
-        return currentTerm;
+
+        std::stack<float> result;
+        
+        for (int i = 0; i < eq.size(); ++i) {
+            if (eq[i] == "/" || eq[i] == "*" || eq[i] == "+" || eq[i] == "-") {
+                if (result.size() >= 2) {
+                    float term2 = result.top();
+                    result.pop();
+                    float term1 = result.top();
+
+                    switch (eq[i][0]) {
+                    case '/':
+                        result.top() = term1 / term2;
+                        break;
+
+                    case '*':
+                        result.top() = term1 * term2;
+                        break;
+
+                    case '+':
+                        result.top() = term1 + term2;
+                        break;
+
+                    case '-':
+                        result.top() = term1 - term2;
+                        break;
+                    }
+                }
+                else {
+                    std::cout << "(Parameters) Error: Invalid postfix!";
+                    return 0;
+                }
+            }
+
+            else {
+                result.push(std::stof(eq[i]));
+            }
+        }
+
+        return result.top();
     }
+}
+
+std::vector<std::string> Parameters::InfixToPostfix(std::string& infix)
+{
+    //Note: Shouldn't need to check much as it should have been validated
+
+    std::vector<std::string> output;
+    std::stack<char> operators;
+    
+    int i = 0;
+    std::string aToH = "abcdefgh";
+
+    while(i < infix.size()) {
+        //If part of function name, add to the output
+        if(aToH.find(infix[i]) != std::string::npos) {
+            std::string newString = "(x)";
+            newString.insert(newString.begin(), infix[i]);
+            output.push_back(newString);
+            //And skip past the (x)
+            i += 4;
+        }
+
+        //If an operator, move any higher priority operators from the stack
+        //To the output vector (push_back then pop)
+        else if(infix[i] == '+' || infix[i] == '-' || infix[i] == '*' || infix[i] == '/') {
+            while (!operators.empty() && GetOperatorPriority(operators.top()) >= GetOperatorPriority(infix[i])) {
+                output.push_back(std::string(1, operators.top()));
+                operators.pop();
+            }
+            //Then push the new operator to the top of the stack
+            operators.push(infix[i]);
+
+            i++;
+        }
+    }
+
+    //Then add any remaining operators to the end of the output
+    while (!operators.empty()) {
+        output.push_back(std::string(1, operators.top()));
+        operators.pop();
+    }
+
+    return output;
 }
 
 Vector2f Parameters::ConvertPos(Vector2f defaultWindowSize, float x, float y) {

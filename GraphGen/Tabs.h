@@ -19,11 +19,6 @@ public:
 	void Update(Event event);
 	void Draw();
 
-private:
-	void UpdateValues(int i);
-
-	void UpdateText(int i);
-
 	struct Tab {
 		sf::RectangleShape rect;
 		sf::Text text;
@@ -32,6 +27,11 @@ private:
 		float n; //They never are needed in mathematical operations
 		float c; //And only interacting with the inputTexts.
 	};
+
+private:
+	void UpdateValues(int i);
+
+	void UpdateText(int i);
 
 	std::vector<Tab> tabs;
 
