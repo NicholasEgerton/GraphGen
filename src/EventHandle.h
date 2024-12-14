@@ -9,7 +9,6 @@ public:
 	EventHandle() = delete;
 	EventHandle(Renderer& renderer) : renderer(renderer) {};
 	void Update();
-
 private:
 	Renderer& renderer;
 };

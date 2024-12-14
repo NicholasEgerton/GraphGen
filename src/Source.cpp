@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "EventHandle.h"
 #include "Renderer.h"
+#include "UI.h"
 
 using namespace sf;
 
@@ -12,11 +13,17 @@ int main()
 
     EventHandle eventHandle = EventHandle(renderer);
 
+    UI ui = UI(renderer);
+
     while (renderer.GetWindow()->isOpen())
     {
+        renderer.Clear();
+
         eventHandle.Update();
 
-        renderer.Update();
+        ui.Update();
+
+        renderer.Display();
     }
 
     return 0;

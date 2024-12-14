@@ -5,12 +5,31 @@ using namespace sf;
 
 Renderer::Renderer(std::unique_ptr<RenderWindow> window) : window(std::move(window))
 {
-	view = std::make_unique<View>(Renderer::window->getDefaultView());
+	view = std::make_unique<View>(this->window->getDefaultView());
 }
 
-void Renderer::Update()
+void Renderer::Draw(sf::Drawable& obj)
+{
+	window->draw(obj);
+}
+
+void Renderer::Display()
+{
+	window->display();
+}
+
+void Renderer::Clear()
 {
 	window->clear();
+}
 
-	window->display();
+void Renderer::Close()
+{
+	window->close();
+}
+
+void Renderer::Resize(Vector2f newSize)
+{
+	view->setSize(newSize);
+	window->setView(*view);
 }
