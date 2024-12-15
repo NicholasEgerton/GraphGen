@@ -8,8 +8,7 @@ using namespace sf;
 
 int main()
 {
-    static const VideoMode defaultWindowSize = VideoMode(1000, 1000);
-    Renderer renderer = Renderer(std::make_unique<RenderWindow>(defaultWindowSize, "GraphGen"));
+    Renderer renderer = Renderer();
 
     EventHandle eventHandle = EventHandle(renderer);
 

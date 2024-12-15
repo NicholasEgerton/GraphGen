@@ -1,11 +1,18 @@
 //Work of Nicholas Egerton
 #include "Renderer.h"
+#include <iostream>
 
 using namespace sf;
 
-Renderer::Renderer(std::unique_ptr<RenderWindow> window) : window(std::move(window))
+Renderer::Renderer()
 {
-	view = std::make_unique<View>(this->window->getDefaultView());
+	static const VideoMode defaultWindowSize = VideoMode(1000, 1000);
+	window = std::make_unique<RenderWindow>(defaultWindowSize, "GraphGen");
+	view = std::make_unique<View>(window->getDefaultView());
+	cambria = std::make_unique<Font>();
+	if (!cambria->loadFromFile("fonts/cambria.ttc")) {
+		std::cout << "(Renderer) Error: Failed loading font 'fonts/cambria.ttc'\n";
+	}
 }
 
 void Renderer::Draw(sf::Drawable& obj)

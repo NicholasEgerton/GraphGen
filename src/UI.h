@@ -8,11 +8,11 @@
 class UI {
 public:
 	UI() = delete;
-	UI(Renderer& renderer) : renderer(renderer) {};
+	UI(Renderer& renderer);
 
 	void Update();
 private:
-	SideBar sideBar = SideBar(sf::Vector2f(0, 0), sf::Vector2f(333, 1000), sf::Color(25, 25, 25));
-
 	Renderer& renderer;
+
+	SideBar sideBar = SideBar(sf::Vector2f(0, 0), sf::Vector2f(333, 1000), renderer, sf::Color(25, 25, 25));
 };

@@ -5,7 +5,7 @@
 
 class Renderer {
 public:
-	Renderer(std::unique_ptr<sf::RenderWindow> window);
+	Renderer();
 
 	void Draw(sf::Drawable& obj);
 	void Display();
@@ -15,6 +15,7 @@ public:
 private:
 	std::unique_ptr<sf::RenderWindow> window;
 	std::unique_ptr<sf::View> view;
+	std::unique_ptr<sf::Font> cambria;
 public:
 	sf::RenderWindow* GetWindow() const {
 		return window.get();
@@ -22,5 +23,9 @@ public:
 
 	sf::View* GetView() const {
 		return view.get();
+	}
+
+	sf::Font* GetCambria() const {
+		return cambria.get();
 	}
 };
