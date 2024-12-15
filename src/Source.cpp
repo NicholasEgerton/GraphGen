@@ -16,12 +16,19 @@ int main()
 
     while (renderer.GetWindow()->isOpen())
     {
+        //General flow of the program:
+        //Clear->Input->UI->Display
+
+        //The display is cleared
         renderer.Clear();
 
+        //Events and input are handled
         eventHandle.Update();
 
+        //The UI is updated and then drawn to the screen
         ui.Update();
 
+        //They are then displayed
         renderer.Display();
     }
 

@@ -5,10 +5,13 @@
 #include "Renderer.h"
 #include "SideBar.h"
 
+//The UI class manages and draws all parent widgets on the screen,
+//And parent widgets may hold their own child widgets that they manage and draw.
+
 class UI {
 public:
 	UI() = delete;
-	UI(Renderer& renderer);
+	UI(Renderer& renderer) : renderer(renderer) {};
 
 	void Update();
 private:
