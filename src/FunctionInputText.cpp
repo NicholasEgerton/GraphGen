@@ -3,9 +3,7 @@
 
 using namespace sf;
 
-
-
-FunctionInputText::FunctionInputText(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, Color backgroundCol, std::string defaultText, unsigned int charSize) : Widget(pos, size)
+FunctionInputText::FunctionInputText(Vector2f pos, Vector2f size, Font& font, Color backgroundCol, std::string defaultText, unsigned int charSize) : Widget(pos, size)
 {
 	text = Text(defaultText, font, charSize);
 	text.setPosition(pos);
@@ -17,11 +15,11 @@ FunctionInputText::FunctionInputText(sf::Vector2f pos, sf::Vector2f size, sf::Fo
 
 void FunctionInputText::draw(RenderTarget& target, RenderStates states) const
 {
-	target.draw(background);
-	target.draw(text);
+	target.draw(background, states);
+	target.draw(text, states);
 }
 
-void FunctionInputText::OnClick(sf::Event& event) const
+void FunctionInputText::OnClick(Event& event) const
 {
 	std::cout << "Clicked!\n";
 }

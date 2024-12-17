@@ -4,13 +4,13 @@
 
 using namespace sf;
 
-SideBar::SideBar(sf::Vector2f pos, sf::Vector2f size, Font& font, sf::Color backgroundCol) : Widget(pos, size), font(font), backgroundCol(backgroundCol)
+SideBar::SideBar(Vector2f pos, Vector2f size, Font& font, Color backgroundCol) : Widget(pos, size), font(font), backgroundCol(backgroundCol)
 {
 	background.setPosition(pos);
 	background.setFillColor(backgroundCol);
 
-	childWidgets.push_back(std::make_unique<FunctionInputText>(Utils::LocalToGlobalPos(sf::Vector2f(20, 10), pos),
-		sf::Vector2f(300, 75), font, Color(35, 35, 35), "y = x", 50));
+	childWidgets.push_back(std::make_unique<FunctionInputText>(Utils::LocalToGlobalPos(Vector2f(20, 10), pos),
+		Vector2f(300, 75), font, Color(35, 35, 35), "y = x", 50));
 }
 
 void SideBar::draw(RenderTarget& target, RenderStates states) const

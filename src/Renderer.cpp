@@ -15,7 +15,7 @@ Renderer::Renderer()
 	}
 }
 
-void Renderer::Draw(sf::Drawable& obj)
+void Renderer::Draw(Drawable& obj)
 {
 	window->draw(obj);
 }

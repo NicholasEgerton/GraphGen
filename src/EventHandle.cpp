@@ -47,7 +47,7 @@ void EventHandle::CheckForFocus(Event& event)
     }
 }
 
-void EventHandle::OnClick(sf::Event& event)
+void EventHandle::OnClick(Event& event)
 {
     if (focus) {
         focus->OnClick(event);
