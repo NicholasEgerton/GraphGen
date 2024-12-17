@@ -4,19 +4,18 @@
 #include "SFML/Graphics.hpp"
 #include "Widget.h"
 #include "FunctionInputText.h"
-#include "Utils.h"
 
 class SideBar : public Widget {
 public:
 	SideBar() = delete;
-	SideBar(sf::Vector2f pos, sf::Vector2f size, Renderer& renderer, sf::Color backgroundCol);
+	SideBar(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, sf::Color backgroundCol);
 
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	virtual std::vector<Widget*> GetFocusableChildWidgets() override;
 private:
+	sf::Font& font;
 	sf::Color backgroundCol;
 
-	sf::RectangleShape sideBarShape = sf::RectangleShape(size);
-	FunctionInputText functionInputText = FunctionInputText(Utils::LocalToGlobalPos(sf::Vector2f(20,10), pos),
-		sf::Vector2f(300, 200), renderer, "y = x", 50);
+	sf::RectangleShape background = sf::RectangleShape(size);
+	std::vector<std::unique_ptr<Widget>> childWidgets;
 };

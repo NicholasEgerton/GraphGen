@@ -12,7 +12,7 @@ int main()
 
     EventHandle eventHandle = EventHandle(renderer);
 
-    UI ui = UI(renderer);
+    UI ui = UI(renderer, eventHandle);
 
     while (renderer.GetWindow()->isOpen())
     {
