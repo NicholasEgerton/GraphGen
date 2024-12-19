@@ -1,4 +1,4 @@
-//Work of Nicholas Egertons
+//Work of Nicholas Egerton
 #pragma once
 
 #include "SFML/Graphics.hpp"

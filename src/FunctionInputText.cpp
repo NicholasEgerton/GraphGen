@@ -1,3 +1,4 @@
+//Work of Nicholas Egerton
 #include "FunctionInputText.h"
 #include <iostream>
 
@@ -10,6 +11,9 @@ FunctionInputText::FunctionInputText(Vector2f pos, Vector2f size, Font& font, Co
 
 	background.setPosition(pos);
 	background.setFillColor(backgroundCol);
+
+	const float fCharSize = static_cast<float>(charSize);
+	caret = RectangleShape(Vector2f(fCharSize, fCharSize));
 }
 
 
@@ -19,13 +23,35 @@ void FunctionInputText::draw(RenderTarget& target, RenderStates states) const
 	target.draw(text, states);
 }
 
-void FunctionInputText::OnClick(Event& event) const
+void FunctionInputText::Update()
 {
-	std::cout << "Clicked!\n";
+	std::cout << "Focused = " << state.focused << "Hovered = " << state.hovered << '\n';
 }
 
-std::vector<Widget*> FunctionInputText::GetFocusableChildWidgets()
+
+Cursor::Type FunctionInputText::OnHover(const Event& event)
 {
-	//FunctionInputText has no child widgets, but itself is focusable.
+	state.hovered = true;
+	return Cursor::Text;
+}
+
+void FunctionInputText::OnUnhover(const Event& event)
+{
+	state.hovered = false;
+}
+
+void FunctionInputText::OnClick(const Event& event)
+{
+	state.focused = true;
+}
+
+void FunctionInputText::OnUnfocus(const Event& event)
+{
+	state.focused = false;
+}
+
+std::vector<Widget*> FunctionInputText::GetHoverableChildWidgets()
+{
+	//FunctionInputText has no child widgets, but itself is hoverable.
 	return std::vector<Widget*>({ this });
 }

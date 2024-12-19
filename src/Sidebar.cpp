@@ -21,19 +21,26 @@ void SideBar::draw(RenderTarget& target, RenderStates states) const
 	}
 }
 
-std::vector<Widget*> SideBar::GetFocusableChildWidgets()
+void SideBar::Update()
 {
-	//Sidebar is not a focusable widget, so will not include itself.
-	std::vector<Widget*> focusableChildWidgets;
+	for (const auto& w : childWidgets) {
+		w->Update();
+	}
+}
+
+std::vector<Widget*> SideBar::GetHoverableChildWidgets()
+{
+	//Sidebar is not a hoverable widget, so will not include itself.
+	std::vector<Widget*> hoverableChildWidgets;
 
 	//Loop through child widgets
 	for (const auto& w : childWidgets) {
-		//Append this childWidget's focusableChildWidgets to the total
-		std::vector<Widget*> cW = w->GetFocusableChildWidgets();
+		//Append this childWidget's hoverableChildWidgets to the total
+		std::vector<Widget*> cW = w->GetHoverableChildWidgets();
 		if (!cW.empty()) {
-			focusableChildWidgets.insert(focusableChildWidgets.begin(), cW.begin(), cW.end());
+			hoverableChildWidgets.insert(hoverableChildWidgets.begin(), cW.begin(), cW.end());
 		}
 	}
 	
-	return focusableChildWidgets;
+	return hoverableChildWidgets;
 }

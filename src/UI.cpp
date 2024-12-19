@@ -14,17 +14,20 @@ UI::UI(Renderer& renderer, EventHandle& eventHandle) : renderer(renderer), event
 	//Loop through child widgets
 	for (const auto& w : childWidgets) {
 		//Append this childWidget's focusableChildWidgets to the total
-		std::vector<Widget*> cW = w->GetFocusableChildWidgets();
+		std::vector<Widget*> cW = w->GetHoverableChildWidgets();
 		if (!cW.empty()) {
 			totalFocusable.insert(totalFocusable.begin(), cW.begin(), cW.end());
 		}
 	}
 
-	eventHandle.AddFocusableWidgets(totalFocusable);
+	eventHandle.AddHoverableWidgets(totalFocusable);
 }
 
 void UI::Update()
 {
+	for (const auto& w : childWidgets) {
+		w->Update();
+	}
 	for (const auto& w : childWidgets) {
 		renderer.Draw(*w);
 	}

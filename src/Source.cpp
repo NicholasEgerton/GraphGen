@@ -10,9 +10,9 @@ int main()
 {
     Renderer renderer = Renderer();
 
-    EventHandle eventHandle = EventHandle(renderer);
+    EventHandle eventHandle(renderer);
 
-    UI ui = UI(renderer, eventHandle);
+    UI ui(renderer, eventHandle);
 
     while (renderer.GetWindow()->isOpen())
     {

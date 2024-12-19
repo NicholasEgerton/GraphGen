@@ -7,31 +7,28 @@
 
 //The event handle manages all events
 //The important part is the design pattern that all objects that wish
-//To be checked to be the focus, are responsible to call AddFocusableWidget(this)
+//To be checked to be hovered, are responsible to call AddHoverableWidget(this)
 
 class EventHandle {
 public:
 	EventHandle() = delete;
-	EventHandle(Renderer& renderer) : renderer(renderer) {};
+	EventHandle(Renderer& renderer);
 	void Update();
 private:
 	Renderer& renderer;
 
 	void OnClick(sf::Event& event);
-	void CheckForFocus(sf::Event& event);
+	void CheckForHover(sf::Event& event);
 
-	std::vector<Widget*> focusableWidgets;
+	std::vector<Widget*> hoverableWidgets;
+	Widget* hover = nullptr;
 	Widget* focus = nullptr;
-public:
-	void AddFocusableWidgets(std::vector<Widget*> widgets) {
-		focusableWidgets.insert(focusableWidgets.begin(), widgets.begin(), widgets.end());
-	}
 
-	void RemoveFocusableWidget(Widget& widget) {
-		for (int i = 0; i < focusableWidgets.size(); i++) {
-			if (focusableWidgets[i] == &widget) {
-				focusableWidgets.erase(focusableWidgets.begin() + i);
-			}
-		}
+	sf::Cursor arrowCursor;
+	sf::Cursor textCursor;
+	sf::Cursor::Type currentCursorType;
+public:
+	void AddHoverableWidgets(std::vector<Widget*> widgets) {
+		hoverableWidgets.insert(hoverableWidgets.begin(), widgets.begin(), widgets.end());
 	}
 };
