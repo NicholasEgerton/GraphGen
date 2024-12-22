@@ -18,10 +18,7 @@ void EventHandle::Update()
                 Vector2f newSize = Vector2f(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
                 renderer.Resize(newSize);
         }
-        if (event.type == Event::MouseButtonPressed) {
-            int debug = 3;
-            debug += 3;
-        }
+
         EventResult eventResult = ui.OnEvent(event);
 
         if (eventResult.consumeInput && eventResult.newCursorType != currentCursorType) {
