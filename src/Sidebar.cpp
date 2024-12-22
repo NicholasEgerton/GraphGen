@@ -1,6 +1,7 @@
 //Work of Nicholas Egerton
 #include "SideBar.h"
 #include "Utils.h"
+#include "FunctionInputText.h"
 
 using namespace sf;
 
@@ -28,19 +29,16 @@ void SideBar::Update()
 	}
 }
 
-std::vector<Widget*> SideBar::GetHoverableChildWidgets()
+EventResult SideBar::OnEvent(const Event& event)
 {
-	//Sidebar is not a hoverable widget, so will not include itself.
-	std::vector<Widget*> hoverableChildWidgets;
-
-	//Loop through child widgets
+	//Sidebar is not an InputWidget, so will just call OnEvent()
+	//On child widgets
+	EventResult consumedInput = { false, Cursor::Type::Arrow };
 	for (const auto& w : childWidgets) {
-		//Append this childWidget's hoverableChildWidgets to the total
-		std::vector<Widget*> cW = w->GetHoverableChildWidgets();
-		if (!cW.empty()) {
-			hoverableChildWidgets.insert(hoverableChildWidgets.begin(), cW.begin(), cW.end());
+		EventResult eventResult = w->OnEvent(event);
+		if (eventResult.consumeInput) {
+			consumedInput = eventResult;
 		}
 	}
-	
-	return hoverableChildWidgets;
+	return consumedInput;
 }

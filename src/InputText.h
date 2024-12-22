@@ -2,9 +2,10 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "Widget.h"
+#include "InputWidget.h"
+#include "EventResult.h"
 
-class InputText : public Widget {
+class InputText : public InputWidget {
 public:
 	InputText() = delete;
 	InputText(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, sf::Color backgroundCol, std::string defaultText,
@@ -12,13 +13,12 @@ public:
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	virtual void Update() override;
-	virtual void OnClick(const sf::Event& event) override;
-	virtual sf::Cursor::Type OnHover(const sf::Event& event) override;
-	virtual void OnUnhover(const sf::Event& event) override;
-	virtual void OnUnfocus(const sf::Event& event) override;
-
-	virtual std::vector<Widget*> GetHoverableChildWidgets() override;
 protected:
+	virtual EventResult OnClick(const sf::Event& event) override;
+	virtual EventResult OnHover(const sf::Event& event) override;
+	virtual EventResult OnUnhover(const sf::Event& event) override;
+	virtual EventResult OnUnfocus(const sf::Event& event) override;
+
 	unsigned int charSize;
 
 	void UpdateCaret(sf::Vector2f mousePos);

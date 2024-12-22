@@ -1,8 +1,6 @@
 #pragma once
 
-class WidgetState {
-public:
-	WidgetState(bool hovered, bool focused) : hovered(hovered), focused(focused) {};
+struct WidgetState {
 	bool hovered;
 	bool focused;
 };

@@ -3,32 +3,16 @@
 
 #include "SFML/Graphics.hpp"
 #include "Renderer.h"
-#include "Widget.h"
-
-//The event handle manages all events
-//The important part is the design pattern that all objects that wish
-//To be checked to be hovered, are responsible to call AddHoverableWidget(this)
+#include "UI.h"
 
 class EventHandle {
 public:
 	EventHandle() = delete;
-	EventHandle(Renderer& renderer);
+	EventHandle(Renderer& renderer, UI& ui) : renderer(renderer), ui(ui) {};
 	void Update();
 private:
 	Renderer& renderer;
+	UI& ui;
 
-	void OnClick(sf::Event& event);
-	void CheckForHover(sf::Event& event);
-
-	std::vector<Widget*> hoverableWidgets;
-	Widget* hover = nullptr;
-	Widget* focus = nullptr;
-
-	sf::Cursor arrowCursor;
-	sf::Cursor textCursor;
-	sf::Cursor::Type currentCursorType;
-public:
-	void AddHoverableWidgets(std::vector<Widget*> widgets) {
-		hoverableWidgets.insert(hoverableWidgets.begin(), widgets.begin(), widgets.end());
-	}
+	sf::Cursor::Type currentCursorType = sf::Cursor::Arrow;
 };

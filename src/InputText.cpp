@@ -5,7 +5,7 @@
 
 using namespace sf;
 
-InputText::InputText(Vector2f pos, Vector2f size, Font& font, Color backgroundCol, std::string defaultText, unsigned int charSize) : Widget(pos, size), charSize(charSize)
+InputText::InputText(Vector2f pos, Vector2f size, Font& font, Color backgroundCol, std::string defaultText, unsigned int charSize) : InputWidget(pos, size), charSize(charSize)
 {
 	text = Text(defaultText, font, charSize);
 	text.setPosition(pos);
@@ -40,7 +40,6 @@ void InputText::Update()
 		}
 	}
 }
-
 
 void InputText::UpdateCaret(Vector2f mousePos)
 {
@@ -123,18 +122,19 @@ void InputText::MoveCaret(size_t charIndex)
 	caret.setPosition(Utils::GetCharacterPos(text, charIndex).x, caret.getPosition().y);
 }
 
-Cursor::Type InputText::OnHover(const Event& event)
+EventResult InputText::OnHover(const Event& event)
 {
 	state.hovered = true;
-	return Cursor::Text;
+	return { true, Cursor::Text };
 }
 
-void InputText::OnUnhover(const Event& event)
+EventResult InputText::OnUnhover(const Event& event)
 {
 	state.hovered = false;
+	return { true, Cursor::Arrow };
 }
 
-void InputText::OnClick(const Event& event)
+EventResult InputText::OnClick(const Event& event)
 {
 	if (!state.focused) {
 		caretClock.restart();
@@ -143,15 +143,11 @@ void InputText::OnClick(const Event& event)
 	Vector2f mousePos = Vector2f(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
 	UpdateCaret(mousePos);
 	state.focused = true;
+	return { false, Cursor::Arrow };
 }
 
-void InputText::OnUnfocus(const Event& event)
+EventResult InputText::OnUnfocus(const Event& event)
 {
 	state.focused = false;
-}
-
-std::vector<Widget*> InputText::GetHoverableChildWidgets()
-{
-	//InputText has no child widgets, but itself is hoverable.
-	return std::vector<Widget*>({ this });
+	return { false, Cursor::Arrow };
 }

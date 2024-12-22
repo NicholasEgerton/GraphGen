@@ -3,7 +3,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "Widget.h"
-#include "FunctionInputText.h"
+#include "EventResult.h"
 
 class SideBar : public Widget {
 public:
@@ -12,7 +12,7 @@ public:
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	virtual void Update() override;
-	virtual std::vector<Widget*> GetHoverableChildWidgets() override;
+	virtual EventResult OnEvent(const sf::Event& event) override;
 private:
 	sf::Font& font;
 	sf::Color backgroundCol;

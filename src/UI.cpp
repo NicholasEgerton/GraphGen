@@ -4,23 +4,10 @@
 
 using namespace sf;
 
-UI::UI(Renderer& renderer, EventHandle& eventHandle) : renderer(renderer), eventHandle(eventHandle)
+UI::UI(Renderer& renderer) : renderer(renderer)
 {
 	//Setup childWidgets
 	childWidgets.push_back(std::make_unique<SideBar>(Vector2f(0, 0), Vector2f(333, 1000), *renderer.GetCambria(), Color(25, 25, 25)));
-
-	//Find focusableChildWidgets and add them to EventHandle
-	std::vector<Widget*> totalFocusable;
-	//Loop through child widgets
-	for (const auto& w : childWidgets) {
-		//Append this childWidget's focusableChildWidgets to the total
-		std::vector<Widget*> cW = w->GetHoverableChildWidgets();
-		if (!cW.empty()) {
-			totalFocusable.insert(totalFocusable.begin(), cW.begin(), cW.end());
-		}
-	}
-
-	eventHandle.AddHoverableWidgets(totalFocusable);
 }
 
 void UI::Update()
@@ -31,4 +18,16 @@ void UI::Update()
 	for (const auto& w : childWidgets) {
 		renderer.Draw(*w);
 	}
+}
+
+EventResult UI::OnEvent(Event& event)
+{
+	EventResult consumedInput = { false, Cursor::Type::Arrow };
+	for (const auto& w : childWidgets) {
+		EventResult eventResult = w->OnEvent(event);
+		if (eventResult.consumeInput) {
+			consumedInput = eventResult;
+		}
+	}
+	return consumedInput;
 }

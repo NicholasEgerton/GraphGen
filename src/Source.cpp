@@ -8,11 +8,11 @@ using namespace sf;
 
 int main()
 {
-    Renderer renderer = Renderer();
+    Renderer renderer;
 
-    EventHandle eventHandle(renderer);
+    UI ui(renderer);
 
-    UI ui(renderer, eventHandle);
+    EventHandle eventHandle(renderer, ui);
 
     while (renderer.GetWindow()->isOpen())
     {

@@ -7,15 +7,19 @@ class Renderer {
 public:
 	Renderer();
 
-	void Draw(sf::Drawable& obj);
+	void Draw(const sf::Drawable& obj);
 	void Display();
 	void Clear();
 	void Close();
-	void Resize(sf::Vector2f newSize);
+	void Resize(const sf::Vector2f newSize);
+	void SetCursor(const sf::Cursor::Type cursorType);
 private:
 	std::unique_ptr<sf::RenderWindow> window;
 	std::unique_ptr<sf::View> view;
 	std::unique_ptr<sf::Font> cambria;
+
+	sf::Cursor arrowCursor;
+	sf::Cursor textCursor;
 public:
 	sf::RenderWindow* GetWindow() const {
 		return window.get();
