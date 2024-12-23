@@ -1,6 +1,6 @@
 //Work of Nicholas Egerton
 #include "Renderer.h"
-#include <iostream>
+#include <assert.h>
 
 using namespace sf;
 
@@ -13,17 +13,15 @@ Renderer::Renderer()
 
 	//Load fonts
 	cambria = std::make_unique<Font>();
-	if (!cambria->loadFromFile("fonts/cambria.ttc")) {
-		std::cout << "(Renderer) Error: Failed loading font 'fonts/cambria.ttc'\n";
-	}
+	const bool cambriaLoaded = cambria->loadFromFile("fonts/cambria.ttc");
+	assert(cambriaLoaded && "Cambria should load from file");
 
 	//Load cursors
-	if (!arrowCursor.loadFromSystem(Cursor::Arrow)) {
-		std::cout << "(EventHandle) Error: Failed loading arrowCursor\n";
-	}
-	if (!textCursor.loadFromSystem(Cursor::Text)) {
-		std::cout << "(EventHandle) Error: Failed loading textCursor\n";
-	}
+	const bool arrowCursorLoaded = arrowCursor.loadFromSystem(Cursor::Arrow);
+	assert(arrowCursorLoaded && "ArrowCursor should load from system");
+
+	const bool textCursorLoaded = textCursor.loadFromSystem(Cursor::Text);
+	assert(textCursorLoaded && "TextCursor should load from system");
 }
 
 void Renderer::Draw(const Drawable& obj)

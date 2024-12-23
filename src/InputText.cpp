@@ -1,7 +1,7 @@
 //Work of Nicholas Egerton
 #include "InputText.h"
 #include "Utils.h"
-#include <iostream>
+#include <assert.h>
 
 using namespace sf;
 
@@ -108,10 +108,7 @@ float InputText::FindCharacterMiddleX(size_t charIndex)
 {
 	std::string s = text.getString();
 
-	if (charIndex >= s.size()) {
-		std::cout << "(InputText) Error: CharIndex out of range.\n";
-		return 0.0f;
-	}
+	assert(charIndex < s.size() && "charIndex should be in range of string");
 	float left = Utils::GetCharacterPos(text, charIndex).x;
 	float middle = left + (Utils::GetCharacterWidth(s[charIndex], charSize, *text.getFont(), false) / 2.f);
 	return middle;
