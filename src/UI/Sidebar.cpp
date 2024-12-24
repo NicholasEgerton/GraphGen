@@ -1,7 +1,7 @@
 //Work of Nicholas Egerton
-#include "SideBar.h"
-#include "Utils.h"
-#include "FunctionInputText.h"
+#include "UI/SideBar.h"
+#include "core/Utils.h"
+#include "UI/FunctionInputText.h"
 
 using namespace sf;
 

@@ -1,5 +1,5 @@
 //Work of Nicholas Egerton
-#include "Renderer.h"
+#include "core/Renderer.h"
 #include <stdexcept>
 
 using namespace sf;

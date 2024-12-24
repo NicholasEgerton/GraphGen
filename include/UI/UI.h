@@ -2,9 +2,9 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "Renderer.h"
-#include "Widget.h"
-#include "EventResult.h"
+#include "core/Renderer.h"
+#include "UI/Widget.h"
+#include "core/EventResult.h"
 
 //The UI class manages and draws all parent widgets on the screen,
 //And parent widgets may hold their own child widgets that they manage and draw.

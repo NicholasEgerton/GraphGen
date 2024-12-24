@@ -1,6 +1,6 @@
 //Work of Nicholas Egerton
-#include "UI.h"
-#include "SideBar.h"
+#include "UI/UI.h"
+#include "UI/SideBar.h"
 
 using namespace sf;
 

@@ -1,6 +1,6 @@
 //Work of Nicholas Egerton
-#include "InputText.h"
-#include "Utils.h"
+#include "UI/InputText.h"
+#include "core/Utils.h"
 #include <assert.h>
 
 using namespace sf;

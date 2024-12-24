@@ -2,8 +2,8 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "Widget.h"
-#include "EventResult.h"
+#include "UI/Widget.h"
+#include "core/EventResult.h"
 
 class SideBar : public Widget {
 public:

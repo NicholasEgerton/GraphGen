@@ -1,9 +1,9 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "Widget.h"
-#include "WidgetState.h"
-#include "EventResult.h"
+#include "UI/Widget.h"
+#include "UI/WidgetState.h"
+#include "core/EventResult.h"
 
 class InputWidget : public Widget {
 public:

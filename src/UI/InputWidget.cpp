@@ -1,6 +1,6 @@
 #include "SFML/Graphics.hpp"
-#include "InputWidget.h"
-#include "Utils.h"
+#include "UI/InputWidget.h"
+#include "core/Utils.h"
 
 using namespace sf;
 

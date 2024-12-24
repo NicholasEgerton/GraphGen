@@ -2,8 +2,8 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "Renderer.h"
-#include "EventResult.h"
+#include "core/Renderer.h"
+#include "core/EventResult.h"
 
 //Everything drawn to the screen is a child of widget, which itself is a
 //Child of sf::Drawable. 

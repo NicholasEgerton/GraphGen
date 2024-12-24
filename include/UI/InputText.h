@@ -3,7 +3,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "InputWidget.h"
-#include "EventResult.h"
+#include "core/EventResult.h"
 
 class InputText : public InputWidget {
 public:

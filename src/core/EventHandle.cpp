@@ -1,6 +1,6 @@
 //Work of Nicholas Egerton
-#include "EventHandle.h"
-#include "EventResult.h"
+#include "core/EventHandle.h"
+#include "core/EventResult.h"
 
 using namespace sf;
 

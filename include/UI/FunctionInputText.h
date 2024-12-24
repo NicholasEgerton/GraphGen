@@ -2,7 +2,7 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "InputText.h"
+#include "UI/InputText.h"
 
 class FunctionInputText : public InputText {
 public:

@@ -2,8 +2,8 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "Renderer.h"
-#include "UI.h"
+#include "core/Renderer.h"
+#include "UI/UI.h"
 
 class EventHandle {
 public:
