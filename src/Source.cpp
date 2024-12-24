@@ -3,32 +3,57 @@
 #include "EventHandle.h"
 #include "Renderer.h"
 #include "UI.h"
+#include <stdexcept>
+#include "Errors.h"
 
 using namespace sf;
 
 int main()
 {
-    Renderer renderer;
-    UI ui{ renderer };
-    EventHandle eventHandle{ renderer, ui };
+    try {
+        Renderer renderer;
+        UI ui{ renderer };
+        EventHandle eventHandle{ renderer, ui };
 
-    while (renderer.GetWindow()->isOpen())
-    {
-        //General flow of the program:
-        //Clear->Input->UI->Display
+        while (renderer.GetWindow()->isOpen())
+        {
+            try {
+                //General flow of the program:
+                //Clear->Input->UI->Display
 
-        //The display is cleared
-        renderer.Clear();
+                //The display is cleared
+                renderer.Clear();
 
-        //Events and input are handled
-        eventHandle.Update();
+                //Events and input are handled
+                eventHandle.Update();
 
-        //The UI is updated and then drawn to the screen
-        ui.Update();
+                //The UI is updated and then drawn to the screen
+                ui.Update();
 
-        //They are then displayed
-        renderer.Display();
+                //They are then displayed
+                renderer.Display();
+            }
+
+            catch (const std::exception& e) {
+                std::string msg{ "Runtime Error: " };
+                msg += e.what();
+                Errors::ShowError(msg);
+                return EXIT_FAILURE;
+            }
+        }
     }
 
-    return 0;
+    catch (const std::exception& e) {
+        std::string msg{ "Initialisation Error: " };
+        msg += e.what();
+        Errors::ShowError(msg);
+        return EXIT_FAILURE;
+    }
+
+    catch (...) {
+        Errors::ShowError("An unknown error occured.");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }

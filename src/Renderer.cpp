@@ -1,6 +1,6 @@
 //Work of Nicholas Egerton
 #include "Renderer.h"
-#include <assert.h>
+#include <stdexcept>
 
 using namespace sf;
 
@@ -12,15 +12,18 @@ Renderer::Renderer()
 
 	//Load fonts
 	cambria = std::make_unique<Font>();
-	const bool cambriaLoaded{ cambria->loadFromFile("fonts/cambria.ttc") };
-	assert(cambriaLoaded && "Cambria should load from file");
+	if (!cambria->loadFromFile("fonts/cambria.ttc")) {
+		throw std::runtime_error("Failed loading fonts/cambria.ttc");
+	}
 
 	//Load cursors
-	const bool arrowCursorLoaded{ arrowCursor.loadFromSystem(Cursor::Arrow) };
-	assert(arrowCursorLoaded && "ArrowCursor should load from system");
+	if (!arrowCursor.loadFromSystem(Cursor::Arrow)) {
+		throw std::runtime_error("Failed loading Cursor::Arrow from system");
+	}
 
-	const bool textCursorLoaded{ textCursor.loadFromSystem(Cursor::Text) };
-	assert(textCursorLoaded && "TextCursor should load from system");
+	if (!textCursor.loadFromSystem(Cursor::Text)) {
+		throw std::runtime_error("Failed loading Cursor::Text from system");
+	}
 }
 
 void Renderer::Draw(const Drawable& obj)
@@ -68,7 +71,7 @@ void Renderer::Resize(const Vector2u newSize)
 
 	//If the newSize is valid, resize the view
 	view->setSize(Vector2f(newSize));
-	view->setCenter(Vector2f(newSize) / 2.f);
+	view->setCenter(Vector2f(newSize.x / 2.f, newSize.y / 2.f));
 	window->setView(*view);
 }
 

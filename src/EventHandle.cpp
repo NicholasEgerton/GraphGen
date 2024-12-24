@@ -15,8 +15,8 @@ void EventHandle::Update()
                 break;
 
             case Event::Resized:
-                Vector2u newSize{ event.size.width, event.size.height };
-                renderer.Resize(newSize);
+                renderer.Resize(Vector2u(event.size.width, event.size.height));
+                break;
         }
 
         EventResult eventResult{ ui.OnEvent(event) };
