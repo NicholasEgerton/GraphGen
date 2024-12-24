@@ -33,9 +33,9 @@ EventResult SideBar::OnEvent(const Event& event)
 {
 	//Sidebar is not an InputWidget, so will just call OnEvent()
 	//On child widgets
-	EventResult consumedInput = { false, Cursor::Type::Arrow };
+	EventResult consumedInput{ false, Cursor::Type::Arrow };
 	for (const auto& w : childWidgets) {
-		EventResult eventResult = w->OnEvent(event);
+		EventResult eventResult{ w->OnEvent(event) };
 		if (eventResult.consumeInput) {
 			consumedInput = eventResult;
 		}

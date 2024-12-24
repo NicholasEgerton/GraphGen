@@ -9,10 +9,8 @@ using namespace sf;
 int main()
 {
     Renderer renderer;
-
-    UI ui(renderer);
-
-    EventHandle eventHandle(renderer, ui);
+    UI ui{ renderer };
+    EventHandle eventHandle{ renderer, ui };
 
     while (renderer.GetWindow()->isOpen())
     {

@@ -19,7 +19,7 @@ void EventHandle::Update()
                 renderer.Resize(newSize);
         }
 
-        EventResult eventResult = ui.OnEvent(event);
+        EventResult eventResult{ ui.OnEvent(event) };
 
         if (eventResult.consumeInput && eventResult.newCursorType != currentCursorType) {
             renderer.SetCursor(eventResult.newCursorType);

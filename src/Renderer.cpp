@@ -12,14 +12,14 @@ Renderer::Renderer()
 
 	//Load fonts
 	cambria = std::make_unique<Font>();
-	const bool cambriaLoaded = cambria->loadFromFile("fonts/cambria.ttc");
+	const bool cambriaLoaded{ cambria->loadFromFile("fonts/cambria.ttc") };
 	assert(cambriaLoaded && "Cambria should load from file");
 
 	//Load cursors
-	const bool arrowCursorLoaded = arrowCursor.loadFromSystem(Cursor::Arrow);
+	const bool arrowCursorLoaded{ arrowCursor.loadFromSystem(Cursor::Arrow) };
 	assert(arrowCursorLoaded && "ArrowCursor should load from system");
 
-	const bool textCursorLoaded = textCursor.loadFromSystem(Cursor::Text);
+	const bool textCursorLoaded{ textCursor.loadFromSystem(Cursor::Text) };
 	assert(textCursorLoaded && "TextCursor should load from system");
 }
 

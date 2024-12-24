@@ -9,7 +9,7 @@ EventResult InputWidget::OnEvent(const Event& event)
     //InputWidget by default has no child widgets,
     //So does not need to call OnEvent() on any.
     //Here, setup basic default bindings for events
-    EventResult eventResult = { false, Cursor::Arrow };
+    EventResult eventResult{ false, Cursor::Arrow };
     Vector2f mousePos;
     switch (event.type) {
         case Event::MouseButtonPressed:

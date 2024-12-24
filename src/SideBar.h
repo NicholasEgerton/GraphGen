@@ -17,6 +17,6 @@ private:
 	sf::Font& font;
 	sf::Color backgroundCol;
 
-	sf::RectangleShape background = sf::RectangleShape(size);
+	sf::RectangleShape background{ size };
 	std::vector<std::unique_ptr<Widget>> childWidgets;
 };

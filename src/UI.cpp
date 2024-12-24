@@ -22,9 +22,9 @@ void UI::Update()
 
 EventResult UI::OnEvent(Event& event)
 {
-	EventResult consumedInput = { false, Cursor::Type::Arrow };
+	EventResult consumedInput{ false, Cursor::Type::Arrow };
 	for (const auto& w : childWidgets) {
-		EventResult eventResult = w->OnEvent(event);
+		EventResult eventResult{ w->OnEvent(event) };
 		if (eventResult.consumeInput) {
 			consumedInput = eventResult;
 		}

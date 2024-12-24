@@ -43,7 +43,7 @@ void InputText::Update()
 
 void InputText::UpdateCaret(Vector2f mousePos)
 {
-	std::string s = text.getString();
+	std::string s{ text.getString() };
 
 	//Note: To get the last character of the string we use an index outside
 	//The range of the string, and this is ok as text.findCharacterPos(), 
@@ -55,7 +55,7 @@ void InputText::UpdateCaret(Vector2f mousePos)
 
 	//We only care about the x value as the height is always the same
 	//This is the x displacement of the caret FROM the caret
-	float displacement = FindCaretDisplacement(0, mousePos);
+	float displacement{ FindCaretDisplacement(0, mousePos) };
 
 	if (s.size() == 1) {
 		if (displacement > 0) {
@@ -77,7 +77,7 @@ void InputText::UpdateCaret(Vector2f mousePos)
 	//We start loop from the second character as we don't need
 	//To check for the old displacement for the first
 	for (size_t i = 1; i < s.size(); ++i) {
-		float newDisplacement = FindCaretDisplacement(i, mousePos);
+		float newDisplacement{ FindCaretDisplacement(i, mousePos) };
 
 		//If the old displacement is negative and the new displacement
 		//Is positive that means the caret is between the two
@@ -99,18 +99,18 @@ void InputText::UpdateCaret(Vector2f mousePos)
 
 float InputText::FindCaretDisplacement(size_t charIndex, Vector2f mousePos)
 {
-	float charX = FindCharacterMiddleX(charIndex);
-	float displacement = charX - mousePos.x;
+	float charX{ FindCharacterMiddleX(charIndex) };
+	float displacement{ charX - mousePos.x };
 	return displacement;
 }
 
 float InputText::FindCharacterMiddleX(size_t charIndex)
 {
-	std::string s = text.getString();
+	std::string s{ text.getString() };
 
 	assert(charIndex < s.size() && "charIndex should be in range of string");
-	float left = Utils::GetCharacterPos(text, charIndex).x;
-	float middle = left + (Utils::GetCharacterWidth(s[charIndex], charSize, *text.getFont(), false) / 2.f);
+	float left{ Utils::GetCharacterPos(text, charIndex).x };
+	float middle{ left + (Utils::GetCharacterWidth(s[charIndex], charSize, *text.getFont(), false) / 2.f) };
 	return middle;
 }
 
@@ -137,7 +137,7 @@ EventResult InputText::OnClick(const Event& event)
 		caretClock.restart();
 	}
 	showCaret = true;
-	Vector2f mousePos = Vector2f(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
+	Vector2f mousePos{ static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y) };
 	UpdateCaret(mousePos);
 	state.focused = true;
 	return { false, Cursor::Arrow };

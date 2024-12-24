@@ -27,7 +27,7 @@ protected:
 	void MoveCaret(size_t charIndex);
 
 	sf::Text text;
-	sf::RectangleShape background = sf::RectangleShape(size);
+	sf::RectangleShape background{ size };
 
 	sf::RectangleShape caret;
 	sf::Clock caretClock;

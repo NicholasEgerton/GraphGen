@@ -4,8 +4,7 @@ using namespace sf;
 
 Vector2f Utils::LocalToGlobalPos(const Vector2f localPos, const Vector2f parentPos)
 {
-	Vector2f globalPos = localPos + parentPos;
-	return globalPos;
+	return localPos + parentPos;
 }
 
 Vector2f Utils::GetCharacterPos(const Text& text, const size_t charIndex)
@@ -13,7 +12,7 @@ Vector2f Utils::GetCharacterPos(const Text& text, const size_t charIndex)
 	//We want to get the top left of the character, but
 	//findCharacterPos returns the left edge of the character as the x,
 	//And the baseline of the text as the y
-	Vector2f charPos = text.findCharacterPos(charIndex);
+	Vector2f charPos{ text.findCharacterPos(charIndex) };
 
 	//To adjust we can add the top of the text bounds
 	charPos.y += text.getGlobalBounds().top;
