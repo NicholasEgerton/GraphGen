@@ -15,7 +15,7 @@ void EventHandle::Update()
                 break;
 
             case Event::Resized:
-                Vector2f newSize = Vector2f(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
+                Vector2u newSize{ event.size.width, event.size.height };
                 renderer.Resize(newSize);
         }
 

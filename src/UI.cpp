@@ -7,7 +7,7 @@ using namespace sf;
 UI::UI(Renderer& renderer) : renderer(renderer)
 {
 	//Setup childWidgets
-	childWidgets.push_back(std::make_unique<SideBar>(Vector2f(0, 0), Vector2f(333, 1000), *renderer.GetCambria(), Color(25, 25, 25)));
+	childWidgets.push_back(std::make_unique<SideBar>(Vector2f(0, 0), Vector2f(640, 1080), *renderer.GetCambria(), Color(25, 25, 25)));
 }
 
 void UI::Update()

@@ -7,8 +7,7 @@ using namespace sf;
 Renderer::Renderer()
 {
 	//Setup window and view
-	static const VideoMode defaultWindowSize = VideoMode(1000, 1000);
-	window = std::make_unique<RenderWindow>(defaultWindowSize, "GraphGen");
+	window = std::make_unique<RenderWindow>(VideoMode(defaultWindowSize.x, defaultWindowSize.y), "GraphGen");
 	view = std::make_unique<View>(window->getDefaultView());
 
 	//Load fonts
@@ -44,9 +43,32 @@ void Renderer::Close()
 	window->close();
 }
 
-void Renderer::Resize(const Vector2f newSize)
+void Renderer::Resize(const Vector2u newSize)
 {
-	view->setSize(newSize);
+	//Make sure newSize is within min and max window size
+	if (newSize.x < minWindowSize.x) {
+		window->setSize(Vector2u(minWindowSize.x, window->getSize().y));
+		return;
+	}
+
+	else if (newSize.x > maxWindowSize.x) {
+		window->setSize(Vector2u(maxWindowSize.x, window->getSize().y));
+		return;
+	}
+
+	else if (newSize.y < minWindowSize.y) {
+		window->setSize(Vector2u(window->getSize().x, minWindowSize.y));
+		return;
+	}
+
+	else if (newSize.y > maxWindowSize.y) {
+		window->setSize(Vector2u(window->getSize().x, maxWindowSize.y));
+		return;
+	}
+
+	//If the newSize is valid, resize the view
+	view->setSize(Vector2f(newSize));
+	view->setCenter(Vector2f(newSize) / 2.f);
 	window->setView(*view);
 }
 
