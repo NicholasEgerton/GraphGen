@@ -35,6 +35,12 @@ EventResult InputWidget::OnEvent(const Event& event)
                 eventResult = OnUnhover(event);
             }
             break;
+
+        case Event::TextEntered:
+            if (state.focused) {
+                eventResult = OnTextEntered(event);
+            }
+            break;
     }
     return eventResult;
 }

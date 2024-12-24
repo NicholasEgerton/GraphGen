@@ -18,6 +18,7 @@ protected:
 	virtual EventResult OnHover(const sf::Event& event) override;
 	virtual EventResult OnUnhover(const sf::Event& event) override;
 	virtual EventResult OnUnfocus(const sf::Event& event) override;
+	virtual EventResult OnTextEntered(const sf::Event& event) override;
 
 	unsigned int charSize;
 
@@ -31,6 +32,7 @@ protected:
 
 	sf::RectangleShape caret;
 	sf::Clock caretClock;
+	size_t currentCaretCharIndex = 0;
 
 	bool showCaret = false;
 };

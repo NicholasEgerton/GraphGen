@@ -117,6 +117,7 @@ float InputText::FindCharacterMiddleX(size_t charIndex)
 void InputText::MoveCaret(size_t charIndex)
 {
 	caret.setPosition(Utils::GetCharacterPos(text, charIndex).x, caret.getPosition().y);
+	currentCaretCharIndex = charIndex;
 }
 
 EventResult InputText::OnHover(const Event& event)
@@ -147,4 +148,30 @@ EventResult InputText::OnUnfocus(const Event& event)
 {
 	state.focused = false;
 	return { false, Cursor::Arrow };
+}
+
+EventResult InputText::OnTextEntered(const sf::Event& event)
+{
+	std::string s = text.getString();
+	//If the TextEntered is backspace remove the character
+	//Behind the caret
+	if (event.text.unicode == 8) {
+		//Note: The caret stands BEHIND the currentCaretCharIndex
+		//If the caret is at the start of the text, delete nothing
+		if(currentCaretCharIndex > 0) {
+			//Otherwise, delete the index of string before currentCaretCharIndex
+			s.erase(s.begin() + (currentCaretCharIndex - 1));
+			text.setString(s);
+			//And move the caret one to the left
+			MoveCaret(currentCaretCharIndex - 1);
+		}
+	}
+	else {
+		//If its not a backspace, add the unicode character to the string
+		s += static_cast<char>(event.text.unicode);
+		text.setString(s);
+		//And move the caret one to the right
+		MoveCaret(currentCaretCharIndex + 1);
+	}
+	return { true, Cursor::Text};
 }

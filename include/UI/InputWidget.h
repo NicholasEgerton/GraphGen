@@ -16,6 +16,7 @@ protected:
 	virtual EventResult OnUnfocus(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
 	virtual EventResult OnHover(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
 	virtual EventResult OnUnhover(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
+	virtual EventResult OnTextEntered(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
 
 	WidgetState state = { false, false };
 
