@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch_amalgamated.hpp"
 #include "SFML/Graphics.hpp"
-#include "Utils.h"
+#include "core/Utils.h"
 
 using namespace sf;
 
