@@ -24,6 +24,10 @@ void MText::UpdateVertices()
     //Set the first glyphPos to the top left corner of mText
     Vector2f glyphPos = pos + Vector2f(0, size.y / 2.f);
     for (const auto& c : wString) {
+        //Clip of the end of text if it goes outside the bounds width
+        if (glyphPos.x > size.x) {
+            break;
+        }
         const Glyph& glyph = font.getGlyph(static_cast<Uint32>(c), static_cast<unsigned int>(round(size.y)), false);
         //Don't add the glyph if it is just whitespace
         if (c != ' ') {
