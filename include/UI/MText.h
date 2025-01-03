@@ -1,7 +1,8 @@
-#pragma once
+﻿#pragma once
 
 #include "SFML/Graphics.hpp"
 #include "UI/Widget.h"
+#include <unordered_map>
 
 //"MText" means "(Math)Text" and is a custom sf::Text class designed
 //To handle formatting math. It has significantly less features than sf::Text,
@@ -17,7 +18,10 @@ private:
 	std::wstring wString;
 
 	void UpdateVertices();
+	void UpdateKeywords();
 	void AddGlyph(sf::Vector2f position, const sf::Glyph& glyph, const sf::Color& color);
 
 	sf::VertexArray vertices{sf::Triangles};
+
+	const std::unordered_map<std::wstring, std::wstring> keywords{ {L"theta", L"θ"}};
 };

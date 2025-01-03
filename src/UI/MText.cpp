@@ -4,6 +4,7 @@ using namespace sf;
 
 MText::MText(Vector2f pos, Vector2f size, const Font& font, std::wstring defaultText) : Widget(pos, size), font(font), wString(defaultText)
 {
+    UpdateKeywords();
     UpdateVertices();
 }
 
@@ -35,6 +36,17 @@ void MText::UpdateVertices()
         }
         //Position the next glyph in front of the last
         glyphPos.x += glyph.advance;
+    }
+}
+
+void MText::UpdateKeywords()
+{
+    for (const auto& keyword : keywords) {
+        size_t found = wString.find(keyword.first);
+        while (found != std::string::npos) {
+            wString.replace(found, keyword.first.length(), keyword.second);
+            found = wString.find(keyword.first, found + 1);
+        }
     }
 }
 
