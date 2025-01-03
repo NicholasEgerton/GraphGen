@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "SFML/Graphics.hpp"
 #include "UI/Widget.h"
@@ -23,5 +23,5 @@ private:
 
 	sf::VertexArray vertices{sf::Triangles};
 
-	const std::unordered_map<std::wstring, std::wstring> keywords{ {L"theta", L"θ"}};
+	const std::unordered_map<std::wstring, std::wstring> keywords{ {L"theta", L"\u03B8"}};
 };

@@ -1,4 +1,4 @@
-﻿//Work of Nicholas Egerton
+//Work of Nicholas Egerton
 #include "UI/SideBar.h"
 #include "core/Utils.h"
 #include "UI/MText.h"
