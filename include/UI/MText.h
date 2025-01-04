@@ -19,9 +19,14 @@ private:
 
 	void UpdateVertices();
 	void UpdateKeywords();
-	void AddGlyph(sf::Vector2f position, const sf::Glyph& glyph, const sf::Color& color);
+	void AddGlyph(sf::Vector2f position, const unsigned int glyphSize, const sf::Glyph& glyph, const sf::Color& color);
 
-	sf::VertexArray vertices{sf::Triangles};
+	struct SizedVertexArray {
+		sf::VertexArray vertices;
+		unsigned int size;
+	};
+
+	std::vector<SizedVertexArray> sizedVertexArrays;
 
 	const std::unordered_map<std::wstring, std::wstring> keywords{
 		{L"theta", L"\u03B8"}, {L"+-", L"\u00B1",}, {L"pi", L"\u03C0"}, {L"phi", L"\u03C6"},
