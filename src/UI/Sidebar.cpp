@@ -10,7 +10,7 @@ SideBar::SideBar(Vector2f pos, Vector2f size, Font& font, Color backgroundCol) :
 	background.setPosition(pos);
 	background.setFillColor(backgroundCol);
 
-	childWidgets.push_back(std::make_unique<MText>(Utils::LocalToGlobalPos(Vector2f(50.f, 30.f), pos), Vector2f(size.x - 50.f, 50.f), font, L"y = sin(theta) + cos(theta)"));
+	childWidgets.push_back(std::make_unique<MText>(Utils::LocalToGlobalPos(Vector2f(50.f, 30.f), pos), Vector2f(size.x - 50.f, 50.f), font, L"y = theta +- pi * phix"));
 }
 
 void SideBar::draw(RenderTarget& target, RenderStates states) const

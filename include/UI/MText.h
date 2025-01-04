@@ -23,5 +23,8 @@ private:
 
 	sf::VertexArray vertices{sf::Triangles};
 
-	const std::unordered_map<std::wstring, std::wstring> keywords{ {L"theta", L"\u03B8"}};
+	const std::unordered_map<std::wstring, std::wstring> keywords{
+		{L"theta", L"\u03B8"}, {L"+-", L"\u00B1",}, {L"pi", L"\u03C0"}, {L"phi", L"\u03C6"},
+		{L"*", L"\u00D7"}
+	};
 };
