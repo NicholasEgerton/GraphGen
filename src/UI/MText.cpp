@@ -2,7 +2,7 @@
 
 using namespace sf;
 
-MText::MText(Vector2f pos, Vector2f size, const Font& font, std::wstring defaultText) : Widget(pos, size), font(font), wString(defaultText)
+MText::MText(Vector2f pos, Vector2f size, const Font& font, std::wstring defaultText) : pos(pos), size(size), font(font), wString(defaultText)
 {
     //Push back the default sized vertex array
     //More can be added later on, to support the textures
@@ -52,7 +52,6 @@ void MText::UpdateVertices()
         }
         //Position the next glyph in front of the last
         glyphPos.x += glyph.advance;
-        glyphSize--;
     }
 }
 

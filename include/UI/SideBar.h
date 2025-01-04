@@ -4,6 +4,8 @@
 #include "SFML/Graphics.hpp"
 #include "UI/Widget.h"
 #include "core/EventResult.h"
+#include "UI/MText.h"
+#include "core/Utils.h"
 
 class SideBar : public Widget {
 public:
@@ -18,5 +20,6 @@ private:
 	sf::Color backgroundCol;
 
 	sf::RectangleShape background{ size };
+	MText mText{ Utils::LocalToGlobalPos(sf::Vector2f(50.f, 30.f), pos), sf::Vector2f(size.x - 50.f, 50.f), font, L"y = theta +- pi * phi"};
 	std::vector<std::unique_ptr<Widget>> childWidgets;
 };
