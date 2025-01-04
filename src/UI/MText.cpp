@@ -1,4 +1,5 @@
 #include "UI/MText.h"
+#include <iostream>
 
 using namespace sf;
 
@@ -45,13 +46,16 @@ void MText::UpdateVertices()
         if (glyphPos.x > size.x) {
             break;
         }
-        const Glyph& glyph = font.getGlyph(static_cast<Uint32>(c), glyphSize, false);
-        //Don't add the glyph if it is just whitespace
-        if (c != ' ') {
-            AddGlyph(glyphPos, glyphSize, glyph, Color::White);
+        //Skip the glyph if FormatGlyph() returns false
+        if (!FormatGlyph(c, glyphPos, glyphSize)) {
+            const Glyph& glyph = font.getGlyph(static_cast<Uint32>(c), glyphSize, false);
+            //Don't add the glyph if it is just whitespace
+            if (c != ' ') {
+                AddGlyph(glyphPos, glyphSize, glyph, Color::White);
+            }
+            //Position the next glyph in front of the last
+            glyphPos.x += glyph.advance;
         }
-        //Position the next glyph in front of the last
-        glyphPos.x += glyph.advance;
     }
 }
 
@@ -66,9 +70,9 @@ void MText::UpdateKeywords()
     }
 }
 
-void MText::AddGlyph(const sf::Vector2f glyphPos, const unsigned int glyphSize, const sf::Glyph& glyph, const sf::Color& color)
+void MText::AddGlyph(const Vector2f glyphPos, const unsigned int glyphSize, const Glyph& glyph, const Color& color)
 {
-    //This function is very similar to sf::Text::addGlyphQuad(), just
+    //This function is very similar to Text::addGlyphQuad(), just
     //Slightly simplified and adjusted to fit the needs of this class
     const Vector2f padding(1.f, 1.f);
     const FloatRect bounds = glyph.bounds;
@@ -93,10 +97,53 @@ void MText::AddGlyph(const sf::Vector2f glyphPos, const unsigned int glyphSize, 
         sizedVertexArrays.push_back({ VertexArray(Triangles), glyphSize });
         vertices = &sizedVertexArrays.back().vertices;
     }
-    vertices->append({ glyphPos + sf::Vector2f(p1.x, p1.y), color, {uv1.x, uv1.y} });
-    vertices->append({ glyphPos + sf::Vector2f(p2.x, p1.y), color, {uv2.x, uv1.y} });
-    vertices->append({ glyphPos + sf::Vector2f(p1.x, p2.y), color, {uv1.x, uv2.y} });
-    vertices->append({ glyphPos + sf::Vector2f(p1.x, p2.y), color, {uv1.x, uv2.y} });
-    vertices->append({ glyphPos + sf::Vector2f(p2.x, p1.y), color, {uv2.x, uv1.y} });
-    vertices->append({ glyphPos + sf::Vector2f(p2.x, p2.y), color, {uv2.x, uv2.y} });
+    vertices->append({ glyphPos + Vector2f(p1.x, p1.y), color, {uv1.x, uv1.y} });
+    vertices->append({ glyphPos + Vector2f(p2.x, p1.y), color, {uv2.x, uv1.y} });
+    vertices->append({ glyphPos + Vector2f(p1.x, p2.y), color, {uv1.x, uv2.y} });
+    vertices->append({ glyphPos + Vector2f(p1.x, p2.y), color, {uv1.x, uv2.y} });
+    vertices->append({ glyphPos + Vector2f(p2.x, p1.y), color, {uv2.x, uv1.y} });
+    vertices->append({ glyphPos + Vector2f(p2.x, p2.y), color, {uv2.x, uv2.y} });
+}
+
+bool MText::FormatGlyph(const wchar_t c, Vector2f& glyphPos, unsigned int& glyphSize)
+{
+    //This can modify the glyphPos and glyphSize to format the text
+    //This function returns a bool on whether or not to skip this glyph
+
+    switch (c) {
+        //Skip escape sequence character
+        case '[':
+            return true;
+        case '^':
+            //Increment the power
+            power++;
+            //Add power to the nest
+            nest.push(&power);
+            //Format the following text to be a power
+            glyphSize = static_cast<unsigned int>(round(glyphSize / 2.f));
+            glyphPos.y -= static_cast<float>(glyphSize);
+            return true;
+        case ']':
+            //If it is the second ] in ]] do nothing
+            if (skipEscapeCharacter) {
+                skipEscapeCharacter = false;
+                return true;
+            }
+
+            else if (!nest.empty()) {
+                //Format based on what the top of the nest just ended
+                if (nest.top() == &power) {
+                    glyphPos.y += static_cast<float>(glyphSize);
+                    glyphSize = static_cast<unsigned int>(round(glyphSize * 2.f));
+                }
+                //Remove one off whatever is at the top of the stack
+                *nest.top() -= 1;
+                //Pop the stack
+                nest.pop();
+                
+                skipEscapeCharacter = true;
+            }
+            return true;
+    }
+    return false;
 }
