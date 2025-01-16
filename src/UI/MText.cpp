@@ -1,5 +1,4 @@
 #include "UI/MText.h"
-#include <stdexcept>
 
 using namespace sf;
 

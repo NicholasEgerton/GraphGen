@@ -20,6 +20,16 @@ public:
 
 	virtual EventResult OnEvent(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
 
+protected:
 	sf::Vector2f pos;
 	sf::Vector2f size;
+
+public:
+	const sf::Vector2f& GetPosition() const {
+		return pos;
+	}
+
+	void SetPosition(sf::Vector2f newSize) {
+		size = newSize;
+	}
 };
