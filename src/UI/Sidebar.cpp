@@ -7,12 +7,14 @@ SideBar::SideBar(Vector2f pos, Vector2f size, Font& font, Color backgroundCol) :
 {
 	background.setPosition(pos);
 	background.setFillColor(backgroundCol);
+
+	mText = std::make_unique<MText>(Utils::LocalToGlobalPos(sf::Vector2f(50.f, 30.f), pos), sf::Vector2f(size.x - 50.f, 50.f), std::make_unique<Font>(font), L"y = sqrt[[2]]", Color::White);
 }
 
 void SideBar::draw(RenderTarget& target, RenderStates states) const
 {
 	target.draw(background, states);
-	target.draw(mText, states);
+	target.draw(*mText, states);
 	for (const auto& w : childWidgets) {
 		target.draw(*w, states);
 	}

@@ -1,14 +1,10 @@
 #include "UI/MText.h"
-#include <iostream>
+#include <stdexcept>
 
 using namespace sf;
 
-MText::MText(Vector2f pos, Vector2f size, const Font& font, std::wstring defaultText) : pos(pos), size(size), font(font), wString(defaultText)
+MText::MText(const Vector2f pos, const Vector2f size, std::shared_ptr<Font> font, const std::wstring defaultText, const Color fillColor) : pos(pos), size(size), font(font), wString(defaultText), fillColor(fillColor)
 {
-    //Push back the default sized vertex array
-    //More can be added later on, to support the textures
-    //Of smaller glyphs
-    sizedVertexArrays.push_back({ VertexArray(Triangles), static_cast<unsigned int>(round(size.y))});
     UpdateKeywords();
     UpdateVertices();
 }
@@ -26,7 +22,7 @@ void MText::draw(RenderTarget& target, RenderStates states) const
         }
         //Set the states texture to the font at that size
         //So that the characters are rendered correctly
-        states.texture = &font.getTexture(sVA.size);
+        states.texture = &font->getTexture(sVA.size);
         target.draw(sVA.vertices, states);
     }
 }
@@ -46,12 +42,12 @@ void MText::UpdateVertices()
         if (glyphPos.x > size.x) {
             break;
         }
+        const Glyph& glyph = font->getGlyph(static_cast<Uint32>(c), glyphSize, false);
         //Skip the glyph if FormatGlyph() returns false
-        if (!FormatGlyph(c, glyphPos, glyphSize)) {
-            const Glyph& glyph = font.getGlyph(static_cast<Uint32>(c), glyphSize, false);
+        if (!FormatGlyph(c, glyph, glyphPos, glyphSize)) {
             //Don't add the glyph if it is just whitespace
             if (c != ' ') {
-                AddGlyph(glyphPos, glyphSize, glyph, Color::White);
+                AddGlyph(glyphPos, glyphSize, glyph, fillColor);
             }
             //Position the next glyph in front of the last
             glyphPos.x += glyph.advance;
@@ -105,11 +101,10 @@ void MText::AddGlyph(const Vector2f glyphPos, const unsigned int glyphSize, cons
     vertices->append({ glyphPos + Vector2f(p2.x, p2.y), color, {uv2.x, uv2.y} });
 }
 
-bool MText::FormatGlyph(const wchar_t c, Vector2f& glyphPos, unsigned int& glyphSize)
+bool MText::FormatGlyph(const wchar_t c, const Glyph& glyph, Vector2f& glyphPos, unsigned int& glyphSize)
 {
     //This can modify the glyphPos and glyphSize to format the text
     //This function returns a bool on whether or not to skip this glyph
-
     switch (c) {
         //Skip escape sequence character
         case '[':
@@ -120,9 +115,16 @@ bool MText::FormatGlyph(const wchar_t c, Vector2f& glyphPos, unsigned int& glyph
             //Add power to the nest
             nest.push(&power);
             //Format the following text to be a power
-            glyphSize = static_cast<unsigned int>(round(glyphSize / 2.f));
-            glyphPos.y -= static_cast<float>(glyphSize);
+            FormatPower(true, glyphPos, glyphSize);
             return true;
+        case L'\u221A':
+            //Increment square root
+            squareRoot++;
+            //Add square root to the nest
+            nest.push(&squareRoot);
+            //Format the following text to be under square root
+            FormatSquareRoot(glyph, glyphPos, glyphSize);
+            return false;
         case ']':
             //If it is the second ] in ]] do nothing
             if (skipEscapeCharacter) {
@@ -133,8 +135,7 @@ bool MText::FormatGlyph(const wchar_t c, Vector2f& glyphPos, unsigned int& glyph
             else if (!nest.empty()) {
                 //Format based on what the top of the nest just ended
                 if (nest.top() == &power) {
-                    glyphPos.y += static_cast<float>(glyphSize);
-                    glyphSize = static_cast<unsigned int>(round(glyphSize * 2.f));
+                    FormatPower(false, glyphPos, glyphSize);
                 }
                 //Remove one off whatever is at the top of the stack
                 *nest.top() -= 1;
@@ -146,4 +147,21 @@ bool MText::FormatGlyph(const wchar_t c, Vector2f& glyphPos, unsigned int& glyph
             return true;
     }
     return false;
+}
+
+void MText::FormatPower(const bool start, sf::Vector2f& glyphPos, unsigned int& glyphSize)
+{
+    if (start) {
+        glyphSize = static_cast<unsigned int>(round(glyphSize / 2.f));
+        glyphPos.y -= static_cast<float>(glyphSize);
+    }
+    else {
+        glyphPos.y += static_cast<float>(glyphSize);
+        glyphSize = static_cast<unsigned int>(round(glyphSize * 2.f));
+    }
+}
+
+void MText::FormatSquareRoot(const sf::Glyph& glyph, sf::Vector2f glyphPos, unsigned int& glyphSize)
+{
+    fillColor = Color::Red;
 }
