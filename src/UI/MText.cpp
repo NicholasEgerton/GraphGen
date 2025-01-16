@@ -2,7 +2,7 @@
 
 using namespace sf;
 
-MText::MText(const Vector2f pos, const Vector2f size, std::shared_ptr<Font> font, const std::wstring defaultText, const Color fillColor) : pos(pos), size(size), font(font), wString(defaultText), fillColor(fillColor)
+MText::MText(const Vector2f pos, const Vector2f size, const Font& font, const std::wstring defaultText, const Color fillColor) : pos(pos), size(size), font(&font), wString(defaultText), fillColor(fillColor)
 {
     UpdateKeywords();
     UpdateVertices();

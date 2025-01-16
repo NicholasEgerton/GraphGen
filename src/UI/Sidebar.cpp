@@ -3,12 +3,12 @@
 
 using namespace sf;
 
-SideBar::SideBar(Vector2f pos, Vector2f size, Font& font, Color backgroundCol) : Widget(pos, size), font(font), backgroundCol(backgroundCol)
+SideBar::SideBar(const Vector2f pos, const Vector2f size, const Font& font, const Color backgroundCol) : Widget(pos, size), font(&font), backgroundCol(backgroundCol)
 {
 	background.setPosition(pos);
 	background.setFillColor(backgroundCol);
 
-	mText = std::make_unique<MText>(Utils::LocalToGlobalPos(sf::Vector2f(50.f, 30.f), pos), sf::Vector2f(size.x - 50.f, 50.f), std::make_unique<Font>(font), L"y = sqrt[[2]]", Color::White);
+	mText = std::make_unique<MText>(Utils::LocalToGlobalPos(sf::Vector2f(50.f, 30.f), pos), sf::Vector2f(size.x - 50.f, 50.f), font, L"y = sqrt[[2]]", Color::White);
 }
 
 void SideBar::draw(RenderTarget& target, RenderStates states) const

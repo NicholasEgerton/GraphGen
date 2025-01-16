@@ -8,7 +8,7 @@
 class InputWidget : public Widget {
 public:
 	InputWidget() = delete;
-	InputWidget(sf::Vector2f pos, sf::Vector2f size) : Widget(pos, size) {};
+	InputWidget(const sf::Vector2f pos, const sf::Vector2f size) : Widget(pos, size) {};
 
 	virtual EventResult OnEvent(const sf::Event& event);
 protected:

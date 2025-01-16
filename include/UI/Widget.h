@@ -11,7 +11,7 @@
 class Widget : public sf::Drawable {
 public:
 	Widget() = delete;
-	Widget(sf::Vector2f pos, sf::Vector2f size) : pos(pos), size(size) {};
+	Widget(const sf::Vector2f pos, const sf::Vector2f size) : pos(pos), size(size) {};
 	//Note: If a widget has a std::vector<Widget> "childWidgets," it should
 	//Be in order from bottom to top, so that in draw(), objects are drawn
 	//With correct priority. E.g background before text.
@@ -29,7 +29,15 @@ public:
 		return pos;
 	}
 
-	void SetPosition(sf::Vector2f newSize) {
+	void SetPosition(const sf::Vector2f newPos) {
+		pos = newPos;
+	}
+
+	const sf::Vector2f& GetSize() const {
+		return size;
+	}
+
+	void SetSize(const sf::Vector2f newSize) {
 		size = newSize;
 	}
 };

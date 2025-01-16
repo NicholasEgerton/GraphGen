@@ -10,13 +10,13 @@
 class SideBar : public Widget {
 public:
 	SideBar() = delete;
-	SideBar(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, sf::Color backgroundCol);
+	SideBar(const sf::Vector2f pos, const sf::Vector2f size, const sf::Font& font, const sf::Color backgroundCol);
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	virtual void Update() override;
 	virtual EventResult OnEvent(const sf::Event& event) override;
 private:
-	sf::Font& font;
+	const sf::Font* font;
 	sf::Color backgroundCol;
 
 	sf::RectangleShape background{ size };

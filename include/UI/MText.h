@@ -13,13 +13,13 @@
 class MText : public sf::Drawable {
 public:
 	MText() = delete;
-	MText(const sf::Vector2f pos, const sf::Vector2f size, const std::shared_ptr<sf::Font> font, const std::wstring defaultText, const sf::Color fillColor);
+	MText(const sf::Vector2f pos, const sf::Vector2f size, const sf::Font& font, const std::wstring defaultText, const sf::Color fillColor);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
 	sf::Vector2f pos;
 	sf::Vector2f size;
-	std::shared_ptr<sf::Font> font;
+	const sf::Font* font;
 	std::wstring wString;
 	sf::Color fillColor;
 
@@ -77,8 +77,8 @@ public:
 		return *font;
 	}
 
-	void SetFont(const std::shared_ptr<sf::Font> newFont) {
-		font = newFont;
+	void SetFont(const sf::Font& newFont) {
+		font = &newFont;
 		UpdateVertices();
 	}
 
