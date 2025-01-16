@@ -30,7 +30,7 @@ private:
 	bool FormatGlyph(const wchar_t c, const sf::Glyph& glyph, sf::Vector2f& glyphPos, unsigned int& glyphSize);
 
 	void FormatPower(const bool start, sf::Vector2f& glyphPos, unsigned int& glyphSize);
-	void FormatSquareRoot(const sf::Glyph& glyph, sf::Vector2f glyphPos, unsigned int& glyphSize);
+	void FormatSquareRoot(const bool start, const sf::Glyph& glyph, sf::Vector2f glyphPos, unsigned int& glyphSize);
 	struct SizedVertexArray {
 		sf::VertexArray vertices;
 		unsigned int size;
@@ -43,15 +43,15 @@ private:
 		{L"*", L"\u00D7"}, {L"sqrt", L"\u221A"}
 	};
 
+	//The nest is made up of a stack of enums of the orders of types of formatting
+	//E.g, for wString = "y = sqrt[[2^[[3]]]] + e^x
+	//Nest would be = {sqrt, power, power}
+	enum class Format {
+		sqrt,
+		power
+	};
+	std::stack<Format> nest;
 	bool skipEscapeCharacter = false;
-	unsigned int power;
-	unsigned int squareRoot;
-	//The nest is made up of a stack of pointers to the type of function/special character
-	//In order of how they were added
-	//E.g for y = sqrt[[x^2]]
-	//The nest would look like:
-	//{[sqrt adress], [power adress]}
-	std::stack<unsigned int*> nest;
 
 public:
 	const sf::Vector2f& GetPosition() const {

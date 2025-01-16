@@ -1,4 +1,5 @@
 #include "UI/MText.h"
+#include <iostream>
 
 using namespace sf;
 
@@ -109,20 +110,16 @@ bool MText::FormatGlyph(const wchar_t c, const Glyph& glyph, Vector2f& glyphPos,
         case '[':
             return true;
         case '^':
-            //Increment the power
-            power++;
             //Add power to the nest
-            nest.push(&power);
+            nest.push(Format::power);
             //Format the following text to be a power
             FormatPower(true, glyphPos, glyphSize);
             return true;
         case L'\u221A':
-            //Increment square root
-            squareRoot++;
             //Add square root to the nest
-            nest.push(&squareRoot);
+            nest.push(Format::sqrt);
             //Format the following text to be under square root
-            FormatSquareRoot(glyph, glyphPos, glyphSize);
+            FormatSquareRoot(true, glyph, glyphPos, glyphSize);
             return false;
         case ']':
             //If it is the second ] in ]] do nothing
@@ -133,11 +130,18 @@ bool MText::FormatGlyph(const wchar_t c, const Glyph& glyph, Vector2f& glyphPos,
 
             else if (!nest.empty()) {
                 //Format based on what the top of the nest just ended
-                if (nest.top() == &power) {
+                if (nest.top() == Format::power) {
                     FormatPower(false, glyphPos, glyphSize);
                 }
-                //Remove one off whatever is at the top of the stack
-                *nest.top() -= 1;
+
+                else if (nest.top() == Format::sqrt) {
+                    FormatSquareRoot(false, glyph, glyphPos, glyphSize);
+                }
+
+                else {
+                    std::cout << "Unknown formatting found in MText.\n";
+                    return true;
+                }
                 //Pop the stack
                 nest.pop();
                 
@@ -160,7 +164,13 @@ void MText::FormatPower(const bool start, sf::Vector2f& glyphPos, unsigned int& 
     }
 }
 
-void MText::FormatSquareRoot(const sf::Glyph& glyph, sf::Vector2f glyphPos, unsigned int& glyphSize)
+void MText::FormatSquareRoot(const bool start, const sf::Glyph& glyph, sf::Vector2f glyphPos, unsigned int& glyphSize)
 {
-    fillColor = Color::Red;
+    if (start) {
+        fillColor = Color::Red;
+    }
+
+    else {
+        fillColor = Color::Green;
+    }
 }
