@@ -51,7 +51,7 @@ void MText::UpdateVertices()
         }
         const Glyph& glyph = font->getGlyph(static_cast<Uint32>(c), glyphSize, false);
         //Skip the glyph if FormatGlyph() returns false
-        if (!FormatGlyph(c, glyphPos, glyphSize)) {
+        if (FormatGlyph(c, glyphPos, glyphSize)) {
             //Don't add the glyph if it is just whitespace
             if (c != ' ') {
                 AddGlyph(glyph, glyphPos, glyphSize, fillColor);
@@ -115,24 +115,24 @@ bool MText::FormatGlyph(const wchar_t c, const Vector2f glyphPos, const unsigned
     switch (c) {
         //Skip escape sequence character
         case '[':
-            return true;
+            return false;
         case '^':
             //Add power to the nest
             nest.push(Format::power);
             //Format the following text to be a power
             FormatPower(true, glyphPos, glyphSize);
-            return true;
+            return false;
         case L'\u221A':
             //Add square root to the nest
             nest.push(Format::sqrt);
             //Format the following text to be under square root
             FormatSquareRoot(true, glyphPos, glyphSize);
-            return false;
+            return true;
         case ']':
             //If it is the second ] in ]] do nothing
             if (skipEscapeCharacter) {
                 skipEscapeCharacter = false;
-                return true;
+                return false;
             }
 
             else if (!nest.empty()) {
@@ -147,16 +147,16 @@ bool MText::FormatGlyph(const wchar_t c, const Vector2f glyphPos, const unsigned
 
                 else {
                     std::cout << "Unknown formatting found in MText.\n";
-                    return true;
+                    return false;
                 }
                 //Pop the stack
                 nest.pop();
                 
                 skipEscapeCharacter = true;
             }
-            return true;
+            return false;
     }
-    return false;
+    return true;
 }
 
 void MText::FormatPower(const bool start, const Vector2f glyphPos, const unsigned int glyphSize)
