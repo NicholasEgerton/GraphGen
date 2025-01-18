@@ -38,16 +38,23 @@ void MText::UpdateVertices()
     unsigned int glyphSize = static_cast<unsigned int>(round(size.y));
 
     for (const auto& c : wString) {
+        //Apply any formatting transforms
+        glyphPos.x += transformsToApply.x;
+        glyphPos.y += transformsToApply.y;
+        glyphSize += static_cast<unsigned int>(transformsToApply.z);
+        //Reset the transforms
+        transformsToApply = { 0.f, 0.f, 0.f };
+
         //Clip of the end of text if it goes outside the bounds width
         if (glyphPos.x > size.x) {
             break;
         }
         const Glyph& glyph = font->getGlyph(static_cast<Uint32>(c), glyphSize, false);
         //Skip the glyph if FormatGlyph() returns false
-        if (!FormatGlyph(c, glyph, glyphPos, glyphSize)) {
+        if (!FormatGlyph(c, glyphPos, glyphSize)) {
             //Don't add the glyph if it is just whitespace
             if (c != ' ') {
-                AddGlyph(glyphPos, glyphSize, glyph, fillColor);
+                AddGlyph(glyph, glyphPos, glyphSize, fillColor);
             }
             //Position the next glyph in front of the last
             glyphPos.x += glyph.advance;
@@ -66,7 +73,7 @@ void MText::UpdateKeywords()
     }
 }
 
-void MText::AddGlyph(const Vector2f glyphPos, const unsigned int glyphSize, const Glyph& glyph, const Color& color)
+void MText::AddGlyph(const Glyph& glyph, const Vector2f glyphPos, const unsigned int glyphSize, const Color color)
 {
     //This function is very similar to Text::addGlyphQuad(), just
     //Slightly simplified and adjusted to fit the needs of this class
@@ -101,7 +108,7 @@ void MText::AddGlyph(const Vector2f glyphPos, const unsigned int glyphSize, cons
     vertices->append({ glyphPos + Vector2f(p2.x, p2.y), color, {uv2.x, uv2.y} });
 }
 
-bool MText::FormatGlyph(const wchar_t c, const Glyph& glyph, Vector2f& glyphPos, unsigned int& glyphSize)
+bool MText::FormatGlyph(const wchar_t c, const Vector2f glyphPos, const unsigned int glyphSize)
 {
     //This can modify the glyphPos and glyphSize to format the text
     //This function returns a bool on whether or not to skip this glyph
@@ -119,7 +126,7 @@ bool MText::FormatGlyph(const wchar_t c, const Glyph& glyph, Vector2f& glyphPos,
             //Add square root to the nest
             nest.push(Format::sqrt);
             //Format the following text to be under square root
-            FormatSquareRoot(true, glyph, glyphPos, glyphSize);
+            FormatSquareRoot(true, glyphPos, glyphSize);
             return false;
         case ']':
             //If it is the second ] in ]] do nothing
@@ -135,7 +142,7 @@ bool MText::FormatGlyph(const wchar_t c, const Glyph& glyph, Vector2f& glyphPos,
                 }
 
                 else if (nest.top() == Format::sqrt) {
-                    FormatSquareRoot(false, glyph, glyphPos, glyphSize);
+                    FormatSquareRoot(false, glyphPos, glyphSize);
                 }
 
                 else {
@@ -152,25 +159,30 @@ bool MText::FormatGlyph(const wchar_t c, const Glyph& glyph, Vector2f& glyphPos,
     return false;
 }
 
-void MText::FormatPower(const bool start, sf::Vector2f& glyphPos, unsigned int& glyphSize)
+void MText::FormatPower(const bool start, const Vector2f glyphPos, const unsigned int glyphSize)
 {
+    float fGlyphSize = static_cast<float>(glyphSize);
     if (start) {
-        glyphSize = static_cast<unsigned int>(round(glyphSize / 2.f));
-        glyphPos.y -= static_cast<float>(glyphSize);
+        //Divide the size by 2
+        transformsToApply.z = round((fGlyphSize / 2.f) - fGlyphSize);
+        //Offset the glyph up by the new glyph size
+        transformsToApply.y = transformsToApply.z;
     }
     else {
-        glyphPos.y += static_cast<float>(glyphSize);
-        glyphSize = static_cast<unsigned int>(round(glyphSize * 2.f));
+        //Offset the glyph back down by the new glyph size
+        transformsToApply.y = fGlyphSize;
+        //Multiply the size back up by 2
+        transformsToApply.z = round((fGlyphSize * 2.f) - fGlyphSize);
     }
 }
 
-void MText::FormatSquareRoot(const bool start, const sf::Glyph& glyph, sf::Vector2f glyphPos, unsigned int& glyphSize)
+void MText::FormatSquareRoot(const bool start, const Vector2f glyphPos, const unsigned int glyphSize)
 {
     if (start) {
         fillColor = Color::Red;
     }
 
     else {
-        fillColor = Color::Green;
+        fillColor = Color::White;
     }
 }

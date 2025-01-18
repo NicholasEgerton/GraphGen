@@ -29,15 +29,7 @@ public:
 		return pos;
 	}
 
-	void SetPosition(const sf::Vector2f newPos) {
-		pos = newPos;
-	}
-
 	const sf::Vector2f& GetSize() const {
 		return size;
-	}
-
-	void SetSize(const sf::Vector2f newSize) {
-		size = newSize;
 	}
 };

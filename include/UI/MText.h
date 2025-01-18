@@ -25,23 +25,25 @@ private:
 
 	void UpdateVertices();
 	void UpdateKeywords();
-	void AddGlyph(const sf::Vector2f glyphPos, const unsigned int glyphSize, const sf::Glyph& glyph, const sf::Color& color);
+	void AddGlyph(const sf::Glyph& glyph, const sf::Vector2f glyphPos, const unsigned int glyphSize, const sf::Color color);
 
-	bool FormatGlyph(const wchar_t c, const sf::Glyph& glyph, sf::Vector2f& glyphPos, unsigned int& glyphSize);
+	bool FormatGlyph(const wchar_t c, const sf::Vector2f glyphPos, const unsigned int glyphSize);
 
-	void FormatPower(const bool start, sf::Vector2f& glyphPos, unsigned int& glyphSize);
-	void FormatSquareRoot(const bool start, const sf::Glyph& glyph, sf::Vector2f glyphPos, unsigned int& glyphSize);
+	void FormatPower(const bool start, const sf::Vector2f glyphPos, const unsigned int glyphSize);
+	void FormatSquareRoot(const bool start, const sf::Vector2f glyphPos, const unsigned int glyphSize);
+
 	struct SizedVertexArray {
 		sf::VertexArray vertices;
 		unsigned int size;
 	};
-
 	std::vector<SizedVertexArray> sizedVertexArrays;
 
 	const std::unordered_map<std::wstring, std::wstring> keywords{
 		{L"theta", L"\u03B8"}, {L"+-", L"\u00B1",}, {L"pi", L"\u03C0"}, {L"phi", L"\u03C6"},
 		{L"*", L"\u00D7"}, {L"sqrt", L"\u221A"}
 	};
+
+	//Formatting:
 
 	//The nest is made up of a stack of enums of the orders of types of formatting
 	//E.g, for wString = "y = sqrt[[2^[[3]]]] + e^x
@@ -52,6 +54,7 @@ private:
 	};
 	std::stack<Format> nest;
 	bool skipEscapeCharacter = false;
+	sf::Vector3f transformsToApply{ 0.f, 0.f, 0.f };
 
 public:
 	const sf::Vector2f& GetPosition() const {
