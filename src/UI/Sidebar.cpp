@@ -8,15 +8,15 @@ SideBar::SideBar(const Vector2f pos, const Vector2f size, const Font& font, cons
 	background.setPosition(pos);
 	background.setFillColor(backgroundCol);
 
-	mText = std::make_unique<MText>(Utils::LocalToGlobalPos(sf::Vector2f(50.f, 100.f), pos), sf::Vector2f(size.x - 50.f, 60.f), font, L"y = e^[[x^[[2+pi]]-sqrt[[5x]]]] + sqrt[[3z^[[theta + 5^[[x]]]]]]", Color::White);
+	mText = std::make_unique<MText>(Utils::LocalToGlobalPos(sf::Vector2f(50.f, 100.f), pos), sf::Vector2f(size.x - 50.f, 100.f), font, L"y = sqrt[[alpha^[[beta]] + theta^[[sqrt[[phi]]]]sqrt[[a]]sqrt[[c]]]]", Color::White);
 }
 
 void SideBar::draw(RenderTarget& target, RenderStates states) const
 {
-	target.draw(background, states);
-	target.draw(*mText, states);
+	target.draw(background);
+	target.draw(*mText);
 	for (const auto& w : childWidgets) {
-		target.draw(*w, states);
+		target.draw(*w);
 	}
 }
 

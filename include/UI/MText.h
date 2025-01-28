@@ -5,11 +5,6 @@
 #include <stack>
 #include <memory>
 
-//"MText" means "(Math)Text" and is a custom sf::Text class designed
-//To handle formatting math. It has significantly less features than sf::Text,
-//But is used where sf::Text cannot.
-//[[ and ]] should be used in input as escape sequences, e.g:
-//y = e^[[2x+1]] or y = sqrt[[x]] to avoid ambiguity
 class MText : public sf::Drawable {
 public:
 	MText() = delete;
@@ -27,6 +22,7 @@ private:
 	void UpdateKeywords();
 	void AddGlyph(const sf::Glyph& glyph, const sf::Vector2f glyphPos, const unsigned int glyphSize, const sf::Color color);
 
+	void ClearText();
 	bool FormatGlyph(const wchar_t c, const sf::Vector2f glyphPos, const unsigned int glyphSize);
 
 	void FormatPower(const bool start, const sf::Vector2f glyphPos, const unsigned int glyphSize);
@@ -38,10 +34,7 @@ private:
 	};
 	std::vector<SizedVertexArray> sizedVertexArrays;
 
-	const std::unordered_map<std::wstring, std::wstring> keywords{
-		{L"theta", L"\u03B8"}, {L"+-", L"\u00B1",}, {L"pi", L"\u03C0"}, {L"phi", L"\u03C6"},
-		{L"*", L"\u00D7"}, {L"sqrt", L"\u221A"}
-	};
+	static const std::unordered_map<std::wstring, std::wstring> keywords;
 
 	//Formatting:
 
@@ -54,53 +47,57 @@ private:
 	};
 	std::stack<Format> nest;
 	bool skipEscapeCharacter = false;
+
+	//Transforms to apply, x: glyphPos.x, y: glyphPos.y, z: glyphSize
+	//These are ADDED to these, not set, i.e "glyphPos.x += transformsToApply.x;"
 	sf::Vector3f transformsToApply{ 0.f, 0.f, 0.f };
 
+	std::vector<sf::RectangleShape> sqrtTops;
+	std::stack<size_t> sqrtIndexes;
+	float sqrtThicknessFactor{ 0.0525f };
 public:
-	const sf::Vector2f& GetPosition() const {
-		return pos;
-	}
+	const sf::Vector2f GetPosition() const;
+	void SetPosition(const sf::Vector2f newPos);
 
-	void SetPosition(const sf::Vector2f newPos) {
-		pos = newPos;
-		UpdateVertices();
-	}
+	const sf::Vector2f GetSize() const;
+	void SetSize(const sf::Vector2f newSize);
 
-	const sf::Vector2f& GetSize() const {
-		return size;
-	}
+	/// <summary>
+	/// Get a pointer to the font used. 
+	/// If there is no font, it returns a nullptr.
+	/// </summary>
+	const sf::Font* GetFont() const;
+	/// <summary>
+	/// <para>Set the font of the text. MText stores a pointer to the font, so if</para>
+	/// the font is destroyed, this will cause undefined behaviour. This is the
+	/// same as in sf::Text.
+	/// </summary>
+	void SetFont(const sf::Font& newPos);
 
-	void SetSize(const sf::Vector2f newSize) {
-		size = newSize;
-		UpdateVertices();
-	}
+	/// <summary>
+	/// Get the wide string used by the text. 
+	/// Wide strings are used to handle the extended unicode characters for math.
+	/// </summary>
+	const std::wstring& GetString() const;
+	/// <summary>
+	/// Set the wide string used by the text. 
+	/// Wide strings are used to handle the extended unicode characters for math.
+	/// </summary>
+	void SetString(const std::wstring& newString);
 
+	const sf::Color GetFillColor() const;
+	void SetFillColor(const sf::Color color);
 
-	const sf::Font& GetFont() const {
-		return *font;
-	}
-
-	void SetFont(const sf::Font& newFont) {
-		font = &newFont;
-		UpdateVertices();
-	}
-
-	const std::wstring& GetString() const {
-		return wString;
-	}
-
-	void SetString(const std::wstring newString) {
-		wString = newString;
-		UpdateKeywords();
-		UpdateVertices();
-	}
-
-	const sf::Color& GetFillColor() const {
-		return fillColor;
-	}
-
-	void SetFillColor(const sf::Color newColor) {
-		fillColor = newColor;
-		UpdateVertices();
-	}
+	/// <summary>
+	/// <para>Get the thickness factor of the top of square roots in the text.</para>
+	/// Different fonts have different shaped square roots, so this can be used
+	/// to adjust. The default is 0.0525.
+	/// </summary>
+	const float GetSqrtThicknessFactor() const;
+	/// <summary>
+	/// <para>Set the thickness factor of the top of square roots in the text.</para>
+	/// Different fonts have different shaped square roots, so this can be used
+	/// to adjust.
+	/// </summary>
+	void SetSqrtThicknessFactor(const float newFactor);
 };
