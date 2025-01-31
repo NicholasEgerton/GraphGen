@@ -5,14 +5,13 @@
 #include <stack>
 #include <memory>
 
-class MText : public sf::Drawable {
+class MText : public sf::Drawable, public sf::Transformable {
 public:
 	MText() = delete;
 	MText(const sf::Vector2f pos, const sf::Vector2f size, const sf::Font& font, const std::wstring defaultText, const sf::Color fillColor);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
-	sf::Vector2f pos;
 	sf::Vector2f size;
 	const sf::Font* font;
 	std::wstring wString;
@@ -56,9 +55,6 @@ private:
 	std::stack<size_t> sqrtIndexes;
 	float sqrtThicknessFactor{ 0.0525f };
 public:
-	const sf::Vector2f GetPosition() const;
-	void SetPosition(const sf::Vector2f newPos);
-
 	const sf::Vector2f GetSize() const;
 	void SetSize(const sf::Vector2f newSize);
 

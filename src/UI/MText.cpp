@@ -9,20 +9,22 @@ const std::unordered_map<std::wstring, std::wstring>MText::keywords = {
     { L"*", L"\u00D7" }, { L"sqrt", L"\u221A" }, { L"+-", L"\u00B1", },
 };
 
-MText::MText(const Vector2f pos, const Vector2f size, const Font& font, const std::wstring defaultText, const Color fillColor) : pos(pos), size(size), font(&font), wString(defaultText), fillColor(fillColor)
+MText::MText(const Vector2f pos, const Vector2f size, const Font& font, const std::wstring defaultText, const Color fillColor) : size(size), font(&font), wString(defaultText), fillColor(fillColor)
 {
+    setPosition(pos);
     UpdateKeywords();
     UpdateVertices();
 }
 
 void MText::draw(RenderTarget& target, RenderStates states) const
 {
+    states.transform *= getTransform();
     if (wString.empty()) {
         return;
     }
 
     for (const auto& sT: sqrtTops) {
-        target.draw(sT);
+        target.draw(sT, states);
     }
 
     for (const auto& sVA : sizedVertexArrays) {
@@ -41,8 +43,8 @@ void MText::UpdateVertices()
 {
     ClearText();
 
-    //Set the first glyphPos to the top left corner of mText
-    Vector2f glyphPos{ pos + Vector2f(0, size.y / 2.f) };
+    //Set the first glyphPos to the top left corner of mText (local coordinates)
+    Vector2f glyphPos{ Vector2f(0, size.y / 2.f) };
     unsigned int glyphSize{ static_cast<unsigned int>(round(size.y)) };
 
     for (const auto& c : wString) {
@@ -55,10 +57,10 @@ void MText::UpdateVertices()
 
         const Glyph& glyph{ font->getGlyph(static_cast<Uint32>(c), glyphSize, false) };
         //Clip of the end of text if it goes outside the bounds width
-        if (glyphPos.x + glyph.advance > pos.x + size.x) {
+        if (glyphPos.x + glyph.advance > size.x) {
             //Finish off remaining sqrtTops, and clear the sqrtIndexes in doing so
             while (!sqrtIndexes.empty()) {
-                FormatSquareRoot(false, Vector2f(pos.x + size.x, glyphPos.y), glyphSize);
+                FormatSquareRoot(false, Vector2f(size.x, glyphPos.y), glyphSize);
             }
             //Clear nest
             nest = {};
@@ -244,17 +246,6 @@ void MText::FormatSquareRoot(const bool start, const Vector2f glyphPos, const un
 }
 
 //GET AND SETS:
-
-const sf::Vector2f MText::GetPosition() const
-{
-    return pos;
-}
-
-void MText::SetPosition(const Vector2f newPos)
-{
-    pos = newPos;
-    UpdateVertices();
-}
 
 const sf::Vector2f MText::GetSize() const
 {
