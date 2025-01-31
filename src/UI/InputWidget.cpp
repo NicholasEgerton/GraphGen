@@ -10,7 +10,7 @@ EventResult InputWidget::OnEvent(const Event& event)
     //So does not need to call OnEvent() on any.
     //Here, setup basic default bindings for events
     EventResult eventResult{ false, Cursor::Arrow };
-    FloatRect bounds{ pos, size };
+    FloatRect bounds{ getPosition(), size};
     Vector2f mousePos;
     switch (event.type) {
         case Event::MouseButtonPressed:
