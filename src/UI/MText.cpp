@@ -4,11 +4,6 @@
 
 using namespace sf;
 
-const std::unordered_map<std::wstring, std::wstring>MText::keywords = {
-    {L"alpha", L"\u03B1"}, {L"beta", L"\u03B2"}, {L"theta", L"\u03B8"}, {L"phi", L"\u03C6"}, {L"pi", L"\u03C0"},
-    { L"*", L"\u00D7" }, { L"sqrt", L"\u221A" }, { L"+-", L"\u00B1", },
-};
-
 MText::MText(const Vector2f pos, const Vector2f size, const Font& font, const std::wstring defaultText, const Color fillColor) : size(size), font(&font), wString(defaultText), fillColor(fillColor)
 {
     setPosition(pos);
@@ -95,6 +90,10 @@ void MText::ClearText()
 
 void MText::UpdateKeywords()
 {
+    static const std::unordered_map<std::wstring, std::wstring> keywords = {
+    {L"alpha", L"\u03B1"}, {L"beta", L"\u03B2"}, {L"theta", L"\u03B8"}, {L"phi", L"\u03C6"}, {L"pi", L"\u03C0"},
+    { L"*", L"\u00D7" }, { L"sqrt", L"\u221A" }, { L"+-", L"\u00B1", },
+    };
     for (const auto& keyword : keywords) {
         size_t found{ wString.find(keyword.first) };
         while (found != std::string::npos) {

@@ -14,9 +14,9 @@ public:
 	void Close();
 	void Resize(const sf::Vector2u newSize);
 	void SetCursor(const sf::Cursor::Type cursorType);
-
-	static const sf::Vector2u defaultWindowSize;
 private:
+	static const sf::Vector2u defaultWindowSize;
+
 	std::unique_ptr<sf::RenderWindow> window;
 	std::unique_ptr<sf::View> view;
 	std::unique_ptr<sf::Font> cambria;

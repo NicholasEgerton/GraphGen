@@ -35,8 +35,6 @@ private:
 	};
 	std::vector<SizedVertexArray> sizedVertexArrays;
 
-	static const std::unordered_map<std::wstring, std::wstring> keywords;
-
 	//Formatting:
 
 	//The nest is made up of a stack of enums of the orders of types of formatting

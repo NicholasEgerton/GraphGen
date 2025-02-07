@@ -4,7 +4,7 @@
 
 using namespace sf;
 
-const Vector2u defaultWindowSize{ 1920, 1080 };
+const Vector2u Renderer::defaultWindowSize = { 1920, 1080 };
 
 Renderer::Renderer()
 {
