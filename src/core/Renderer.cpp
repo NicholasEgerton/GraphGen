@@ -4,6 +4,8 @@
 
 using namespace sf;
 
+const Vector2u defaultWindowSize{ 1920, 1080 };
+
 Renderer::Renderer()
 {
 	//Setup window and view
@@ -48,6 +50,9 @@ void Renderer::Close()
 
 void Renderer::Resize(const Vector2u newSize)
 {
+	static const sf::Vector2u minWindowSize{ 960, 540 };
+	static const sf::Vector2u maxWindowSize{ 1920, 1080 };
+
 	//Make sure newSize is within min and max window size
 	if (newSize.x < minWindowSize.x) {
 		window->setSize(Vector2u(minWindowSize.x, window->getSize().y));

@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <stack>
 #include <memory>
+#include <string>
+#include <vector>
 
 class MText : public sf::Drawable, public sf::Transformable {
 public:

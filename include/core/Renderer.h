@@ -2,6 +2,7 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
+#include <memory>
 
 class Renderer {
 public:
@@ -14,9 +15,7 @@ public:
 	void Resize(const sf::Vector2u newSize);
 	void SetCursor(const sf::Cursor::Type cursorType);
 
-	const sf::Vector2u defaultWindowSize{ 1920, 1080 };
-	const sf::Vector2u minWindowSize{ 960, 540 };
-	const sf::Vector2u maxWindowSize{ 1920, 1080 };
+	static const sf::Vector2u defaultWindowSize;
 private:
 	std::unique_ptr<sf::RenderWindow> window;
 	std::unique_ptr<sf::View> view;

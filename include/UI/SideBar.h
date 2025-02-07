@@ -5,7 +5,8 @@
 #include "UI/Widget.h"
 #include "core/EventResult.h"
 #include "UI/MText.h"
-#include "core/Utils.h"
+#include <memory>
+#include <vector>
 
 class SideBar : public Widget {
 public:
