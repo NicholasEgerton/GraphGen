@@ -8,31 +8,25 @@ class Renderer {
 public:
 	Renderer();
 
+	bool IsOpen();
+	bool PollEvent(sf::Event& event);
 	void Draw(const sf::Drawable& obj);
 	void Display();
-	void Clear();
+	void Clear(const sf::Color color = sf::Color());
 	void Close();
 	void Resize(const sf::Vector2u newSize);
 	void SetCursor(const sf::Cursor::Type cursorType);
 private:
 	static const sf::Vector2u defaultWindowSize;
 
-	std::unique_ptr<sf::RenderWindow> window;
-	std::unique_ptr<sf::View> view;
-	std::unique_ptr<sf::Font> cambria;
+	sf::RenderWindow window{ sf::VideoMode(defaultWindowSize.x, defaultWindowSize.y), "GraphGen" };
+	sf::View view{ window.getDefaultView() };
+	sf::Font cambria;
 
 	sf::Cursor arrowCursor;
 	sf::Cursor textCursor;
 public:
-	sf::RenderWindow* GetWindow() const {
-		return window.get();
-	}
-
-	sf::View* GetView() const {
-		return view.get();
-	}
-
-	sf::Font* GetCambria() const {
-		return cambria.get();
+	const sf::Font& GetCambria() const {
+		return cambria;
 	}
 };

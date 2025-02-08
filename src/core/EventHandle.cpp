@@ -8,7 +8,7 @@ void EventHandle::Update()
 {
     Event event;
 
-    while(renderer.GetWindow()->pollEvent(event)) {
+    while(renderer.PollEvent(event)) {
         switch (event.type) {
             case Event::Closed:
                 renderer.Close();

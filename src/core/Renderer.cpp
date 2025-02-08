@@ -8,13 +8,8 @@ const Vector2u Renderer::defaultWindowSize = { 1920, 1080 };
 
 Renderer::Renderer()
 {
-	//Setup window and view
-	window = std::make_unique<RenderWindow>(VideoMode(defaultWindowSize.x, defaultWindowSize.y), "GraphGen");
-	view = std::make_unique<View>(window->getDefaultView());
-
 	//Load fonts
-	cambria = std::make_unique<Font>();
-	if (!cambria->loadFromFile("fonts/cambria.ttc")) {
+	if (!cambria.loadFromFile("fonts/cambria.ttc")) {
 		throw std::runtime_error("Failed loading fonts/cambria.ttc");
 	}
 
@@ -28,66 +23,63 @@ Renderer::Renderer()
 	}
 }
 
+bool Renderer::IsOpen()
+{
+	return window.isOpen();
+}
+
+bool Renderer::PollEvent(Event& event)
+{
+	return window.pollEvent(event);
+}
+
 void Renderer::Draw(const Drawable& obj)
 {
-	window->draw(obj);
+	window.draw(obj);
 }
 
 void Renderer::Display()
 {
-	window->display();
+	window.display();
 }
 
-void Renderer::Clear()
+void Renderer::Clear(const Color color)
 {
-	window->clear();
+	window.clear(color);
 }
 
 void Renderer::Close()
 {
-	window->close();
+	window.close();
 }
 
-void Renderer::Resize(const Vector2u newSize)
+void Renderer::Resize(Vector2u newSize)
 {
-	static const sf::Vector2u minWindowSize{ 960, 540 };
-	static const sf::Vector2u maxWindowSize{ 1920, 1080 };
+	static const Vector2u minWindowSize{ 960, 540 };
+	static const Vector2u maxWindowSize{ 1920, 1080 };
 
-	//Make sure newSize is within min and max window size
-	if (newSize.x < minWindowSize.x) {
-		window->setSize(Vector2u(minWindowSize.x, window->getSize().y));
-		return;
+	//Clamp newSize in range
+	newSize.x = std::max(minWindowSize.x, std::min(newSize.x, maxWindowSize.x));
+	newSize.y = std::max(minWindowSize.y, std::min(newSize.y, maxWindowSize.y));
+
+	//Resize the view
+	if (window.getSize() != newSize) {
+		window.setSize(newSize);
 	}
-
-	else if (newSize.x > maxWindowSize.x) {
-		window->setSize(Vector2u(maxWindowSize.x, window->getSize().y));
-		return;
-	}
-
-	else if (newSize.y < minWindowSize.y) {
-		window->setSize(Vector2u(window->getSize().x, minWindowSize.y));
-		return;
-	}
-
-	else if (newSize.y > maxWindowSize.y) {
-		window->setSize(Vector2u(window->getSize().x, maxWindowSize.y));
-		return;
-	}
-
-	//If the newSize is valid, resize the view
-	view->setSize(Vector2f(newSize));
-	view->setCenter(Vector2f(newSize.x / 2.f, newSize.y / 2.f));
-	window->setView(*view);
+	window.setSize(newSize);
+	view.setSize(Vector2f(newSize));
+	view.setCenter(Vector2f(newSize.x / 2.f, newSize.y / 2.f));
+	window.setView(view);
 }
 
 void Renderer::SetCursor(const Cursor::Type cursorType)
 {
 	switch (cursorType) {
 		case Cursor::Arrow:
-			window->setMouseCursor(arrowCursor);
+			window.setMouseCursor(arrowCursor);
 			break;
 		case Cursor::Text:
-			window->setMouseCursor(textCursor);
+			window.setMouseCursor(textCursor);
 			break;
 	}
 }

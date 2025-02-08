@@ -15,7 +15,7 @@ int main()
         UI ui{ renderer };
         EventHandle eventHandle{ renderer, ui };
 
-        while (renderer.GetWindow()->isOpen())
+        while (renderer.IsOpen())
         {
             try {
                 //General flow of the program:

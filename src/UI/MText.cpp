@@ -42,6 +42,7 @@ void MText::UpdateVertices()
     Vector2f glyphPos{ Vector2f(0, size.y / 2.f) };
     unsigned int glyphSize{ static_cast<unsigned int>(round(size.y)) };
 
+    //Loop through wString and add each glyph
     for (const auto& c : wString) {
         //Apply any formatting transforms
         glyphPos.x += transformsToApply.x;
@@ -246,23 +247,23 @@ void MText::FormatSquareRoot(const bool start, const Vector2f glyphPos, const un
 
 //GET AND SETS:
 
-const sf::Vector2f MText::GetSize() const
+const Vector2f MText::GetSize() const
 {
     return size;
 }
 
-void MText::SetSize(const sf::Vector2f newSize)
+void MText::SetSize(const Vector2f newSize)
 {
     size = newSize;
     UpdateVertices();
 }
 
-const sf::Font* MText::GetFont() const
+const Font* MText::GetFont() const
 {
     return font;
 }
 
-void MText::SetFont(const sf::Font& newFont)
+void MText::SetFont(const Font& newFont)
 {
     font = &newFont;
     UpdateVertices();
@@ -280,12 +281,12 @@ void MText::SetString(const std::wstring& newString)
     UpdateVertices();
 }
 
-const sf::Color MText::GetFillColor() const
+const Color MText::GetFillColor() const
 {
     return fillColor;
 }
 
-void MText::SetFillColor(const sf::Color newColor)
+void MText::SetFillColor(const Color newColor)
 {
     fillColor = newColor;
     UpdateVertices();

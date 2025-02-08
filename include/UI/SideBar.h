@@ -21,6 +21,6 @@ private:
 	sf::Color backgroundCol;
 
 	sf::RectangleShape background{ size };
-	std::unique_ptr<MText> mText;
+	MText mText;
 	std::vector<std::unique_ptr<Widget>> childWidgets;
 };
