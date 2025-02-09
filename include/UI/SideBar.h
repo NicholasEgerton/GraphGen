@@ -2,20 +2,20 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "UI/Widget.h"
+#include "UI/ViewWidget.h"
 #include "core/EventResult.h"
 #include "UI/MText.h"
 #include <memory>
 #include <vector>
 
-class SideBar : public Widget {
+class SideBar : public ViewWidget {
 public:
 	SideBar() = delete;
-	SideBar(const sf::Vector2f pos, const sf::Vector2f size, const sf::Font& font, const sf::Color backgroundCol);
+	SideBar(const sf::Vector2f pos, const sf::Vector2f size, const sf::Font& font, const sf::Color backgroundCol, sf::Vector2f viewToWindowRatio);
 
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	virtual void Update() override;
-	virtual EventResult OnEvent(const sf::Event& event) override;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	void Update() override;
+	EventResult OnEvent(const sf::Event& event) override;
 private:
 	const sf::Font* font;
 	sf::Color backgroundCol;

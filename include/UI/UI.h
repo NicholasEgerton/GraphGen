@@ -3,7 +3,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "core/Renderer.h"
-#include "UI/Widget.h"
+#include "UI/ViewWidget.h"
 #include "core/EventResult.h"
 #include <memory>
 #include <vector>
@@ -16,10 +16,11 @@ public:
 	UI() = delete;
 	UI(Renderer& renderer);
 
+	void Draw();
 	void Update();
 	EventResult OnEvent(sf::Event& event);
 private:
 	Renderer& renderer;
 
-	std::vector<std::unique_ptr<Widget>> childWidgets;
+	std::vector<std::unique_ptr<ViewWidget>> childViewWidgets;
 };

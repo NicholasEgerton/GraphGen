@@ -6,7 +6,7 @@
 #include "core/EventResult.h"
 
 //Everything drawn to the screen is a child of widget, which itself is a
-//Child of sf::Drawable. 
+//Child of sf::Drawable and sf::Transformable. 
 
 class Widget : public sf::Drawable, public sf::Transformable {
 public:

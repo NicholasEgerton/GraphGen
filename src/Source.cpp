@@ -21,16 +21,19 @@ int main()
                 //General flow of the program:
                 //Clear->Input->UI->Display
 
-                //The display is cleared
+                //Clear display
                 renderer.Clear();
 
-                //Events and input are handled
+                //Handle inputs and events
                 eventHandle.Update();
 
-                //The UI is updated and then drawn to the screen
+                //Update UI
                 ui.Update();
 
-                //They are then displayed
+                //Draw UI
+                ui.Draw();
+
+                //Show display
                 renderer.Display();
             }
 

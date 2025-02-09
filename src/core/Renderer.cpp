@@ -4,8 +4,6 @@
 
 using namespace sf;
 
-const Vector2u Renderer::defaultWindowSize = { 1920, 1080 };
-
 Renderer::Renderer()
 {
 	//Load fonts
@@ -33,9 +31,9 @@ bool Renderer::PollEvent(Event& event)
 	return window.pollEvent(event);
 }
 
-void Renderer::Draw(const Drawable& obj)
+void Renderer::Draw(const Drawable& obj, const RenderStates states)
 {
-	window.draw(obj);
+	window.draw(obj, states);
 }
 
 void Renderer::Display()
@@ -53,22 +51,8 @@ void Renderer::Close()
 	window.close();
 }
 
-void Renderer::Resize(Vector2u newSize)
+void Renderer::SetView(const sf::View& view)
 {
-	static const Vector2u minWindowSize{ 960, 540 };
-	static const Vector2u maxWindowSize{ 1920, 1080 };
-
-	//Clamp newSize in range
-	newSize.x = std::max(minWindowSize.x, std::min(newSize.x, maxWindowSize.x));
-	newSize.y = std::max(minWindowSize.y, std::min(newSize.y, maxWindowSize.y));
-
-	//Resize the view
-	if (window.getSize() != newSize) {
-		window.setSize(newSize);
-	}
-	window.setSize(newSize);
-	view.setSize(Vector2f(newSize));
-	view.setCenter(Vector2f(newSize.x / 2.f, newSize.y / 2.f));
 	window.setView(view);
 }
 

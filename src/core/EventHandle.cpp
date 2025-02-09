@@ -13,10 +13,6 @@ void EventHandle::Update()
             case Event::Closed:
                 renderer.Close();
                 break;
-
-            case Event::Resized:
-                renderer.Resize(Vector2u(event.size.width, event.size.height));
-                break;
         }
 
         EventResult eventResult{ ui.OnEvent(event) };
