@@ -1,12 +1,8 @@
-//Work of Nicholas Egerton
-#include "SFML/Graphics.hpp"
-#include "core/EventHandle.h"
+﻿#include "core/EventHandle.h"
 #include "core/Renderer.h"
 #include "UI/UI.h"
 #include "core/Errors.h"
 #include <stdexcept>
-
-using namespace sf;
 
 int main()
 {

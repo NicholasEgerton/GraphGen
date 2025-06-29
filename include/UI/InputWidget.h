@@ -10,13 +10,13 @@ public:
 	InputWidget() = delete;
 	InputWidget(const sf::Vector2f pos, const sf::Vector2f size) : Widget(pos, size) {};
 
-	virtual EventResult OnEvent(const sf::Event& event);
+	virtual EventResult OnEvent(const std::optional<sf::Event>& event);
 protected:
-	virtual EventResult OnClick(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
-	virtual EventResult OnUnfocus(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
-	virtual EventResult OnHover(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
-	virtual EventResult OnUnhover(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
-	virtual EventResult OnTextEntered(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
+	virtual EventResult OnClick(const std::optional<sf::Event>& event) { return { false, sf::Cursor::Type::Arrow }; };
+	virtual EventResult OnUnfocus(const std::optional<sf::Event>& event) { return { false, sf::Cursor::Type::Arrow }; };
+	virtual EventResult OnHover(const std::optional<sf::Event>& event) { return { false, sf::Cursor::Type::Arrow }; };
+	virtual EventResult OnUnhover(const std::optional<sf::Event>& event) { return { false, sf::Cursor::Type::Arrow }; };
+	virtual EventResult OnTextEntered(const std::optional<sf::Event>& event) { return { false, sf::Cursor::Type::Arrow }; };
 
 	WidgetState state = { false, false };
 

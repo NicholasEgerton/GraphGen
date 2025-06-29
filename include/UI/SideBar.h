@@ -4,7 +4,6 @@
 #include "SFML/Graphics.hpp"
 #include "UI/ViewWidget.h"
 #include "core/EventResult.h"
-#include "UI/MText.h"
 #include <memory>
 #include <vector>
 
@@ -15,12 +14,11 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void Update() override;
-	EventResult OnEvent(const sf::Event& event) override;
+	EventResult OnEvent(const std::optional<sf::Event>& event) override;
 private:
 	const sf::Font* font;
 	sf::Color backgroundCol;
 
 	sf::RectangleShape background{ size };
-	MText mText;
 	std::vector<std::unique_ptr<Widget>> childWidgets;
 };

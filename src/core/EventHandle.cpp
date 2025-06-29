@@ -6,13 +6,9 @@ using namespace sf;
 
 void EventHandle::Update()
 {
-    Event event;
-
-    while(renderer.PollEvent(event)) {
-        switch (event.type) {
-            case Event::Closed:
-                renderer.Close();
-                break;
+    while(const std::optional<Event> event = renderer.PollEvent()) {
+        if (event->is<Event::Closed>()) {
+            renderer.Close();
         }
 
         EventResult eventResult{ ui.OnEvent(event) };

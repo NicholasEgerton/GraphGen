@@ -18,7 +18,7 @@ public:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {};
 	virtual void Update() {};
 
-	virtual EventResult OnEvent(const sf::Event& event) { return { false, sf::Cursor::Arrow }; };
+	virtual EventResult OnEvent(const std::optional<sf::Event>& event) { return { false, sf::Cursor::Type::Arrow }; };
 
 protected:
 	sf::Vector2f size;

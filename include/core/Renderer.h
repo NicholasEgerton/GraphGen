@@ -1,7 +1,7 @@
-//Work of Nicholas Egerton
 #pragma once
 
 #include "SFML/Graphics.hpp"
+#include "SFML/Window/Cursor.hpp"
 #include <memory>
 
 class Renderer {
@@ -9,7 +9,7 @@ public:
 	Renderer();
 
 	bool IsOpen();
-	bool PollEvent(sf::Event& event);
+	std::optional<sf::Event> PollEvent();
 	void Draw(const sf::Drawable& obj, const sf::RenderStates states = sf::RenderStates::Default);
 	void Display();
 	void Clear(const sf::Color color = sf::Color());
@@ -17,12 +17,11 @@ public:
 	void SetView(const sf::View& view);
 	void SetCursor(const sf::Cursor::Type cursorType);
 private:
-	//Set the window size to half the resolution
-	sf::RenderWindow window{ sf::VideoMode((sf::VideoMode::getDesktopMode().width + 1) / 2, (sf::VideoMode::getDesktopMode().height + 1) / 2), "GraphGen" };
+	sf::RenderWindow window;
 	sf::Font cambria;
 
-	sf::Cursor arrowCursor;
-	sf::Cursor textCursor;
+	sf::Cursor arrowCursor{ sf::Cursor::createFromSystem(sf::Cursor::Type::Arrow).value() };
+	sf::Cursor textCursor{ sf::Cursor::createFromSystem(sf::Cursor::Type::Text).value() };
 public:
 	/// <summary>
 	/// Get the font "Cambria."

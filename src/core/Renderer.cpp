@@ -1,4 +1,3 @@
-//Work of Nicholas Egerton
 #include "core/Renderer.h"
 #include <stdexcept>
 
@@ -6,18 +5,14 @@ using namespace sf;
 
 Renderer::Renderer()
 {
+	//Set the window size to half the resolution
+	Vector2u wSize{ VideoMode::getDesktopMode().size };
+	wSize.x = (wSize.x + 1) / 2;
+	wSize.y = (wSize.y + 1) / 2;
+	window = RenderWindow(VideoMode(wSize), "GraphGen");
 	//Load fonts
-	if (!cambria.loadFromFile("fonts/cambria.ttc")) {
+	if (!cambria.openFromFile("resources/fonts/cambria.ttc")) {
 		throw std::runtime_error("Failed loading fonts/cambria.ttc");
-	}
-
-	//Load cursors
-	if (!arrowCursor.loadFromSystem(Cursor::Arrow)) {
-		throw std::runtime_error("Failed loading Cursor::Arrow from system");
-	}
-
-	if (!textCursor.loadFromSystem(Cursor::Text)) {
-		throw std::runtime_error("Failed loading Cursor::Text from system");
 	}
 }
 
@@ -26,9 +21,9 @@ bool Renderer::IsOpen()
 	return window.isOpen();
 }
 
-bool Renderer::PollEvent(Event& event)
+std::optional<Event> Renderer::PollEvent()
 {
-	return window.pollEvent(event);
+	return window.pollEvent();
 }
 
 void Renderer::Draw(const Drawable& obj, const RenderStates states)
@@ -59,10 +54,10 @@ void Renderer::SetView(const sf::View& view)
 void Renderer::SetCursor(const Cursor::Type cursorType)
 {
 	switch (cursorType) {
-		case Cursor::Arrow:
+		case Cursor::Type::Arrow:
 			window.setMouseCursor(arrowCursor);
 			break;
-		case Cursor::Text:
+		case Cursor::Type::Text:
 			window.setMouseCursor(textCursor);
 			break;
 	}

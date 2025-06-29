@@ -4,44 +4,37 @@
 
 using namespace sf;
 
-EventResult InputWidget::OnEvent(const Event& event)
+EventResult InputWidget::OnEvent(const std::optional<sf::Event>& event)
 {
     //InputWidget by default has no child widgets,
     //So does not need to call OnEvent() on any.
     //Here, setup basic default bindings for events
-    EventResult eventResult{ false, Cursor::Arrow };
+    EventResult eventResult{ false, Cursor::Type::Arrow };
     FloatRect bounds{ getPosition(), size};
-    Vector2f mousePos;
-    switch (event.type) {
-        case Event::MouseButtonPressed:
-            mousePos = Vector2f(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
+    if (const auto* mouseButtonPressed = event->getIf<Event::MouseButtonPressed>()) {
+        if (bounds.contains(Vector2f(mouseButtonPressed->position))) {
+            eventResult = OnClick(event);
+        }
 
-            if (bounds.contains(mousePos)) {
-                eventResult = OnClick(event);
-            }
+        else if (state.focused) {
+            eventResult = OnUnfocus(event);
+        }
+    }
 
-            else if (state.focused) {
-                eventResult = OnUnfocus(event);
-            }
-            break;
-        case Event::MouseMoved:
-            mousePos = Vector2f(static_cast<float>(event.mouseMove.x), static_cast<float>(event.mouseMove.y));
-            if (bounds.contains(mousePos)) {
-                if (!state.hovered) {
-                    eventResult = OnHover(event);
-                }
-            }
+    else if (const auto* mouseMoved = event->getIf<Event::MouseMoved>()) {
+        if (bounds.contains(Vector2f(mouseMoved->position))) {
+            eventResult = OnHover(event);
+        }
 
-            else if (state.hovered) {
-                eventResult = OnUnhover(event);
-            }
-            break;
+        else if (state.focused) {
+            eventResult = OnUnhover(event);
+        }
+    }
 
-        case Event::TextEntered:
-            if (state.focused) {
-                eventResult = OnTextEntered(event);
-            }
-            break;
+    else if (const auto* textEntered = event->getIf<Event::TextEntered>()) {
+        if (state.focused) {
+            eventResult = OnTextEntered(event);
+        }
     }
     return eventResult;
 }

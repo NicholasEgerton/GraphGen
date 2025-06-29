@@ -1,4 +1,3 @@
-//Work of Nicholas Egerton
 #pragma once
 
 #include "SFML/Graphics.hpp"
@@ -8,8 +7,8 @@
 #include <memory>
 #include <vector>
 
-//The UI class manages and draws all parent widgets on the screen,
-//And parent widgets may hold their own child widgets that they manage and draw.
+//The UI class manages and draws all view widgets on the screen,
+//And view widgets may hold their own child widgets that they manage and draw.
 
 class UI {
 public:
@@ -18,7 +17,7 @@ public:
 
 	void Draw();
 	void Update();
-	EventResult OnEvent(sf::Event& event);
+	EventResult OnEvent(const std::optional<sf::Event>& event);
 private:
 	Renderer& renderer;
 

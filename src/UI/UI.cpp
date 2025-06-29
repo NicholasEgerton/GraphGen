@@ -31,7 +31,7 @@ void UI::Update()
 	}
 }
 
-EventResult UI::OnEvent(Event& event)
+EventResult UI::OnEvent(const std::optional<Event>& event)
 {
 	EventResult consumedInput{ false, Cursor::Type::Arrow };
 	for (const auto& w : childViewWidgets) {

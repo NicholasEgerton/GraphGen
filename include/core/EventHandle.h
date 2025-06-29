@@ -14,5 +14,5 @@ private:
 	Renderer& renderer;
 	UI& ui;
 
-	sf::Cursor::Type currentCursorType = sf::Cursor::Arrow;
+	sf::Cursor::Type currentCursorType = sf::Cursor::Type::Arrow;
 };
